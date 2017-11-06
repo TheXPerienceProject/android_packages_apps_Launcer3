@@ -25,7 +25,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 
 /**
  * This is a custom composite drawable that has a fixed virtual size and dynamically lays out its

@@ -31,7 +31,7 @@ import com.android.launcher3.DragSource;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.PendingAddItemInfo;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.Workspace;
 import com.android.launcher3.dragndrop.DragOptions;
 import com.android.launcher3.dragndrop.LivePreviewWidgetCell;

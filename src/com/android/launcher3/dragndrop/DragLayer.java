@@ -49,7 +49,7 @@ import com.android.launcher3.InsettableFrameLayout;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherAppWidgetHostView;
 import com.android.launcher3.PinchToOverviewListener;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.ShortcutAndWidgetContainer;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.allapps.AllAppsTransitionController;

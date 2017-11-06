@@ -24,7 +24,7 @@ import android.view.View.AccessibilityDelegate;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
 
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.Workspace;
 import com.android.launcher3.config.FeatureFlags;

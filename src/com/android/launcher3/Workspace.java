@@ -87,6 +87,7 @@ import com.android.launcher3.util.VerticalFlingDetector;
 import com.android.launcher3.util.WallpaperOffsetInterpolator;
 import com.android.launcher3.widget.PendingAddShortcutInfo;
 import com.android.launcher3.widget.PendingAddWidgetInfo;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;

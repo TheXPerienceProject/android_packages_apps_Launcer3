@@ -27,7 +27,7 @@ import android.view.ViewParent;
 
 import com.android.launcher3.DropTarget;
 import com.android.launcher3.ItemInfo;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.config.ProviderConfig;
 import com.android.launcher3.userevent.nano.LauncherLogProto.Action;

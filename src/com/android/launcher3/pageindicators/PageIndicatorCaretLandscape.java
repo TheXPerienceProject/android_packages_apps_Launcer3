@@ -16,14 +16,12 @@
 package com.android.launcher3.pageindicators;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 
 import com.android.launcher3.Launcher;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 
 /**
  * Simply draws the caret drawable bottom-right aligned in the view. This ensures that we can have

@@ -37,7 +37,7 @@ import android.widget.FrameLayout;
 import com.android.launcher3.AppWidgetResizeFrame;
 import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.LauncherAppState;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.compat.AppWidgetManagerCompat;
 import com.android.launcher3.config.FeatureFlags;

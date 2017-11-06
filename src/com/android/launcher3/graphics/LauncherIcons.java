@@ -39,7 +39,7 @@ import android.os.UserHandle;
 import com.android.launcher3.AppInfo;
 import com.android.launcher3.IconCache;
 import com.android.launcher3.LauncherAppState;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.model.PackageItemInfo;

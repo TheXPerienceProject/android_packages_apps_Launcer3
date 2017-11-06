@@ -18,7 +18,7 @@ android {
     buildToolsVersion '26.0.2'
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 22
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -43,7 +43,7 @@ android {
         main {
             res.srcDirs = ['res']
             java.srcDirs = ['src', 'src_config']
-            manifest.srcFile 'AndroidManifest-common.xml'
+            manifest.srcFile 'AndroidManifest.xml'
             proto.srcDirs 'protos/'
         }
 
@@ -76,6 +76,8 @@ dependencies {
     compile "com.android.support:palette-v7:${SUPPORT_LIBS_VERSION}"
     compile 'com.google.protobuf.nano:protobuf-javanano:3.+'
 
+    compile "com.android.support:appcompat-v7:${SUPPORT_LIBS_VERSION}"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     androidTestCompile "org.mockito:mockito-core:1.+"
     androidTestCompile 'com.google.dexmaker:dexmaker:1.2'

@@ -40,6 +40,7 @@ import com.android.launcher3.logging.UserEventDispatcher;
 import com.android.launcher3.userevent.nano.LauncherLogProto.ContainerType;
 import com.android.launcher3.userevent.nano.LauncherLogProto.Target;
 import com.android.launcher3.util.Themes;
+import com.google.android.apps.nexuslauncher.R;
 
 public class Hotseat extends FrameLayout
         implements UserEventDispatcher.LogContainerProvider {

@@ -39,7 +39,7 @@ import com.android.launcher3.ItemInfo;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherAppWidgetProviderInfo;
 import com.android.launcher3.PendingAddItemInfo;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.compat.PinItemRequestCompat;
 import com.android.launcher3.folder.Folder;
 import com.android.launcher3.userevent.nano.LauncherLogProto;

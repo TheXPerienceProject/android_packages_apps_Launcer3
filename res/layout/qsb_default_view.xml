@@ -1,54 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-     Copyright (C) 2016 The Android Open Source Project
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-
-          http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_margin="16dp"
-        android:layout_gravity="center_vertical"
-        android:background="@drawable/round_rect_primary"
-        android:elevation="2dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:id="@+id/btn_qsb_search"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:text="@string/abandoned_search"
-            android:textColor="?android:attr/textColorSecondary"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:clickable="true"
-            android:background="?android:attr/selectableItemBackground" />
-        <ImageView
-            android:layout_width="48dp"
-            android:id="@+id/btn_qsb_setup"
-            android:clickable="true"
-            android:visibility="gone"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_setting"
-            android:tint="?android:attr/textColorSecondary"
-            android:contentDescription="@string/gadget_setup_text"
-            android:padding="8dp"
-            android:background="?android:attr/selectableItemBackground" />
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="center_vertical" android:orientation="horizontal" android:background="@drawable/round_rect_primary" android:layout_width="fill_parent" android:layout_height="48.0dip" android:layout_margin="8.0dip" android:elevation="2.0dip">
+        <TextView android:textAppearance="?android:textAppearanceMedium" android:textColor="?android:textColorSecondary" android:gravity="center_vertical" android:id="@id/btn_qsb_search" android:background="?android:selectableItemBackground" android:clickable="true" android:layout_width="0.0dip" android:layout_height="fill_parent" android:text="@string/abandoned_search" android:layout_weight="1.0" android:paddingStart="16.0dip" />
+        <ImageView android:id="@id/btn_qsb_setup" android:background="?android:selectableItemBackground" android:padding="8.0dip" android:visibility="gone" android:clickable="true" android:layout_width="48.0dip" android:layout_height="fill_parent" android:src="@drawable/ic_setting" android:tint="?android:textColorSecondary" android:contentDescription="@string/gadget_setup_text" />
     </LinearLayout>
 </FrameLayout>

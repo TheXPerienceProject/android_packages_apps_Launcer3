@@ -29,7 +29,7 @@ import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.android.launcher3.LauncherAppWidgetProviderInfo;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.util.ComponentKey;
 import com.android.launcher3.util.PackageUserKey;
 

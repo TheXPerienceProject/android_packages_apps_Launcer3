@@ -19,9 +19,9 @@ package com.android.launcher3;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
 import android.graphics.Point;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Xml;
 import android.view.Display;
@@ -30,6 +30,7 @@ import android.view.WindowManager;
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.config.ProviderConfig;
 import com.android.launcher3.util.Thunk;
+import com.google.android.apps.nexuslauncher.R;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -196,26 +197,24 @@ public class InvariantDeviceProfile {
             while (((type = parser.next()) != XmlPullParser.END_TAG ||
                     parser.getDepth() > depth) && type != XmlPullParser.END_DOCUMENT) {
                 if ((type == XmlPullParser.START_TAG) && "profile".equals(parser.getName())) {
-                    TypedArray a = context.obtainStyledAttributes(
-                            Xml.asAttributeSet(parser), R.styleable.InvariantDeviceProfile);
-                    int numRows = a.getInt(R.styleable.InvariantDeviceProfile_numRows, 0);
-                    int numColumns = a.getInt(R.styleable.InvariantDeviceProfile_numColumns, 0);
-                    float iconSize = a.getFloat(R.styleable.InvariantDeviceProfile_iconSize, 0);
+                    AttributeSet set = Xml.asAttributeSet(parser);
+                    int numRows = set.getAttributeIntValue(R.attr.numRows, 0);
+                    int numColumns = set.getAttributeIntValue(R.attr.numColumns, 0);
+                    float iconSize = set.getAttributeFloatValue(R.attr.iconSize, 0);
                     profiles.add(new InvariantDeviceProfile(
-                            a.getString(R.styleable.InvariantDeviceProfile_name),
-                            a.getFloat(R.styleable.InvariantDeviceProfile_minWidthDps, 0),
-                            a.getFloat(R.styleable.InvariantDeviceProfile_minHeightDps, 0),
+                            set.getAttributeValue(R.attr.name),
+                            set.getAttributeFloatValue(R.attr.minWidthDps, 0),
+                            set.getAttributeFloatValue(R.attr.minHeightDps, 0),
                             numRows,
                             numColumns,
-                            a.getInt(R.styleable.InvariantDeviceProfile_numFolderRows, numRows),
-                            a.getInt(R.styleable.InvariantDeviceProfile_numFolderColumns, numColumns),
-                            a.getInt(R.styleable.InvariantDeviceProfile_minAllAppsPredictionColumns, numColumns),
+                            set.getAttributeIntValue(R.attr.numFolderRows, numRows),
+                            set.getAttributeIntValue(R.attr.numFolderColumns, numColumns),
+                            set.getAttributeIntValue(R.attr.minAllAppsPredictionColumns, numColumns),
                             iconSize,
-                            a.getFloat(R.styleable.InvariantDeviceProfile_iconTextSize, 0),
-                            a.getInt(R.styleable.InvariantDeviceProfile_numHotseatIcons, numColumns),
-                            a.getFloat(R.styleable.InvariantDeviceProfile_hotseatIconSize, iconSize),
-                            a.getResourceId(R.styleable.InvariantDeviceProfile_defaultLayoutId, 0)));
-                    a.recycle();
+                            set.getAttributeFloatValue(R.attr.iconTextSize, 0),
+                            set.getAttributeIntValue(R.attr.numHotseatIcons, numColumns),
+                            set.getAttributeFloatValue(R.attr.hotseatIconSize, iconSize),
+                            set.getAttributeResourceValue(R.attr.defaultLayoutId, 0)));
                 }
             }
         } catch (IOException|XmlPullParserException e) {

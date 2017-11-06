@@ -29,7 +29,7 @@ import com.android.launcher3.IconCache;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherSettings;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.compat.LauncherAppsCompat;
 import com.android.launcher3.compat.PinItemRequestCompat;
 import com.android.launcher3.compat.ShortcutConfigActivityInfo;

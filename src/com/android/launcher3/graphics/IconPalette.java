@@ -27,7 +27,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.util.Log;
 
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.util.Themes;
 
 /**

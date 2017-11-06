@@ -39,6 +39,7 @@ import com.android.launcher3.LauncherSettings.Favorites;
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.graphics.LauncherIcons;
 import com.android.launcher3.util.Thunk;
+import com.google.android.apps.nexuslauncher.R;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

@@ -35,6 +35,7 @@ import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.util.CircleRevealOutlineProvider;
 import com.android.launcher3.util.Thunk;
 import com.android.launcher3.widget.WidgetsContainerView;
+import com.google.android.apps.nexuslauncher.R;
 
 /**
  * TODO: figure out what kind of tests we can write for this

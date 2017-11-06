@@ -23,6 +23,7 @@ import android.view.View;
 
 import com.android.launcher3.dragndrop.DragOptions;
 import com.android.launcher3.folder.Folder;
+import com.google.android.apps.nexuslauncher.R;
 
 public class DeleteDropTarget extends ButtonDropTarget {
 

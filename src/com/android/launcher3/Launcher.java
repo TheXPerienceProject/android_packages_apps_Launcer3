@@ -131,6 +131,7 @@ import com.android.launcher3.widget.PendingAddWidgetInfo;
 import com.android.launcher3.widget.WidgetAddFlowHandler;
 import com.android.launcher3.widget.WidgetHostViewLoader;
 import com.android.launcher3.widget.WidgetsContainerView;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -1298,8 +1299,8 @@ public class Launcher extends BaseActivity
         mDragLayer = (DragLayer) findViewById(R.id.drag_layer);
         mFocusHandler = mDragLayer.getFocusIndicatorHelper();
         mWorkspace = (Workspace) mDragLayer.findViewById(R.id.workspace);
-        mQsbContainer = mDragLayer.findViewById(mDeviceProfile.isVerticalBarLayout()
-                ? R.id.workspace_blocked_row : R.id.qsb_container);
+        /*mQsbContainer = mDragLayer.findViewById(mDeviceProfile.isVerticalBarLayout()
+                ? R.id.workspace_blocked_row : R.id.qsb_container);*/
         mWorkspace.initParentViews(mDragLayer);
 
         mLauncherView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN

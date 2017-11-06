@@ -19,7 +19,7 @@ import android.view.ViewConfiguration;
 import android.widget.ImageView;
 
 import com.android.launcher3.Launcher;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.dynamicui.ExtractedColors;
 

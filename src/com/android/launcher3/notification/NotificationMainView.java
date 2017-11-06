@@ -31,7 +31,7 @@ import android.widget.TextView;
 
 import com.android.launcher3.ItemInfo;
 import com.android.launcher3.Launcher;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.userevent.nano.LauncherLogProto;
 import com.android.launcher3.util.Themes;
 

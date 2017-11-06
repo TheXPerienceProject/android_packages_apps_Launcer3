@@ -21,6 +21,7 @@ import com.android.launcher3.accessibility.DragViewStateAnnouncer;
 import com.android.launcher3.dragndrop.DragLayer;
 import com.android.launcher3.util.FocusLogic;
 import com.android.launcher3.util.TouchController;
+import com.google.android.apps.nexuslauncher.R;
 
 public class AppWidgetResizeFrame extends FrameLayout
         implements View.OnKeyListener, TouchController {

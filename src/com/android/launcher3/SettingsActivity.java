@@ -29,6 +29,7 @@ import android.provider.Settings.System;
 import android.support.v4.os.BuildCompat;
 
 import com.android.launcher3.graphics.IconShapeOverride;
+import com.google.android.apps.nexuslauncher.R;
 
 /**
  * Settings activity for Launcher. Currently implements the following setting: Allow rotation

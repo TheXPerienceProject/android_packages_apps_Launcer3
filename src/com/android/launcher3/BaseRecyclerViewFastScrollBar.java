@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.util.Themes;
+import com.google.android.apps.nexuslauncher.R;
 
 /**
  * The track and scrollbar that shows when you scroll the list.

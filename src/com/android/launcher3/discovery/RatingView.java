@@ -24,7 +24,7 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 
 /**
  * A simple rating view that shows stars with a rating from 0-5.

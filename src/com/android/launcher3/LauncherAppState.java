@@ -31,6 +31,7 @@ import com.android.launcher3.dynamicui.ExtractionUtils;
 import com.android.launcher3.util.ConfigMonitor;
 import com.android.launcher3.util.Preconditions;
 import com.android.launcher3.util.TestingUtils;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;

@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import android.widget.RemoteViews;
 
 import com.android.launcher3.Launcher;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 
 /**
  * Appwidget host view with QSB specific logic.

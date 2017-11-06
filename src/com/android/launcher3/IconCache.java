@@ -57,6 +57,7 @@ import com.android.launcher3.util.Provider;
 import com.android.launcher3.util.SQLiteCacheHelper;
 import com.android.launcher3.util.Themes;
 import com.android.launcher3.util.Thunk;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.util.Collections;
 import java.util.HashMap;

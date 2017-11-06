@@ -31,7 +31,7 @@ import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.LauncherModel;
 import com.android.launcher3.MainThreadExecutor;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.SessionCommitReceiver;
 import com.android.launcher3.ShortcutInfo;
 import com.android.launcher3.compat.UserManagerCompat;

@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

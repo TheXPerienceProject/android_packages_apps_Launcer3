@@ -24,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 
 import com.android.launcher3.util.Thunk;
+import com.google.android.apps.nexuslauncher.R;
 
 
 /**

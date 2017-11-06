@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewOutlineProvider;
 
 import com.android.launcher3.BaseRecyclerView;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.Utilities;
 
 /**

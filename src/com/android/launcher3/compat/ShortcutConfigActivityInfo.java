@@ -34,7 +34,7 @@ import android.widget.Toast;
 
 import com.android.launcher3.IconCache;
 import com.android.launcher3.LauncherSettings;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.ShortcutInfo;
 
 import java.lang.reflect.Method;

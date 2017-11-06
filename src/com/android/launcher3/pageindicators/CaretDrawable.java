@@ -22,11 +22,10 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
-
-import com.android.launcher3.R;
-import com.android.launcher3.util.Themes;
-
 import android.graphics.drawable.Drawable;
+
+import com.android.launcher3.util.Themes;
+import com.google.android.apps.nexuslauncher.R;
 
 public class CaretDrawable extends Drawable {
     public static final float PROGRESS_CARET_POINTING_UP = -1f;

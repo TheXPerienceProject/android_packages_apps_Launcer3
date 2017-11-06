@@ -35,6 +35,7 @@ import com.android.launcher3.anim.PropertyListBuilder;
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.dragndrop.DragLayer;
 import com.android.launcher3.util.Thunk;
+import com.google.android.apps.nexuslauncher.R;
 
 /**
  * A convenience class to update a view's visibility state after an alpha animation.

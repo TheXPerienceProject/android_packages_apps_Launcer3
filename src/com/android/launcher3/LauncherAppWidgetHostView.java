@@ -39,6 +39,7 @@ import android.widget.RemoteViews;
 
 import com.android.launcher3.dragndrop.DragLayer;
 import com.android.launcher3.dragndrop.DragLayer.TouchCompleteListener;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

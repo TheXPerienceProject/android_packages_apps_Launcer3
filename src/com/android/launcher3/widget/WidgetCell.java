@@ -31,7 +31,7 @@ import android.widget.TextView;
 
 import com.android.launcher3.BaseActivity;
 import com.android.launcher3.DeviceProfile;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.SimpleOnStylusPressListener;
 import com.android.launcher3.StylusEventHelper;
 import com.android.launcher3.WidgetPreviewLoader;

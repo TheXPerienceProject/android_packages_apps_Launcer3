@@ -60,7 +60,7 @@ import com.android.launcher3.LauncherSettings;
 import com.android.launcher3.LogDecelerateInterpolator;
 import com.android.launcher3.OnAlarmListener;
 import com.android.launcher3.PagedView;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.ShortcutInfo;
 import com.android.launcher3.UninstallDropTarget.DropTargetSource;
 import com.android.launcher3.Utilities;

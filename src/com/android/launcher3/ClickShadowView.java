@@ -26,6 +26,8 @@ import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
 
+import com.google.android.apps.nexuslauncher.R;
+
 public class ClickShadowView extends View {
 
     private static final int SHADOW_SIZE_FACTOR = 3;

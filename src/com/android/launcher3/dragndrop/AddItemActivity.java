@@ -16,11 +16,6 @@
 
 package com.android.launcher3.dragndrop;
 
-import static com.android.launcher3.logging.LoggerUtils.newCommandAction;
-import static com.android.launcher3.logging.LoggerUtils.newContainerTarget;
-import static com.android.launcher3.logging.LoggerUtils.newItemTarget;
-import static com.android.launcher3.logging.LoggerUtils.newLauncherEvent;
-
 import android.annotation.TargetApi;
 import android.app.ActivityOptions;
 import android.appwidget.AppWidgetHost;
@@ -47,7 +42,6 @@ import com.android.launcher3.InvariantDeviceProfile;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherAppWidgetProviderInfo;
-import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.compat.AppWidgetManagerCompat;
 import com.android.launcher3.compat.PinItemRequestCompat;
@@ -59,6 +53,12 @@ import com.android.launcher3.widget.PendingAddShortcutInfo;
 import com.android.launcher3.widget.PendingAddWidgetInfo;
 import com.android.launcher3.widget.WidgetHostViewLoader;
 import com.android.launcher3.widget.WidgetImageView;
+import com.google.android.apps.nexuslauncher.R;
+
+import static com.android.launcher3.logging.LoggerUtils.newCommandAction;
+import static com.android.launcher3.logging.LoggerUtils.newContainerTarget;
+import static com.android.launcher3.logging.LoggerUtils.newItemTarget;
+import static com.android.launcher3.logging.LoggerUtils.newLauncherEvent;
 
 @TargetApi(Build.VERSION_CODES.N_MR1)
 public class AddItemActivity extends BaseActivity implements OnLongClickListener, OnTouchListener {

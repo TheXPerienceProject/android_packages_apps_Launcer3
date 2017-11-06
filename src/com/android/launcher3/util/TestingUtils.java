@@ -3,7 +3,6 @@ package com.android.launcher3.util;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -11,9 +10,8 @@ import android.widget.FrameLayout;
 
 import com.android.launcher3.CustomAppWidget;
 import com.android.launcher3.Launcher;
-import com.android.launcher3.LauncherAppState;
-import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.util.HashMap;
 

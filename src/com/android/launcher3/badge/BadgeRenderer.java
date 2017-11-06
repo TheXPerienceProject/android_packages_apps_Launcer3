@@ -28,7 +28,7 @@ import android.graphics.Shader;
 import android.support.annotation.Nullable;
 import android.util.SparseArray;
 
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.graphics.IconPalette;
 import com.android.launcher3.graphics.ShadowGenerator;
 

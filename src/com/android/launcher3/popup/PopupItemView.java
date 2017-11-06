@@ -33,7 +33,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.android.launcher3.LogAccelerateInterpolator;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.util.PillRevealOutlineProvider;
 

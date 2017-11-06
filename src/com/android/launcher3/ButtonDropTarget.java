@@ -44,11 +44,12 @@ import com.android.launcher3.dragndrop.DragOptions;
 import com.android.launcher3.dragndrop.DragView;
 import com.android.launcher3.util.Themes;
 import com.android.launcher3.util.Thunk;
+import com.google.android.apps.nexuslauncher.R;
 
 /**
  * Implements a DropTarget.
  */
-public abstract class ButtonDropTarget extends TextView
+public abstract class ButtonDropTarget extends android.support.v7.widget.AppCompatTextView
         implements DropTarget, DragController.DragListener, OnClickListener {
 
     private static final int DRAG_VIEW_DROP_DURATION = 285;

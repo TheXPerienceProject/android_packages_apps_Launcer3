@@ -19,7 +19,7 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.ViewGroup;
 
 import com.android.launcher3.BubbleTextView;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 
 public class WidgetsRowViewHolder extends ViewHolder {
 

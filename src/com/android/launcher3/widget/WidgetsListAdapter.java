@@ -24,7 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.launcher3.LauncherAppState;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.WidgetPreviewLoader;
 import com.android.launcher3.compat.AlphabeticIndexCompat;
 import com.android.launcher3.model.PackageItemInfo;

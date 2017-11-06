@@ -29,7 +29,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.android.launcher3.ItemInfo;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.anim.PillHeightRevealOutlineProvider;
 import com.android.launcher3.graphics.IconPalette;
 import com.android.launcher3.logging.UserEventDispatcher.LogContainerProvider;

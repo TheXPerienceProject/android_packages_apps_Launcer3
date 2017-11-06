@@ -37,7 +37,7 @@ import com.android.launcher3.discovery.AppDiscoveryAppInfo;
 import com.android.launcher3.AppInfo;
 import com.android.launcher3.BubbleTextView;
 import com.android.launcher3.Launcher;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.allapps.AlphabeticalAppsList.AdapterItem;
 import com.android.launcher3.discovery.AppDiscoveryItemView;
 

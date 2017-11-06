@@ -29,7 +29,7 @@ import com.android.launcher3.BaseRecyclerView;
 import com.android.launcher3.BubbleTextView;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Launcher;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.graphics.DrawableFactory;
 import com.android.launcher3.userevent.nano.LauncherLogProto.ContainerType;

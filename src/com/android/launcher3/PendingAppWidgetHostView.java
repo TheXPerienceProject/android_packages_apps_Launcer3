@@ -36,6 +36,7 @@ import com.android.launcher3.IconCache.ItemInfoUpdateReceiver;
 import com.android.launcher3.graphics.DrawableFactory;
 import com.android.launcher3.model.PackageItemInfo;
 import com.android.launcher3.util.Themes;
+import com.google.android.apps.nexuslauncher.R;
 
 public class PendingAppWidgetHostView extends LauncherAppWidgetHostView
         implements OnClickListener, ItemInfoUpdateReceiver {

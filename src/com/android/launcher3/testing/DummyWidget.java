@@ -3,7 +3,7 @@ package com.android.launcher3.testing;
 import android.appwidget.AppWidgetProviderInfo;
 
 import com.android.launcher3.CustomAppWidget;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 
 public class DummyWidget implements CustomAppWidget {
     @Override

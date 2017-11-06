@@ -28,7 +28,7 @@ import com.android.launcher3.FolderInfo;
 import com.android.launcher3.ItemInfo;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.accessibility.LauncherAccessibilityDelegate.DragType;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.ShortcutInfo;
 import com.android.launcher3.dragndrop.DragLayer;
 

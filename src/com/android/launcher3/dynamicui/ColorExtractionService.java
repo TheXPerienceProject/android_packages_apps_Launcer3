@@ -34,7 +34,7 @@ import android.util.Log;
 
 import com.android.launcher3.LauncherProvider;
 import com.android.launcher3.LauncherSettings;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.config.FeatureFlags;
 

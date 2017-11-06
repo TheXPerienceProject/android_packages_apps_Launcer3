@@ -27,6 +27,7 @@ import com.android.launcher3.folder.Folder;
 import com.android.launcher3.folder.FolderPagedView;
 import com.android.launcher3.util.FocusLogic;
 import com.android.launcher3.util.Thunk;
+import com.google.android.apps.nexuslauncher.R;
 
 /**
  * A keyboard listener we set on all the workspace icons.

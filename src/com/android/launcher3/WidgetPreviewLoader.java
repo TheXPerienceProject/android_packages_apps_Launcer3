@@ -43,6 +43,7 @@ import com.android.launcher3.util.Preconditions;
 import com.android.launcher3.util.SQLiteCacheHelper;
 import com.android.launcher3.util.Thunk;
 import com.android.launcher3.widget.WidgetCell;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.util.ArrayList;
 import java.util.Collections;

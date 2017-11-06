@@ -31,7 +31,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.accessibility.AccessibilityEvent;
 
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.util.HashMap;
 

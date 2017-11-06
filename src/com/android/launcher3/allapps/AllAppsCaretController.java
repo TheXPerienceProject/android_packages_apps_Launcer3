@@ -20,7 +20,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 
 import com.android.launcher3.Launcher;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.pageindicators.CaretDrawable;
 
 public class AllAppsCaretController {

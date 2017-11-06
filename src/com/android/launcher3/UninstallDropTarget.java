@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 import android.widget.Toast;
 
 import com.android.launcher3.compat.LauncherAppsCompat;
+import com.google.android.apps.nexuslauncher.R;
 
 public class UninstallDropTarget extends ButtonDropTarget {
 

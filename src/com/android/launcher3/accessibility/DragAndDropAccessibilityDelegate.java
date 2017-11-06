@@ -27,7 +27,7 @@ import android.view.accessibility.AccessibilityEvent;
 
 import com.android.launcher3.CellLayout;
 import com.android.launcher3.Launcher;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.util.List;
 

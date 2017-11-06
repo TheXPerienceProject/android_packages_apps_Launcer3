@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherAppWidgetHostView;
-import com.android.launcher3.R;
+import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.Workspace;
 import com.android.launcher3.config.ProviderConfig;
 import com.android.launcher3.folder.FolderIcon;

@@ -51,6 +51,7 @@ import com.android.launcher3.anim.PropertyListBuilder;
 import com.android.launcher3.pageindicators.PageIndicator;
 import com.android.launcher3.util.LauncherEdgeEffect;
 import com.android.launcher3.util.Thunk;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.util.ArrayList;
 

@@ -33,6 +33,7 @@ import android.widget.FrameLayout;
 import com.android.launcher3.allapps.AllAppsContainerView;
 import com.android.launcher3.config.FeatureFlags;
 import com.android.launcher3.util.TransformingTouchDelegate;
+import com.google.android.apps.nexuslauncher.R;
 
 /**
  * A base container view, which supports resizing.
