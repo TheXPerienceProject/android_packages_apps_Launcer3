@@ -2,17 +2,12 @@ package com.android.launcher3.testing;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 import android.widget.FrameLayout;
 
-import com.android.launcher3.AppInfo;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherCallbacks;
-import com.android.launcher3.allapps.AllAppsSearchBarController;
-import com.android.launcher3.logging.UserEventDispatcher;
 import com.android.launcher3.util.ComponentKey;
 
 import java.io.FileDescriptor;
@@ -98,6 +93,11 @@ public class LauncherExtension extends Launcher {
         }
 
         @Override
+        public void bindAllApplications(ArrayList p0) {
+
+        }
+
+        @Override
         public void dump(String prefix, FileDescriptor fd, PrintWriter w, String[] args) {
         }
 
@@ -120,10 +120,6 @@ public class LauncherExtension extends Launcher {
 
         @Override
         public void finishBindingItems(boolean upgradePath) {
-        }
-
-        @Override
-        public void bindAllApplications(ArrayList<AppInfo> apps) {
         }
 
         @Override
@@ -180,16 +176,6 @@ public class LauncherExtension extends Launcher {
         }
 
         @Override
-        public View getQsbBar() {
-            return null;
-        }
-
-        @Override
-        public Bundle getAdditionalSearchWidgetOptions() {
-            return new Bundle();
-        }
-
-        @Override
         public boolean shouldMoveToDefaultScreenOnHomeIntent() {
             return true;
         }
@@ -200,24 +186,9 @@ public class LauncherExtension extends Launcher {
         }
 
         @Override
-        public AllAppsSearchBarController getAllAppsSearchBarController() {
-            return null;
-        }
-
-        @Override
         public List<ComponentKey> getPredictedApps() {
             // To debug app predictions, enable AlphabeticalAppsList#DEBUG_PREDICTIONS
             return new ArrayList<>();
-        }
-
-        @Override
-        public int getSearchBarHeight() {
-            return SEARCH_BAR_HEIGHT_NORMAL;
-        }
-
-        @Override
-        public void setLauncherSearchCallback(Object callbacks) {
-            // Do nothing
         }
 
         @Override

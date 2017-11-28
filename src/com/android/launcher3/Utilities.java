@@ -647,4 +647,8 @@ public final class Utilities {
         hashSet.add(elem);
         return hashSet;
     }
+
+    public static SharedPreferences getDevicePrefs(final Context context) {
+        return context.getSharedPreferences("com.android.launcher3.device.prefs", 0);
+    }
 }

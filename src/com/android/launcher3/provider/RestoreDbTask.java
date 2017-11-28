@@ -47,16 +47,16 @@ public class RestoreDbTask {
 
     public static boolean performRestore(DatabaseHelper helper) {
         SQLiteDatabase db = helper.getWritableDatabase();
-        db.beginTransaction();
+        LauncherDbUtils.SQLiteTransaction a3 = new LauncherDbUtils.SQLiteTransaction(db);
         try {
             new RestoreDbTask().sanitizeDB(helper, db);
-            db.setTransactionSuccessful();
+            a3.commit();
             return true;
         } catch (Exception e) {
             FileLog.e(TAG, "Failed to verify db", e);
             return false;
         } finally {
-            db.endTransaction();
+            a3.close();
         }
     }
 
@@ -136,7 +136,7 @@ public class RestoreDbTask {
     }
 
     public static void setPending(Context context, boolean isPending) {
-        FileLog.d(TAG, "Restore data received through full backup");
+        FileLog.d(TAG, "Restore data received through full backup " + isPending);
         Utilities.getPrefs(context).edit().putBoolean(RESTORE_TASK_PENDING, isPending).commit();
     }
 }

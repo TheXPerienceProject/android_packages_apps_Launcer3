@@ -66,7 +66,9 @@ public class DeepShortcutManager {
 
     public static boolean supportsShortcuts(ItemInfo info) {
         return info.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION
-                && !info.isDisabled();
+                && !info.isDisabled()
+                && !(info instanceof com.android.launcher3.ShortcutInfo
+                    && ((com.android.launcher3.ShortcutInfo)info).isPromise());
     }
 
     public boolean wasLastCallSuccess() {

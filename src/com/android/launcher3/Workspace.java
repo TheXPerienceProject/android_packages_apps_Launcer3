@@ -80,7 +80,6 @@ import com.android.launcher3.userevent.nano.LauncherLogProto.ContainerType;
 import com.android.launcher3.userevent.nano.LauncherLogProto.Target;
 import com.android.launcher3.util.ItemInfoMatcher;
 import com.android.launcher3.util.LongArrayMap;
-import com.android.launcher3.util.MultiStateAlphaController;
 import com.android.launcher3.util.PackageUserKey;
 import com.android.launcher3.util.Thunk;
 import com.android.launcher3.util.VerticalFlingDetector;
@@ -241,7 +240,7 @@ public class Workspace extends PagedView
     public static final int QSB_ALPHA_INDEX_OVERLAY_SCROLL = 3;
 
 
-    MultiStateAlphaController mQsbAlphaController;
+    //MultiStateAlphaController mQsbAlphaController;
 
     @ViewDebug.ExportedProperty(category = "launcher")
     private State mState = State.NORMAL;
@@ -531,14 +530,14 @@ public class Workspace extends PagedView
         // Set the wallpaper dimensions when Launcher starts up
         setWallpaperDimension();
 
-        setEdgeGlowColor(getResources().getColor(R.color.workspace_edge_effect_color));
+        //setEdgeGlowColor(getResources().getColor(R.color.workspace_edge_effect_color));
     }
 
     @Override
     public void initParentViews(View parent) {
         super.initParentViews(parent);
         mPageIndicator.setAccessibilityDelegate(new OverviewAccessibilityDelegate());
-        mQsbAlphaController = new MultiStateAlphaController(mLauncher.getQsbContainer(), 4);
+        //mQsbAlphaController = new MultiStateAlphaController(mLauncher.getQsbContainer(), 4);
     }
 
     private int getDefaultPage() {
@@ -579,8 +578,7 @@ public class Workspace extends PagedView
     }
 
     private int getEmbeddedQsbId() {
-        return mLauncher.getDeviceProfile().isVerticalBarLayout()
-                ? R.id.qsb_container : R.id.workspace_blocked_row;
+        return 0;
     }
 
     /**
@@ -624,10 +622,7 @@ public class Workspace extends PagedView
         if (qsb == null) {
             // In transposed layout, we add the QSB in the Grid. As workspace does not touch the
             // edges, we do not need a full width QSB.
-            qsb = mLauncher.getLayoutInflater().inflate(
-                    mLauncher.getDeviceProfile().isVerticalBarLayout()
-                            ? R.layout.qsb_container : R.layout.qsb_blocker_view,
-                    firstPage, false);
+            qsb = mLauncher.getLayoutInflater().inflate(0, firstPage, false);
         }
 
         CellLayout.LayoutParams lp = new CellLayout.LayoutParams(0, 0, firstPage.getCountX(), 1);
@@ -646,7 +641,7 @@ public class Workspace extends PagedView
         // Note that it relies on the strict ordering of measuring the workspace before the QSB
         // at the dragLayer level.
         // Only measure the QSB when the view is enabled
-        if (FeatureFlags.QSB_ON_FIRST_SCREEN && getChildCount() > 0) {
+        /*if (FeatureFlags.QSB_ON_FIRST_SCREEN && getChildCount() > 0) {
             CellLayout firstPage = (CellLayout) getChildAt(0);
             int cellHeight = firstPage.getCellHeight();
 
@@ -656,7 +651,7 @@ public class Workspace extends PagedView
                 lp.height = cellHeight;
                 qsbContainer.setLayoutParams(lp);
             }
-        }
+        }*/
     }
 
     public void removeAllWorkspaceScreens() {
@@ -683,7 +678,7 @@ public class Workspace extends PagedView
         mWorkspaceScreens.clear();
 
         // Ensure that the first page is always present
-        bindAndInitFirstWorkspaceScreen(qsb);
+        //bindAndInitFirstWorkspaceScreen(qsb);
 
         // Re-enable the layout transitions
         enableLayoutTransitions();
@@ -1409,10 +1404,10 @@ public class Workspace extends PagedView
     }
 
     private void onWorkspaceOverallScrollChanged() {
-        if (!mIgnoreQsbScroll) {
+        /*if (!mIgnoreQsbScroll) {
             mLauncher.getQsbContainer().setTranslationX(
                     mOverlayTranslation + mFirstPageScrollX - getScrollX());
-        }
+        }*/
     }
 
     @Override
@@ -1494,7 +1489,7 @@ public class Workspace extends PagedView
         setHotseatTranslationAndAlpha(Direction.X, transX, alpha);
         onWorkspaceOverallScrollChanged();
 
-        mQsbAlphaController.setAlphaAtIndex(alpha, QSB_ALPHA_INDEX_OVERLAY_SCROLL);
+        //mQsbAlphaController.setAlphaAtIndex(alpha, QSB_ALPHA_INDEX_OVERLAY_SCROLL);
     }
 
     /**
@@ -1505,8 +1500,8 @@ public class Workspace extends PagedView
     public void setWorkspaceYTranslationAndAlpha(float translation, float alpha) {
         setWorkspaceTranslationAndAlpha(Direction.Y, translation, alpha);
 
-        mLauncher.getQsbContainer().setTranslationY(translation);
-        mQsbAlphaController.setAlphaAtIndex(alpha, QSB_ALPHA_INDEX_Y_TRANSLATION);
+        //mLauncher.getQsbContainer().setTranslationY(translation);
+        //mQsbAlphaController.setAlphaAtIndex(alpha, QSB_ALPHA_INDEX_Y_TRANSLATION);
     }
 
     /**
@@ -1703,9 +1698,9 @@ public class Workspace extends PagedView
                     float alpha = 1 - Math.abs(scrollProgress);
                     child.getShortcutsAndWidgets().setAlpha(alpha);
 
-                    if (isQsbContainerPage(i)) {
+                    /*if (isQsbContainerPage(i)) {
                         mQsbAlphaController.setAlphaAtIndex(alpha, QSB_ALPHA_INDEX_PAGE_SCROLL);
-                    }
+                    }*/
                 }
             }
         }

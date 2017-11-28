@@ -305,14 +305,12 @@ public class PopupPopulator {
         if (view instanceof DeepShortcutView) {
             // Expanded system shortcut, with both icon and text shown on white background.
             final DeepShortcutView shortcutView = (DeepShortcutView) view;
-            shortcutView.getIconView().setBackground(info.getIcon(context,
-                    android.R.attr.textColorTertiary));
+            shortcutView.getIconView().setBackground(info.getIcon(context));
             shortcutView.getBubbleText().setText(info.getLabel(context));
         } else if (view instanceof ImageView) {
             // Only the system shortcut icon shows on a gray background header.
             final ImageView shortcutIcon = (ImageView) view;
-            shortcutIcon.setImageDrawable(info.getIcon(context,
-                    android.R.attr.textColorHint));
+            shortcutIcon.setImageDrawable(info.getIcon(context));
             shortcutIcon.setContentDescription(info.getLabel(context));
         }
         view.setTag(info);

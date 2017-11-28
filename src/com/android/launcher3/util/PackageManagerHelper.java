@@ -32,7 +32,9 @@ import android.text.TextUtils;
 import com.android.launcher3.AppInfo;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.compat.LauncherAppsCompat;
+import com.google.android.apps.nexuslauncher.R;
 
+import java.net.URISyntaxException;
 import java.util.List;
 
 /**
@@ -148,5 +150,19 @@ public class PackageManagerHelper {
                         .authority("details")
                         .appendQueryParameter("id", packageName)
                         .build());
+    }
+
+    public static Intent getMarketSearchIntent(final Context context, final String s) {
+        try {
+            Intent uri = Intent.parseUri(context.getString(R.string.market_search_intent), 0);
+            if (!TextUtils.isEmpty(s)) {
+                Uri data = uri.getData();
+                Uri.Builder appendQueryParameter = data.buildUpon().appendQueryParameter("q", s);
+                uri.setData(appendQueryParameter.build());
+            }
+            return uri;
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

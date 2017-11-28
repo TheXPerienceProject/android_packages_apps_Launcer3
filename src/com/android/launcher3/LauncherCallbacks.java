@@ -17,14 +17,8 @@
 package com.android.launcher3;
 
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-
-import com.android.launcher3.allapps.AllAppsSearchBarController;
-import com.android.launcher3.logging.UserEventDispatcher;
-import com.android.launcher3.util.ComponentKey;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -40,73 +34,71 @@ import java.util.List;
  */
 public interface LauncherCallbacks {
 
-    /*
-     * Activity life-cycle methods. These methods are triggered after
-     * the code in the corresponding Launcher method is executed.
-     */
-    public void preOnCreate();
-    public void onCreate(Bundle savedInstanceState);
-    public void preOnResume();
-    public void onResume();
-    public void onStart();
-    public void onStop();
-    public void onPause();
-    public void onDestroy();
-    public void onSaveInstanceState(Bundle outState);
-    public void onPostCreate(Bundle savedInstanceState);
-    public void onNewIntent(Intent intent);
-    public void onActivityResult(int requestCode, int resultCode, Intent data);
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            int[] grantResults);
-    public void onWindowFocusChanged(boolean hasFocus);
-    public void onAttachedToWindow();
-    public void onDetachedFromWindow();
-    public boolean onPrepareOptionsMenu(Menu menu);
-    public void dump(String prefix, FileDescriptor fd, PrintWriter w, String[] args);
-    public void onHomeIntent();
-    public boolean handleBackPressed();
-    public void onTrimMemory(int level);
+    void bindAllApplications(final ArrayList p0);
 
-    /*
-     * Extension points for providing custom behavior on certain user interactions.
-     */
-    public void onLauncherProviderChange();
-    public void finishBindingItems(final boolean upgradePath);
-    public void bindAllApplications(ArrayList<AppInfo> apps);
-    public void onInteractionBegin();
-    public void onInteractionEnd();
+    void dump(final String p0, final FileDescriptor p1, final PrintWriter p2, final String[] p3);
 
-    @Deprecated
-    public void onWorkspaceLockedChanged();
+    void finishBindingItems(final boolean p0);
 
-    /**
-     * Starts a search with {@param initialQuery}. Return false if search was not started.
-     */
-    public boolean startSearch(
-            String initialQuery, boolean selectInitialQuery, Bundle appSearchData);
-    public boolean hasCustomContentToLeft();
-    public void populateCustomContentContainer();
-    public View getQsbBar();
-    public Bundle getAdditionalSearchWidgetOptions();
+    List getPredictedApps();
 
-    /*
-     * Extensions points for adding / replacing some other aspects of the Launcher experience.
-     */
-    public boolean shouldMoveToDefaultScreenOnHomeIntent();
-    public boolean hasSettings();
-    public AllAppsSearchBarController getAllAppsSearchBarController();
-    public List<ComponentKey> getPredictedApps();
-    public static final int SEARCH_BAR_HEIGHT_NORMAL = 0, SEARCH_BAR_HEIGHT_TALL = 1;
-    /** Must return one of {@link #SEARCH_BAR_HEIGHT_NORMAL} or {@link #SEARCH_BAR_HEIGHT_TALL} */
-    public int getSearchBarHeight();
+    boolean handleBackPressed();
 
-    /**
-     * Sets the callbacks to allow reacting the actions of search overlays of the launcher.
-     *
-     * @param callbacks A set of callbacks to the Launcher, is actually a LauncherSearchCallback,
-     *                  but for implementation purposes is passed around as an object.
-     */
-    public void setLauncherSearchCallback(Object callbacks);
+    boolean hasCustomContentToLeft();
 
-    public boolean shouldShowDiscoveryBounce();
+    boolean hasSettings();
+
+    void onActivityResult(final int p0, final int p1, final Intent p2);
+
+    void onAttachedToWindow();
+
+    void onCreate(final Bundle p0);
+
+    void onDestroy();
+
+    void onDetachedFromWindow();
+
+    void onHomeIntent();
+
+    void onInteractionBegin();
+
+    void onInteractionEnd();
+
+    void onLauncherProviderChange();
+
+    void onNewIntent(final Intent p0);
+
+    void onPause();
+
+    void onPostCreate(final Bundle p0);
+
+    boolean onPrepareOptionsMenu(final Menu p0);
+
+    void onRequestPermissionsResult(final int p0, final String[] p1, final int[] p2);
+
+    void onResume();
+
+    void onSaveInstanceState(final Bundle p0);
+
+    void onStart();
+
+    void onStop();
+
+    void onTrimMemory(final int p0);
+
+    void onWindowFocusChanged(final boolean p0);
+
+    void onWorkspaceLockedChanged();
+
+    void populateCustomContentContainer();
+
+    void preOnCreate();
+
+    void preOnResume();
+
+    boolean shouldMoveToDefaultScreenOnHomeIntent();
+
+    boolean shouldShowDiscoveryBounce();
+
+    boolean startSearch(final String p0, final boolean p1, final Bundle p2);
 }

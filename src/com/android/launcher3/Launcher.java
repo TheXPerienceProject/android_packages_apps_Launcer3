@@ -218,7 +218,7 @@ public class Launcher extends BaseActivity
     private View mLauncherView;
     @Thunk DragLayer mDragLayer;
     private DragController mDragController;
-    private View mQsbContainer;
+    //private View mQsbContainer;
 
     public View mWeightWatcher;
 
@@ -551,7 +551,7 @@ public class Launcher extends BaseActivity
 
     public boolean setLauncherCallbacks(LauncherCallbacks callbacks) {
         mLauncherCallbacks = callbacks;
-        mLauncherCallbacks.setLauncherSearchCallback(new Launcher.LauncherSearchCallbacks() {
+        /*mLauncherCallbacks.setLauncherSearchCallback(new Launcher.LauncherSearchCallbacks() {
             private boolean mWorkspaceImportanceStored = false;
             private boolean mHotseatImportanceStored = false;
             private int mWorkspaceImportanceForAccessibility =
@@ -591,7 +591,7 @@ public class Launcher extends BaseActivity
                 mWorkspaceImportanceStored = false;
                 mHotseatImportanceStored = false;
             }
-        });
+        });*/
         return true;
     }
 
@@ -1300,7 +1300,7 @@ public class Launcher extends BaseActivity
         mFocusHandler = mDragLayer.getFocusIndicatorHelper();
         mWorkspace = (Workspace) mDragLayer.findViewById(R.id.workspace);
         /*mQsbContainer = mDragLayer.findViewById(mDeviceProfile.isVerticalBarLayout()
-                ? R.id.workspace_blocked_row : R.id.qsb_container);*/
+                ? R.id.qsb_widget : R.id.qsb_background_container);*/
         mWorkspace.initParentViews(mDragLayer);
 
         mLauncherView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -1326,7 +1326,7 @@ public class Launcher extends BaseActivity
         // Until the workspace is bound, ensure that we keep the wallpaper offset locked to the
         // default state, otherwise we will update to the wrong offsets in RTL
         mWorkspace.lockWallpaperToDefaultPage();
-        mWorkspace.bindAndInitFirstWorkspaceScreen(null /* recycled qsb */);
+        //mWorkspace.bindAndInitFirstWorkspaceScreen(null /* recycled qsb */);
         mDragController.addDragListener(mWorkspace);
 
         // Get the search/delete/uninstall bar
@@ -1335,11 +1335,11 @@ public class Launcher extends BaseActivity
         // Setup Apps and Widgets
         mAppsView = (AllAppsContainerView) findViewById(R.id.apps_view);
         mWidgetsView = (WidgetsContainerView) findViewById(R.id.widgets_view);
-        if (mLauncherCallbacks != null && mLauncherCallbacks.getAllAppsSearchBarController() != null) {
+        /*if (mLauncherCallbacks != null && mLauncherCallbacks.getAllAppsSearchBarController() != null) {
             mAppsView.setSearchBarController(mLauncherCallbacks.getAllAppsSearchBarController());
-        } else {
+        } else {*/
             mAppsView.setSearchBarController(new DefaultAppSearchController());
-        }
+        //}
 
         // Setup the drag controller (drop targets have to be added in reverse order in priority)
         mDragController.setMoveTarget(mWorkspace);
@@ -1673,9 +1673,9 @@ public class Launcher extends BaseActivity
         return mWorkspace;
     }
 
-    public View getQsbContainer() {
+    /*public View getQsbContainer() {
         return mQsbContainer;
-    }
+    }*/
 
     public Hotseat getHotseat() {
         return mHotseat;
@@ -3708,12 +3708,12 @@ public class Launcher extends BaseActivity
         return mDeviceProfile.isVerticalBarLayout();
     }
 
-    public int getSearchBarHeight() {
+    /*public int getSearchBarHeight() {
         if (mLauncherCallbacks != null) {
             return mLauncherCallbacks.getSearchBarHeight();
         }
         return LauncherCallbacks.SEARCH_BAR_HEIGHT_NORMAL;
-    }
+    }*/
 
     /**
      * A runnable that we can dequeue and re-enqueue when all applications are bound (to prevent

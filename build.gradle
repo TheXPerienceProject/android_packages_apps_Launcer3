@@ -18,7 +18,7 @@ android {
     buildToolsVersion '26.0.2'
 
     defaultConfig {
-        minSdkVersion 22
+        minSdkVersion 24
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -34,7 +34,7 @@ android {
     flavorDimensions 'default'
     productFlavors {
         aosp {
-            applicationId 'com.android.launcher3'
+            applicationId 'com.google.android.apps.nexuslauncher'
             testApplicationId 'com.android.launcher3.tests'
             dimension 'default'
         }

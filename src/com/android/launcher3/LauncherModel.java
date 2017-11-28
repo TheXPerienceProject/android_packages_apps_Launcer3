@@ -176,6 +176,7 @@ public class LauncherModel extends BroadcastReceiver
 
     private final LauncherAppsCompat mLauncherApps;
     private final UserManagerCompat mUserManager;
+    private final MainThreadExecutor mUiExecutor;
 
     public interface Callbacks {
         public boolean setLoadOnResume();
@@ -218,6 +219,7 @@ public class LauncherModel extends BroadcastReceiver
 
         mLauncherApps = LauncherAppsCompat.getInstance(context);
         mUserManager = UserManagerCompat.getInstance(context);
+        mUiExecutor = new MainThreadExecutor();
     }
 
     /** Runs the specified runnable immediately if called from the main thread, otherwise it is
@@ -1835,7 +1837,7 @@ public class LauncherModel extends BroadcastReceiver
                 CacheDataUpdatedTask.OP_CACHE_UPDATE, user, updatedPackages));
     }
 
-    void enqueueModelUpdateTask(BaseModelUpdateTask task) {
+    public void enqueueModelUpdateTask(BaseModelUpdateTask task) {
         if (!mModelLoaded && mLoaderTask == null) {
             if (DEBUG_LOADERS) {
                 Log.d(TAG, "enqueueModelUpdateTask Ignoring task since loader is pending=" + task);
@@ -1843,6 +1845,17 @@ public class LauncherModel extends BroadcastReceiver
             return;
         }
         task.init(this);
+        runOnWorkerThread(task);
+    }
+
+    public void enqueueModelUpdateTask(ModelUpdateTask task) {
+        if (!mModelLoaded && mLoaderTask == null) {
+            if (DEBUG_LOADERS) {
+                Log.d(TAG, "enqueueModelUpdateTask Ignoring task since loader is pending=" + task);
+            }
+            return;
+        }
+        task.init(mApp, this, LauncherModel.sBgDataModel, mBgAllAppsList, mUiExecutor);
         runOnWorkerThread(task);
     }
 
@@ -2006,4 +2019,10 @@ public class LauncherModel extends BroadcastReceiver
     public static Looper getWorkerLooper() {
         return sWorkerThread.getLooper();
     }
+
+    public interface ModelUpdateTask extends Runnable
+    {
+        void init(final LauncherAppState p0, final LauncherModel p1, final BgDataModel p2, final AllAppsList p3, final Executor p4);
+    }
+
 }

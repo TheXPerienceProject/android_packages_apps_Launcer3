@@ -10,11 +10,10 @@ import com.android.launcher3.AbstractFloatingView;
 import com.android.launcher3.InfoDropTarget;
 import com.android.launcher3.ItemInfo;
 import com.android.launcher3.Launcher;
-import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.model.WidgetItem;
 import com.android.launcher3.util.PackageUserKey;
-import com.android.launcher3.util.Themes;
 import com.android.launcher3.widget.WidgetsBottomSheet;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ import java.util.List;
  *
  * Example system shortcuts, defined as inner classes, include Widgets and AppInfo.
  */
-public abstract class SystemShortcut {
+public abstract class SystemShortcut extends ItemInfo {
     private final int mIconResId;
     private final int mLabelResId;
 
@@ -33,10 +32,8 @@ public abstract class SystemShortcut {
         mLabelResId = labelResId;
     }
 
-    public Drawable getIcon(Context context, int colorAttr) {
-        Drawable icon = context.getResources().getDrawable(mIconResId, context.getTheme()).mutate();
-        icon.setTint(Themes.getAttrColor(context, colorAttr));
-        return icon;
+    public Drawable getIcon(Context context) {
+        return context.getResources().getDrawable(mIconResId, context.getTheme());
     }
 
     public String getLabel(Context context) {

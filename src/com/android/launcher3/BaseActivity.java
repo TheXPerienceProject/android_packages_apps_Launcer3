@@ -22,14 +22,23 @@ import android.content.ContextWrapper;
 import android.view.View.AccessibilityDelegate;
 
 import com.android.launcher3.logging.UserEventDispatcher;
+import com.android.launcher3.util.SystemUiController;
 
 public abstract class BaseActivity extends Activity {
 
     protected DeviceProfile mDeviceProfile;
+    protected SystemUiController mSystemUiController;
     protected UserEventDispatcher mUserEventDispatcher;
 
     public DeviceProfile getDeviceProfile() {
         return mDeviceProfile;
+    }
+
+    public SystemUiController getSystemUiController() {
+        if (this.mSystemUiController == null) {
+            this.mSystemUiController = new SystemUiController(this.getWindow());
+        }
+        return this.mSystemUiController;
     }
 
     public AccessibilityDelegate getAccessibilityDelegate() {

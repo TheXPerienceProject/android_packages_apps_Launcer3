@@ -205,7 +205,9 @@ public class NotificationFooterLayout extends FrameLayout {
                 collapseFooter.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        ((ViewGroup) getParent()).removeView(NotificationFooterLayout.this);
+                        ((ViewGroup) getParent()).findViewById(R.id.divider).setVisibility(View.GONE);
+                        getLayoutParams().height = 0;
+                        requestLayout();
                     }
                 });
                 collapseFooter.start();

@@ -18,10 +18,12 @@ package com.android.launcher3.shortcuts;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Point;
-import android.support.v4.content.ContextCompat;
+import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -31,8 +33,8 @@ import com.android.launcher3.BubbleTextView;
 import com.android.launcher3.ItemInfo;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherAnimUtils;
-import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.anim.PropertyListBuilder;
+import com.android.launcher3.anim.RoundedRectRevealOutlineProvider;
 import com.android.launcher3.dragndrop.DragOptions;
 import com.android.launcher3.dragndrop.DragView;
 import com.android.launcher3.logging.UserEventDispatcher.LogContainerProvider;
@@ -41,6 +43,7 @@ import com.android.launcher3.popup.PopupItemView;
 import com.android.launcher3.popup.PopupPopulator;
 import com.android.launcher3.popup.SystemShortcut;
 import com.android.launcher3.userevent.nano.LauncherLogProto;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,6 +63,8 @@ public class ShortcutsItemView extends PopupItemView implements View.OnLongClick
     private final Point mIconLastTouchPos = new Point();
     private final List<DeepShortcutView> mDeepShortcutViews = new ArrayList<>();
     private final List<View> mSystemShortcutViews = new ArrayList<>();
+    private LinearLayout mContent;
+    private int mHiddenShortcutsHeight;
 
     public ShortcutsItemView(Context context) {
         this(context, null, 0);
@@ -78,7 +83,8 @@ public class ShortcutsItemView extends PopupItemView implements View.OnLongClick
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mShortcutsLayout = findViewById(R.id.deep_shortcuts);
+        mContent = findViewById(R.id.content);
+        mShortcutsLayout = findViewById(R.id.shortcuts);
     }
 
     @Override
@@ -96,7 +102,7 @@ public class ShortcutsItemView extends PopupItemView implements View.OnLongClick
     @Override
     public boolean onLongClick(View v) {
         // Return early if this is not initiated from a touch or not the correct view
-        if (!v.isInTouchMode() || !(v.getParent() instanceof DeepShortcutView)) return false;
+        if (!(v.getParent() instanceof DeepShortcutView)) return false;
         // Return early if global dragging is not enabled
         if (!mLauncher.isDraggingEnabled()) return false;
         // Return early if an item is already being dragged (e.g. when long-pressing two shortcuts)
@@ -120,10 +126,6 @@ public class ShortcutsItemView extends PopupItemView implements View.OnLongClick
         return false;
     }
 
-    public void addShortcutView(View shortcutView, PopupPopulator.Item shortcutType) {
-        addShortcutView(shortcutView, shortcutType, -1);
-    }
-
     private void addShortcutView(View shortcutView, PopupPopulator.Item shortcutType, int index) {
         if (shortcutType == PopupPopulator.Item.SHORTCUT) {
             mDeepShortcutViews.add((DeepShortcutView) shortcutView);
@@ -135,7 +137,7 @@ public class ShortcutsItemView extends PopupItemView implements View.OnLongClick
             if (mSystemShortcutIcons == null) {
                 mSystemShortcutIcons = (LinearLayout) mLauncher.getLayoutInflater().inflate(
                         R.layout.system_shortcut_icons, mShortcutsLayout, false);
-                mShortcutsLayout.addView(mSystemShortcutIcons, 0);
+                mShortcutsLayout.addView(mSystemShortcutIcons, mShortcutsLayout.getChildCount() > 0 ? -1 : 0);
             }
             mSystemShortcutIcons.addView(shortcutView, index);
         } else {
@@ -147,6 +149,15 @@ public class ShortcutsItemView extends PopupItemView implements View.OnLongClick
             }
             mShortcutsLayout.addView(shortcutView, index);
         }
+    }
+
+    public void addShortcutView(View view, PopupPopulator.Item item) {
+        addShortcutView(view, item, -1);
+    }
+
+    private Animator translateYFrom(final View view, final int n) {
+        float translationY = view.getTranslationY();
+        return ObjectAnimator.ofFloat(view, ShortcutsItemView.TRANSLATION_Y, new float[] { n + translationY, translationY });
     }
 
     public List<DeepShortcutView> getDeepShortcutViews(boolean reverseOrder) {
@@ -209,7 +220,7 @@ public class ShortcutsItemView extends PopupItemView implements View.OnLongClick
         }
     }
 
-    @Override
+    /*@Override
     public Animator createOpenAnimation(boolean isContainerAboveIcon, boolean pivotLeft) {
         AnimatorSet openAnimation = LauncherAnimUtils.createAnimatorSet();
         openAnimation.play(super.createOpenAnimation(isContainerAboveIcon, pivotLeft));
@@ -248,11 +259,8 @@ public class ShortcutsItemView extends PopupItemView implements View.OnLongClick
 
     @Override
     public int getArrowColor(boolean isArrowAttachedToBottom) {
-        return ContextCompat.getColor(getContext(),
-                isArrowAttachedToBottom || mSystemShortcutIcons == null
-                        ? R.color.popup_background_color
-                        : R.color.popup_header_background_color);
-    }
+        return 0;
+    }*/
 
     @Override
     public void fillInLogContainerData(View v, ItemInfo info, LauncherLogProto.Target target,
@@ -260,5 +268,105 @@ public class ShortcutsItemView extends PopupItemView implements View.OnLongClick
         target.itemType = LauncherLogProto.ItemType.DEEPSHORTCUT;
         target.rank = info.rank;
         targetParent.containerType = LauncherLogProto.ContainerType.DEEPSHORTCUTS;
+    }
+
+    public int getHiddenShortcutsHeight() {
+        return mHiddenShortcutsHeight;
+    }
+
+    public void hideShortcuts(boolean b, int n) {
+        this.mHiddenShortcutsHeight = (getResources().getDimensionPixelSize(R.dimen.bg_popup_item_height) - this.mShortcutsLayout.getChildAt(0).getLayoutParams().height) * this.mShortcutsLayout.getChildCount();
+        final int n3 = this.mShortcutsLayout.getChildCount() - n;
+        if (n3 <= 0) {
+            return;
+        }
+        final int childCount = this.mShortcutsLayout.getChildCount();
+        int n4;
+        if (b) {
+            n4 = 1;
+        }
+        else {
+            n4 = -1;
+        }
+        int n5;
+        int n6;
+        if (b) {
+            n5 = n3;
+            n6 = 0;
+        }
+        else {
+            final int n7 = childCount - 1;
+            n5 = n3;
+            n6 = n7;
+        }
+        while (n6 >= 0 && n6 < childCount) {
+            final View child = this.mShortcutsLayout.getChildAt(n6);
+            if (child instanceof DeepShortcutView) {
+                this.mHiddenShortcutsHeight += child.getLayoutParams().height;
+                child.setVisibility(View.GONE);
+                final int n8 = n6 + n4;
+                if (!b && n8 >= 0 && n8 < childCount) {
+                    this.mShortcutsLayout.getChildAt(n8).findViewById(R.id.divider).setVisibility(View.GONE);
+                }
+                --n5;
+                if (n5 == 0) {
+                    break;
+                }
+            }
+            n6 += n4;
+        }
+    }
+
+    public Animator showAllShortcuts(final boolean b) {
+        final int childCount = this.mShortcutsLayout.getChildCount();
+        if (childCount == 0) {
+            Log.w("ShortcutsItem", "Tried to show all shortcuts but there were no shortcuts to show");
+            return null;
+        }
+        final int height = this.mShortcutsLayout.getChildAt(0).getLayoutParams().height;
+        final int dimensionPixelSize = this.getResources().getDimensionPixelSize(R.dimen.bg_popup_item_height);
+        for (int i = 0; i < childCount; ++i) {
+            final DeepShortcutView deepShortcutView = (DeepShortcutView)this.mShortcutsLayout.getChildAt(i);
+            deepShortcutView.getLayoutParams().height = dimensionPixelSize;
+            deepShortcutView.requestLayout();
+            deepShortcutView.setVisibility(View.VISIBLE);
+            if (i < childCount - 1) {
+                deepShortcutView.findViewById(R.id.divider).setVisibility(View.VISIBLE);
+            }
+        }
+        final AnimatorSet animatorSet = LauncherAnimUtils.createAnimatorSet();
+        if (b) {
+            animatorSet.play(this.translateYFrom(this.mShortcutsLayout, -this.mHiddenShortcutsHeight));
+        }
+        else if (this.mSystemShortcutIcons != null) {
+            animatorSet.play(this.translateYFrom(this.mSystemShortcutIcons, -this.mHiddenShortcutsHeight));
+            final Rect rect = new Rect(this.mPillRect);
+            final Rect rect2 = new Rect(this.mPillRect);
+            rect2.bottom += this.mHiddenShortcutsHeight;
+            animatorSet.play(new RoundedRectRevealOutlineProvider(this.getBackgroundRadius(), this.getBackgroundRadius(), rect, rect2, this.mRoundedCorners).createRevealAnimator((View)this, false));
+        }
+        for (int j = 0; j < childCount; ++j) {
+            final DeepShortcutView deepShortcutView2 = (DeepShortcutView)this.mShortcutsLayout.getChildAt(j);
+            final int n = dimensionPixelSize - height;
+            int n2;
+            if (b) {
+                n2 = childCount - j - 1;
+            }
+            else {
+                n2 = j;
+            }
+            int n3;
+            if (b) {
+                n3 = 1;
+            }
+            else {
+                n3 = -1;
+            }
+            animatorSet.play(translateYFrom(deepShortcutView2, n2 * n * n3));
+            animatorSet.play(translateYFrom(deepShortcutView2.getBubbleText(), n / 2 * n3));
+            animatorSet.play(translateYFrom(deepShortcutView2.getIconView(), n3 * (n / 2)));
+            animatorSet.play(LauncherAnimUtils.ofPropertyValuesHolder(deepShortcutView2.getIconView(), new PropertyListBuilder().scale(1.0f).build()));
+        }
+        return animatorSet;
     }
 }

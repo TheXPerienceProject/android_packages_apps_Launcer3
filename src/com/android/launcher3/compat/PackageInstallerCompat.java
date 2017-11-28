@@ -16,7 +16,9 @@
 
 package com.android.launcher3.compat;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.PackageInstaller;
 
 import java.util.HashMap;
 
@@ -45,20 +47,34 @@ public abstract class PackageInstallerCompat {
 
     public abstract void onStop();
 
-    public static final class PackageInstallInfo {
+    public static final class PackageInstallInfo
+    {
+        public final ComponentName componentName;
         public final String packageName;
+        public final int progress;
+        public final int state;
 
-        public int state;
-        public int progress;
-
-        public PackageInstallInfo(String packageName) {
-            this.packageName = packageName;
+        private PackageInstallInfo(final PackageInstaller.SessionInfo packageInstaller$SessionInfo) {
+            this.state = 1;
+            this.packageName = packageInstaller$SessionInfo.getAppPackageName();
+            this.componentName = new ComponentName(this.packageName, "");
+            this.progress = (int)(packageInstaller$SessionInfo.getProgress() * 100.0f);
         }
 
-        public PackageInstallInfo(String packageName, int state, int progress) {
-            this.packageName = packageName;
+        public PackageInstallInfo(final String packageName, final int state, final int progress) {
             this.state = state;
+            this.packageName = packageName;
+            this.componentName = new ComponentName(packageName, "");
             this.progress = progress;
         }
+
+        public static PackageInstallInfo fromInstallingState(final PackageInstaller.SessionInfo packageInstaller$SessionInfo) {
+            return new PackageInstallInfo(packageInstaller$SessionInfo);
+        }
+
+        public static PackageInstallInfo fromState(final int n, final String s) {
+            return new PackageInstallInfo(s, n, 0);
+        }
     }
+
 }

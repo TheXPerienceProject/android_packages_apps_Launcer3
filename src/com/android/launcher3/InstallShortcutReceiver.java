@@ -34,6 +34,7 @@ import android.os.UserHandle;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Pair;
 
 import com.android.launcher3.compat.LauncherAppsCompat;
 import com.android.launcher3.compat.UserManagerCompat;
@@ -151,9 +152,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
         }
     }
 
-    // Determines whether to defer installing shortcuts immediately until
-    // processAllPendingInstalls() is called.
-    private static boolean mUseInstallQueue = false;
+    private static int sInstallQueueDisabledFlags = 0;
 
     public void onReceive(Context context, Intent data) {
         if (!ACTION_INSTALL_SHORTCUT.equals(data.getAction())) {
@@ -207,7 +206,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
 
     public static ShortcutInfo fromShortcutIntent(Context context, Intent data) {
         PendingInstallShortcutInfo info = createPendingInfo(context, data);
-        return info == null ? null : (ShortcutInfo) info.getItemInfo();
+        return info == null ? null : (ShortcutInfo) info.getItemInfo().first;
     }
 
     public static void queueShortcut(ShortcutInfoCompat info, Context context) {
@@ -245,27 +244,27 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
 
     private static void queuePendingShortcutInfo(PendingInstallShortcutInfo info, Context context) {
         // Queue the item up for adding if launcher has not loaded properly yet
-        LauncherAppState app = LauncherAppState.getInstance(context);
-        boolean launcherNotLoaded = app.getModel().getCallback() == null;
-
         addToInstallQueue(Utilities.getPrefs(context), info);
-        if (!mUseInstallQueue && !launcherNotLoaded) {
-            flushInstallQueue(context);
-        }
+        flushInstallQueue(context);
     }
 
-    static void enableInstallQueue() {
-        mUseInstallQueue = true;
+    public static void enableInstallQueue(int n) {
+        InstallShortcutReceiver.sInstallQueueDisabledFlags |= n;
     }
-    static void disableAndFlushInstallQueue(Context context) {
-        mUseInstallQueue = false;
+
+    public static void disableAndFlushInstallQueue(int n, Context context) {
+        sInstallQueueDisabledFlags &= ~n;
         flushInstallQueue(context);
     }
 
     static void flushInstallQueue(Context context) {
+        LauncherModel model = LauncherAppState.getInstance(context).getModel();
+        if (InstallShortcutReceiver.sInstallQueueDisabledFlags != 0 || model.getCallback() == null) {
+            return;
+        }
         ArrayList<PendingInstallShortcutInfo> items = getAndClearInstallQueue(context);
         if (!items.isEmpty()) {
-            LauncherAppState.getInstance(context).getModel().addAndBindAddedWorkspaceItems(
+            model.addAndBindAddedWorkspaceItems(
                     new LazyShortcutsProvider(context.getApplicationContext(), items));
         }
     }
@@ -439,7 +438,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
             }
         }
 
-        public ItemInfo getItemInfo() {
+        public Pair getItemInfo() {
             if (activityInfo != null) {
                 AppInfo appInfo = new AppInfo(mContext, activityInfo, user);
                 final LauncherAppState app = LauncherAppState.getInstance(mContext);
@@ -459,11 +458,11 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
                         }
                     });
                 }
-                return si;
+                return Pair.create(si, activityInfo);
             } else if (shortcutInfo != null) {
                 ShortcutInfo si = new ShortcutInfo(shortcutInfo, mContext);
                 si.iconBitmap = LauncherIcons.createShortcutIcon(shortcutInfo, mContext);
-                return si;
+                return Pair.create(si, activityInfo);
             } else if (providerInfo != null) {
                 LauncherAppWidgetProviderInfo info = LauncherAppWidgetProviderInfo
                         .fromProviderInfo(mContext, providerInfo);
@@ -475,9 +474,9 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
                 widgetInfo.minSpanY = info.minSpanY;
                 widgetInfo.spanX = Math.min(info.spanX, idp.numColumns);
                 widgetInfo.spanY = Math.min(info.spanY, idp.numRows);
-                return widgetInfo;
+                return Pair.create(widgetInfo, activityInfo);
             } else {
-                return createShortcutInfo(data, LauncherAppState.getInstance(mContext));
+                return Pair.create(createShortcutInfo(data, LauncherAppState.getInstance(mContext)), null);
             }
         }
 
@@ -618,7 +617,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
                 }
 
                 // Generate a shortcut info to add into the model
-                installQueue.add(pendingInfo.getItemInfo());
+                installQueue.add((ItemInfo)pendingInfo.getItemInfo().first);
             }
             return installQueue;
         }
@@ -661,4 +660,7 @@ public class InstallShortcutReceiver extends BroadcastReceiver {
         return info;
     }
 
+    public static ShortcutInfo fromActivityInfo(final LauncherActivityInfo launcherActivityInfo, final Context context) {
+        return (ShortcutInfo)new PendingInstallShortcutInfo(launcherActivityInfo, context).getItemInfo().first;
+    }
 }

@@ -57,7 +57,9 @@ import com.android.launcher3.graphics.DragPreviewProvider;
 import com.android.launcher3.util.CellAndSpan;
 import com.android.launcher3.util.GridOccupancy;
 import com.android.launcher3.util.ParcelableSparseArray;
+import com.android.launcher3.util.Themes;
 import com.android.launcher3.util.Thunk;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -193,7 +195,8 @@ public class CellLayout extends ViewGroup implements BubbleTextShadowHandler {
     public CellLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CellLayout, defStyle, 0);
-        mContainerType = a.getInteger(R.styleable.CellLayout_containerType, WORKSPACE);
+        //mContainerType = a.getInteger(R.styleable.CellLayout_containerType, WORKSPACE);
+        mContainerType = 0;
         a.recycle();
 
         // A ViewGroup usually does not draw, but CellLayout needs to draw a rectangle to show
@@ -235,7 +238,7 @@ public class CellLayout extends ViewGroup implements BubbleTextShadowHandler {
         for (int i = 0; i < mDragOutlines.length; i++) {
             mDragOutlines[i] = new Rect(-1, -1, -1, -1);
         }
-        mDragOutlinePaint.setColor(getResources().getColor(R.color.outline_color));
+        mDragOutlinePaint.setColor(Themes.getAttrColor(context, R.attr.workspaceTextColor));
 
         // When dragging things around the home screens, we show a green outline of
         // where the item will land. The outlines gradually fade out, leaving a trail
@@ -545,7 +548,7 @@ public class CellLayout extends ViewGroup implements BubbleTextShadowHandler {
         DeviceProfile grid = mLauncher.getDeviceProfile();
         View child = getChildAt(x, y);
 
-        mFolderLeaveBehind.setup(getResources().getDisplayMetrics(), grid, null,
+        mFolderLeaveBehind.setup(mLauncher, grid, null,
                 child.getMeasuredWidth(), child.getPaddingTop());
 
         mFolderLeaveBehind.delegateCellX = x;
@@ -614,8 +617,8 @@ public class CellLayout extends ViewGroup implements BubbleTextShadowHandler {
             bubbleChild.setTextVisibility(mContainerType != HOTSEAT);
         }
 
-        child.setScaleX(mChildScale);
-        child.setScaleY(mChildScale);
+        child.setScaleX(1.0f);
+        child.setScaleY(1.0f);
 
         // Generate an id for each view, this assumes we have at most 256x256 cells
         // per workspace screen
@@ -865,10 +868,10 @@ public class CellLayout extends ViewGroup implements BubbleTextShadowHandler {
         // Expand the background drawing bounds by the padding baked into the background drawable
         mBackground.getPadding(mTempRect);
         mBackground.setBounds(
-                left - mTempRect.left,
-                top - mTempRect.top,
-                right + mTempRect.right,
-                bottom + mTempRect.bottom);
+                left - mTempRect.left - getPaddingLeft(),
+                top - mTempRect.top - getPaddingTop(),
+                right + mTempRect.right + getPaddingRight(),
+                bottom + mTempRect.bottom + getPaddingBottom());
     }
 
     /**
@@ -1055,7 +1058,7 @@ public class CellLayout extends ViewGroup implements BubbleTextShadowHandler {
                 r.set(left, top, left + dragOutline.getWidth(), top + dragOutline.getHeight());
             }
 
-            Utilities.scaleRectAboutCenter(r, mChildScale);
+            Utilities.scaleRectAboutCenter(r, 1.0f);
             mDragOutlineAnims[mDragOutlineCurrent].setTag(dragOutline);
             mDragOutlineAnims[mDragOutlineCurrent].animateIn();
 
@@ -1993,7 +1996,7 @@ public class CellLayout extends ViewGroup implements BubbleTextShadowHandler {
             this.child = child;
             this.mode = mode;
             setInitialAnimationValues(false);
-            finalScale = (mChildScale - (CHILD_DIVIDEND / child.getWidth())) * initScale;
+            finalScale = (1.0f - (CHILD_DIVIDEND / child.getWidth())) * initScale;
             finalDeltaX = initDeltaX;
             finalDeltaY = initDeltaY;
             int dir = mode == MODE_HINT ? -1 : 1;
@@ -2017,7 +2020,7 @@ public class CellLayout extends ViewGroup implements BubbleTextShadowHandler {
             if (restoreOriginalValues) {
                 if (child instanceof LauncherAppWidgetHostView) {
                     LauncherAppWidgetHostView lahv = (LauncherAppWidgetHostView) child;
-                    initScale = lahv.getScaleToFit();
+                    initScale = 1.0f;
                     initDeltaX = lahv.getTranslationForCentering().x;
                     initDeltaY = lahv.getTranslationForCentering().y;
                 } else {

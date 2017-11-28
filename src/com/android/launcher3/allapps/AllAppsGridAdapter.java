@@ -310,7 +310,7 @@ public class AllAppsGridAdapter extends RecyclerView.Adapter<AllAppsGridAdapter.
                 return new ViewHolder(searchMarketView);
             case VIEW_TYPE_SEARCH_DIVIDER:
                 return new ViewHolder(mLayoutInflater.inflate(
-                        R.layout.all_apps_search_divider, parent, false));
+                        R.layout.all_apps_divider, parent, false));
             case VIEW_TYPE_APPS_LOADING_DIVIDER:
                 View loadingDividerView = mLayoutInflater.inflate(
                         R.layout.all_apps_discovery_loading_divider, parent, false);

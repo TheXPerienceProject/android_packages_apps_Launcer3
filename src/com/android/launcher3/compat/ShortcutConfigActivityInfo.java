@@ -34,8 +34,8 @@ import android.widget.Toast;
 
 import com.android.launcher3.IconCache;
 import com.android.launcher3.LauncherSettings;
-import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.ShortcutInfo;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.lang.reflect.Method;
 
@@ -127,7 +127,7 @@ public abstract class ShortcutConfigActivityInfo {
     }
 
     @TargetApi(26)
-    static class ShortcutConfigActivityInfoVO extends ShortcutConfigActivityInfo {
+    public static class ShortcutConfigActivityInfoVO extends ShortcutConfigActivityInfo {
 
         private final LauncherActivityInfo mInfo;
 

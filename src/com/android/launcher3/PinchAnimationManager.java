@@ -196,8 +196,8 @@ public class PinchAnimationManager {
     private void animateHotseatAndQsb(boolean show) {
         startAnimator(INDEX_HOTSEAT,
                 mWorkspace.createHotseatAlphaAnimator(show ? 1 : 0), THRESHOLD_ANIM_DURATION);
-        startAnimator(INDEX_QSB, mWorkspace.mQsbAlphaController.animateAlphaAtIndex(
-                show ? 1 : 0, Workspace.QSB_ALPHA_INDEX_STATE_CHANGE), THRESHOLD_ANIM_DURATION);
+        //startAnimator(INDEX_QSB, mWorkspace.mQsbAlphaController.animateAlphaAtIndex(
+                //show ? 1 : 0, Workspace.QSB_ALPHA_INDEX_STATE_CHANGE), THRESHOLD_ANIM_DURATION);
     }
 
     private void animateOverviewPanelButtons(boolean show) {

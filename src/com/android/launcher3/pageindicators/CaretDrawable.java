@@ -38,6 +38,7 @@ public class CaretDrawable extends Drawable {
     private Paint mCaretPaint = new Paint();
     private Path mPath = new Path();
     private final int mCaretSizePx;
+    private final boolean mUseShadow;
 
     public CaretDrawable(Context context) {
         final Resources res = context.getResources();
@@ -45,12 +46,12 @@ public class CaretDrawable extends Drawable {
         final int strokeWidth = res.getDimensionPixelSize(R.dimen.all_apps_caret_stroke_width);
         final int shadowSpread = res.getDimensionPixelSize(R.dimen.all_apps_caret_shadow_spread);
 
-        mCaretPaint.setColor(res.getColor(R.color.workspace_icon_text_color));
+        mCaretPaint.setColor(Themes.getAttrColor(context, R.attr.workspaceTextColor));
         mCaretPaint.setAntiAlias(true);
         mCaretPaint.setStrokeWidth(strokeWidth);
         mCaretPaint.setStyle(Paint.Style.STROKE);
-        mCaretPaint.setStrokeCap(Paint.Cap.SQUARE);
-        mCaretPaint.setStrokeJoin(Paint.Join.MITER);
+        mCaretPaint.setStrokeCap(Paint.Cap.ROUND);
+        mCaretPaint.setStrokeJoin(Paint.Join.ROUND);
 
         mShadowPaint.setColor(res.getColor(R.color.default_shadow_color_no_alpha));
         mShadowPaint.setAlpha(Themes.getAlpha(context, android.R.attr.spotShadowAlpha));
@@ -61,6 +62,7 @@ public class CaretDrawable extends Drawable {
         mShadowPaint.setStrokeJoin(Paint.Join.ROUND);
 
         mCaretSizePx = res.getDimensionPixelSize(R.dimen.all_apps_caret_size);
+        mUseShadow = !Themes.getAttrBoolean(context, R.attr.isWorkspaceDarkText);
     }
 
     @Override
@@ -95,7 +97,9 @@ public class CaretDrawable extends Drawable {
         mPath.lineTo(left + (width / 2), top + caretHeight * getNormalizedCaretProgress());
         mPath.lineTo(left + width, top + caretHeight * (1 - getNormalizedCaretProgress()));
 
-        canvas.drawPath(mPath, mShadowPaint);
+        if (mUseShadow) {
+            canvas.drawPath(mPath, mShadowPaint);
+        }
         canvas.drawPath(mPath, mCaretPaint);
     }
 

@@ -64,12 +64,17 @@ public class FolderInfo extends ItemInfo {
      *
      * @param item
      */
-    public void add(ShortcutInfo item, boolean animate) {
-        contents.add(item);
+    public void add(ShortcutInfo item, final int n, boolean animate) {
+        int key = Utilities.boundToRange(n, 0, contents.size());
+        contents.add(key, item);
         for (int i = 0; i < listeners.size(); i++) {
-            listeners.get(i).onAdd(item);
+            listeners.get(i).onAdd(item, key);
         }
         itemsChanged(animate);
+    }
+
+    public void add(final ShortcutInfo shortcutInfo, boolean animate) {
+        add(shortcutInfo, contents.size(), animate);
     }
 
     /**
@@ -121,7 +126,7 @@ public class FolderInfo extends ItemInfo {
     }
 
     public interface FolderListener {
-        public void onAdd(ShortcutInfo item);
+        public void onAdd(ShortcutInfo item, int p1);
         public void onRemove(ShortcutInfo item);
         public void onTitleChanged(CharSequence title);
         public void onItemsChanged(boolean animate);

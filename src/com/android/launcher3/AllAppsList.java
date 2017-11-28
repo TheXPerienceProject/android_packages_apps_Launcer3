@@ -19,9 +19,11 @@ package com.android.launcher3;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.LauncherActivityInfo;
+import android.os.Process;
 import android.os.UserHandle;
 
 import com.android.launcher3.compat.LauncherAppsCompat;
+import com.android.launcher3.compat.PackageInstallerCompat;
 import com.android.launcher3.util.FlagOp;
 import com.android.launcher3.util.ItemInfoMatcher;
 
@@ -69,7 +71,7 @@ public class AllAppsList {
         if (!mAppFilter.shouldShowApp(info.componentName)) {
             return;
         }
-        if (findActivity(data, info.componentName, info.user)) {
+        if (findAppInfo(info.componentName, info.user) != null) {
             return;
         }
         mIconCache.getTitleAndIcon(info, activityInfo, true /* useLowResIcon */);
@@ -169,9 +171,8 @@ public class AllAppsList {
             // Find enabled activities and add them to the adapter
             // Also updates existing activities with new labels/icons
             for (final LauncherActivityInfo info : matches) {
-                AppInfo applicationInfo = findApplicationInfoLocked(
-                        info.getComponentName().getPackageName(), user,
-                        info.getComponentName().getClassName());
+                AppInfo applicationInfo = findAppInfo(
+                        info.getComponentName(), user);
                 if (applicationInfo == null) {
                     add(new AppInfo(context, info, user), info);
                 } else {
@@ -208,31 +209,27 @@ public class AllAppsList {
     }
 
     /**
-     * Returns whether <em>apps</em> contains <em>component</em>.
-     */
-    private static boolean findActivity(ArrayList<AppInfo> apps, ComponentName component,
-            UserHandle user) {
-        final int N = apps.size();
-        for (int i = 0; i < N; i++) {
-            final AppInfo info = apps.get(i);
-            if (info.user.equals(user) && info.componentName.equals(component)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Find an ApplicationInfo object for the given packageName and className.
      */
-    private AppInfo findApplicationInfoLocked(String packageName, UserHandle user,
-            String className) {
+    private AppInfo findAppInfo(ComponentName componentName, UserHandle user) {
         for (AppInfo info: data) {
-            if (user.equals(info.user) && packageName.equals(info.componentName.getPackageName())
-                    && className.equals(info.componentName.getClassName())) {
+            if (componentName.equals(info.componentName) && user.equals(info.user)) {
                 return info;
             }
         }
         return null;
+    }
+
+    public void addPromiseApp(final Context context, final PackageInstallerCompat.PackageInstallInfo packageInstallerCompat$PackageInstallInfo) {
+        if (LauncherAppsCompat.getInstance(context).getApplicationInfo(packageInstallerCompat$PackageInstallInfo.packageName, 0, Process.myUserHandle()) == null) {
+            PromiseAppInfo promiseAppInfo = new PromiseAppInfo(packageInstallerCompat$PackageInstallInfo);
+            mIconCache.getTitleAndIcon(promiseAppInfo, promiseAppInfo.usingLowResIcon);
+            data.add(promiseAppInfo);
+            added.add(promiseAppInfo);
+        }
+    }
+
+    public void removePromiseApp(AppInfo appInfo) {
+        data.remove(appInfo);
     }
 }

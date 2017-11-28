@@ -19,26 +19,27 @@ package com.android.launcher3.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.LauncherActivityInfo;
+import android.os.Handler;
 import android.os.Process;
 import android.os.UserHandle;
-import android.support.v4.os.BuildCompat;
 
-import com.android.launcher3.AppInfo;
 import com.android.launcher3.FolderInfo;
-import com.android.launcher3.IconCache;
+import com.android.launcher3.InstallShortcutReceiver;
 import com.android.launcher3.ItemInfo;
-import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherFiles;
 import com.android.launcher3.LauncherModel;
 import com.android.launcher3.MainThreadExecutor;
-import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.SessionCommitReceiver;
 import com.android.launcher3.ShortcutInfo;
+import com.android.launcher3.Utilities;
 import com.android.launcher3.compat.UserManagerCompat;
-import com.android.launcher3.shortcuts.ShortcutInfoCompat;
+import com.android.launcher3.model.BgDataModel;
+import com.android.launcher3.model.ModelWriter;
+import com.google.android.apps.nexuslauncher.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -59,7 +60,7 @@ public class ManagedProfileHeuristic {
      */
     private static final long AUTO_ADD_TO_FOLDER_DURATION = 8 * 60 * 60 * 1000;
 
-    public static ManagedProfileHeuristic get(Context context, UserHandle user) {
+    /*public static ManagedProfileHeuristic get(Context context, UserHandle user) {
         if (!Process.myUserHandle().equals(user)) {
             return new ManagedProfileHeuristic(context, user);
         }
@@ -100,129 +101,22 @@ public class ManagedProfileHeuristic {
     public void processUserApps(List<LauncherActivityInfo> apps) {
         Preconditions.assertWorkerThread();
         new ManagedProfilePackageHandler().processUserApps(apps, mUser);
-    }
-
-    private class ManagedProfilePackageHandler extends CachedPackageTracker {
-
-        private ManagedProfilePackageHandler() {
-            super(mContext, LauncherFiles.MANAGED_USER_PREFERENCES_KEY);
-        }
-
-        protected void onLauncherAppsAdded(
-                List<LauncherActivityInstallInfo> apps, UserHandle user, boolean userAppsExisted) {
-            ArrayList<ShortcutInfo> workFolderApps = new ArrayList<>();
-            ArrayList<ShortcutInfo> homescreenApps = new ArrayList<>();
-
-            int count = apps.size();
-            long folderCreationTime =
-                    mUserManager.getUserCreationTime(user) + AUTO_ADD_TO_FOLDER_DURATION;
-
-            boolean quietModeEnabled = UserManagerCompat.getInstance(mContext)
-                    .isQuietModeEnabled(user);
-            for (int i = 0; i < count; i++) {
-                LauncherActivityInstallInfo info = apps.get(i);
-                AppInfo appInfo = new AppInfo(info.info, user, quietModeEnabled);
-                mIconCache.getTitleAndIcon(appInfo, info.info, false /* useLowResIcon */);
-                ShortcutInfo si = appInfo.makeShortcut();
-                ((info.installTime <= folderCreationTime) ? workFolderApps : homescreenApps).add(si);
-            }
-
-            finalizeWorkFolder(user, workFolderApps, homescreenApps);
-
-            // Do not add shortcuts on the homescreen for the first time. This prevents the launcher
-            // getting filled with the managed user apps, when it start with a fresh DB (or after
-            // a very long time).
-            if (userAppsExisted && !homescreenApps.isEmpty() && mAddIconsToHomescreen) {
-                mModel.addAndBindAddedWorkspaceItems(new ArrayList<ItemInfo>(homescreenApps));
-            }
-        }
-
-        @Override
-        protected void onLauncherPackageRemoved(String packageName, UserHandle user) {
-        }
-
-        /**
-         * Adds and binds shortcuts marked to be added to the work folder.
-         */
-        private void finalizeWorkFolder(
-                UserHandle user, final ArrayList<ShortcutInfo> workFolderApps,
-                ArrayList<ShortcutInfo> homescreenApps) {
-            if (workFolderApps.isEmpty()) {
-                return;
-            }
-            // Try to get a work folder.
-            String folderIdKey = USER_FOLDER_ID_PREFIX + mUserManager.getSerialNumberForUser(user);
-            if (!mAddIconsToHomescreen) {
-                if (!mPrefs.contains(folderIdKey)) {
-                    // Just mark the folder id preference to avoid new folder creation later.
-                    mPrefs.edit().putLong(folderIdKey, -1).apply();
-                }
-                return;
-            }
-            if (mPrefs.contains(folderIdKey)) {
-                long folderId = mPrefs.getLong(folderIdKey, 0);
-                final FolderInfo workFolder = mModel.findFolderById(folderId);
-
-                if (workFolder == null || !workFolder.hasOption(FolderInfo.FLAG_WORK_FOLDER)) {
-                    // Could not get a work folder. Add all the icons to homescreen.
-                    homescreenApps.addAll(0, workFolderApps);
-                    return;
-                }
-                saveWorkFolderShortcuts(folderId, workFolder.contents.size(), workFolderApps);
-
-                // FolderInfo could already be bound. We need to add shortcuts on the UI thread.
-                new MainThreadExecutor().execute(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        workFolder.prepareAutoUpdate();
-                        for (ShortcutInfo info : workFolderApps) {
-                            workFolder.add(info, false);
-                        }
-                    }
-                });
-            } else {
-                // Create a new folder.
-                final FolderInfo workFolder = new FolderInfo();
-                workFolder.title = mContext.getText(R.string.work_folder_name);
-                workFolder.setOption(FolderInfo.FLAG_WORK_FOLDER, true, null);
-
-                // Add all shortcuts before adding it to the UI, as an empty folder might get deleted.
-                for (ShortcutInfo info : workFolderApps) {
-                    workFolder.add(info, false);
-                }
-
-                // Add the item to home screen and DB. This also generates an item id synchronously.
-                ArrayList<ItemInfo> itemList = new ArrayList<>(1);
-                itemList.add(workFolder);
-                mModel.addAndBindAddedWorkspaceItems(itemList);
-                mPrefs.edit().putLong(folderIdKey, workFolder.id).apply();
-
-                saveWorkFolderShortcuts(workFolder.id, 0, workFolderApps);
-            }
-        }
-
-        @Override
-        public void onShortcutsChanged(String packageName, List<ShortcutInfoCompat> shortcuts,
-                UserHandle user) {
-            // Do nothing
-        }
-    }
+    }*/
 
     /**
      * Add work folder shortcuts to the DB.
-     */
+
     private void saveWorkFolderShortcuts(
             long workFolderId, int startingRank, ArrayList<ShortcutInfo> workFolderApps) {
         for (ItemInfo info : workFolderApps) {
             info.rank = startingRank++;
             mModel.getWriter(false).addItemToDatabase(info, workFolderId, 0, 0, 0);
         }
-    }
+    }*/
 
     /**
      * Verifies that entries corresponding to {@param users} exist and removes all invalid entries.
-     */
+
     public static void processAllUsers(List<UserHandle> users, Context context) {
         UserManagerCompat userManager = UserManagerCompat.getInstance(context);
         HashSet<String> validKeys = new HashSet<String>();
@@ -240,7 +134,7 @@ public class ManagedProfileHeuristic {
             }
         }
         editor.apply();
-    }
+    }*/
 
     private static void addAllUserKeys(long userSerial, HashSet<String> keysOut) {
         keysOut.add(INSTALLED_PACKAGES_PREFIX + userSerial);
@@ -269,6 +163,147 @@ public class ManagedProfileHeuristic {
             String folderIdKey = USER_FOLDER_ID_PREFIX + userManager.getSerialNumberForUser(user);
             if (!prefs.contains(folderIdKey)) {
                 prefs.edit().putLong(folderIdKey, ItemInfo.NO_ID).apply();
+            }
+        }
+    }
+
+    public static void onAllAppsLoaded(final Context context, List<LauncherActivityInfo> list, UserHandle userHandle) {
+        if (!Process.myUserHandle().equals(userHandle)) {
+            UserFolderInfo managedProfileHeuristic$UserFolderInfo = new UserFolderInfo(context, userHandle, null);
+            if (managedProfileHeuristic$UserFolderInfo.folderAlreadyCreated) {
+                return;
+            }
+            if (Utilities.isAtLeastO() && (SessionCommitReceiver.isEnabled(context) ^ true)) {
+                managedProfileHeuristic$UserFolderInfo.prefs.edit().putLong(managedProfileHeuristic$UserFolderInfo.folderIdKey, (long)(-1)).apply();
+                return;
+            }
+            InstallShortcutReceiver.enableInstallQueue(4);
+            for (LauncherActivityInfo launcherActivityInfo : list) {
+                if (launcherActivityInfo.getFirstInstallTime() < managedProfileHeuristic$UserFolderInfo.addIconToFolderTime) {
+                    InstallShortcutReceiver.queueActivityInfo(launcherActivityInfo, context);
+                }
+            }
+            new Handler(LauncherModel.getWorkerLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    InstallShortcutReceiver.disableAndFlushInstallQueue(4, context);
+                }
+            });
+        }
+    }
+
+    public static SharedPreferences prefs(final Context context) {
+        return context.getSharedPreferences("com.android.launcher3.managedusers.prefs", 0);
+    }
+
+    public static void processAllUsers(final List list, final Context context) {
+        final UserManagerCompat instance = UserManagerCompat.getInstance(context);
+        final HashSet<String> set = new HashSet<String>();
+        final Iterator<UserHandle> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            set.add("user_folder_" + instance.getSerialNumberForUser(iterator.next()));
+        }
+        SharedPreferences prefs = prefs(context);
+        SharedPreferences.Editor edit = prefs.edit();
+        for (final String s : prefs.getAll().keySet()) {
+            if (!set.contains(s)) {
+                edit.remove(s);
+            }
+        }
+        edit.apply();
+    }
+
+    public static class UserFolderInfo
+    {
+        final long addIconToFolderTime;
+        final boolean folderAlreadyCreated;
+        final String folderIdKey;
+        final FolderInfo folderInfo;
+        boolean folderPendingAddition;
+        final ArrayList<ShortcutInfo> pendingShortcuts;
+        final SharedPreferences prefs;
+        final UserHandle user;
+        final long userSerial;
+
+        public UserFolderInfo(final Context context, final UserHandle user, final BgDataModel bgDataModel) {
+            final boolean folderPendingAddition = true;
+            this.pendingShortcuts = new ArrayList<>();
+            this.user = user;
+            final UserManagerCompat instance = UserManagerCompat.getInstance(context);
+            this.userSerial = instance.getSerialNumberForUser(user);
+            this.addIconToFolderTime = instance.getUserCreationTime(user) + 28800000L;
+            this.folderIdKey = "user_folder_" + this.userSerial;
+            this.prefs = ManagedProfileHeuristic.prefs(context);
+            this.folderAlreadyCreated = this.prefs.contains(this.folderIdKey);
+            if (bgDataModel != null) {
+                if (this.folderAlreadyCreated) {
+                    this.folderInfo = (FolderInfo)bgDataModel.folders.get(this.prefs.getLong(this.folderIdKey, (long)(-1)));
+                }
+                else {
+                    this.folderInfo = new FolderInfo();
+                    this.folderInfo.title = context.getText(R.string.work_folder_name);
+                    this.folderInfo.setOption(2, folderPendingAddition, null);
+                    this.folderPendingAddition = folderPendingAddition;
+                }
+            }
+            else {
+                this.folderInfo = null;
+            }
+        }
+
+        public void applyPendingState(final ModelWriter modelWriter) {
+            if (this.folderInfo == null) {
+                return;
+            }
+            int size;
+            if (this.folderAlreadyCreated) {
+                size = this.folderInfo.contents.size();
+            }
+            else {
+                size = 0;
+            }
+            for (ShortcutInfo shortcutInfo : this.pendingShortcuts) {
+                final int n = size + 1;
+                shortcutInfo.rank = size;
+                modelWriter.addItemToDatabase(shortcutInfo, this.folderInfo.id, 0L, 0, 0);
+                size = n;
+            }
+            if (this.folderAlreadyCreated) {
+                new MainThreadExecutor().execute(new Runnable()
+                {
+                    public void run() {
+                        folderInfo.prepareAutoUpdate();
+                        Iterator<ShortcutInfo> iterator = pendingShortcuts.iterator();
+                        while (iterator.hasNext()) {
+                            folderInfo.add(iterator.next(), false);
+                        }
+                    }
+                });
+            }
+            else {
+                this.prefs.edit().putLong(this.folderIdKey, this.folderInfo.id).apply();
+            }
+        }
+
+        public ItemInfo convertToWorkspaceItem(final ShortcutInfo shortcutInfo, final LauncherActivityInfo launcherActivityInfo) {
+            if (launcherActivityInfo.getFirstInstallTime() >= this.addIconToFolderTime) {
+                return shortcutInfo;
+            }
+            if (this.folderAlreadyCreated) {
+                if (this.folderInfo == null) {
+                    return shortcutInfo;
+                }
+                this.pendingShortcuts.add(shortcutInfo);
+                return null;
+            }
+            else {
+                this.pendingShortcuts.add(shortcutInfo);
+                this.folderInfo.add(shortcutInfo, false);
+                if (this.folderPendingAddition) {
+                    this.folderPendingAddition = false;
+                    return this.folderInfo;
+                }
+                return null;
             }
         }
     }

@@ -20,7 +20,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.ColorMatrix;
-import android.view.ContextThemeWrapper;
+import android.graphics.drawable.Drawable;
 
 /**
  * Various utility methods associated with theming.
@@ -29,10 +29,6 @@ public class Themes {
 
     public static int getColorAccent(Context context) {
         return getAttrColor(context, android.R.attr.colorAccent);
-    }
-
-    public static int getColorPrimary(Context context, int theme) {
-        return getAttrColor(new ContextThemeWrapper(context, theme), android.R.attr.colorPrimary);
     }
 
     public static int getAttrColor(Context context, int attr) {
@@ -67,5 +63,19 @@ public class Themes {
     public static void setColorScaleOnMatrix(int color, ColorMatrix target) {
         target.setScale(Color.red(color) / 255f, Color.green(color) / 255f,
                 Color.blue(color) / 255f, Color.alpha(color) / 255f);
+    }
+
+    public static boolean getAttrBoolean(Context context, int attr) {
+        TypedArray obtainStyledAttributes = context.obtainStyledAttributes(new int[] { attr });
+        boolean boolean1 = obtainStyledAttributes.getBoolean(0, false);
+        obtainStyledAttributes.recycle();
+        return boolean1;
+    }
+
+    public static Drawable getAttrDrawable(Context context, int attr) {
+        TypedArray obtainStyledAttributes = context.obtainStyledAttributes(new int[] { attr });
+        Drawable drawable = obtainStyledAttributes.getDrawable(0);
+        obtainStyledAttributes.recycle();
+        return drawable;
     }
 }

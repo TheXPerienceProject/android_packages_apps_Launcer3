@@ -18,7 +18,6 @@ package com.android.launcher3;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -66,10 +65,7 @@ public abstract class BaseContainerView extends FrameLayout
         if (FeatureFlags.LAUNCHER3_ALL_APPS_PULL_UP && this instanceof AllAppsContainerView) {
             mBaseDrawable = new ColorDrawable();
         } else {
-            TypedArray a = context.obtainStyledAttributes(attrs,
-                    R.styleable.BaseContainerView, defStyleAttr, 0);
-            mBaseDrawable = a.getDrawable(R.styleable.BaseContainerView_revealBackground);
-            a.recycle();
+            mBaseDrawable = new ColorDrawable();
         }
     }
 
@@ -122,11 +118,14 @@ public abstract class BaseContainerView extends FrameLayout
 
         DeviceProfile grid = Launcher.getLauncher(context).getDeviceProfile();
         int[] padding = grid.getContainerPadding();
-        paddingLeft = padding[0] + grid.edgeMarginPx;
-        paddingRight = padding[1] + grid.edgeMarginPx;
         if (!grid.isVerticalBarLayout()) {
-            paddingTop = paddingBottom = grid.edgeMarginPx;
+            paddingBottom = grid.edgeMarginPx;
+            paddingLeft = padding[0] + grid.edgeMarginPx;
+            paddingRight = padding[1] + grid.edgeMarginPx;
+            paddingTop = paddingBottom;
         } else {
+            paddingLeft = padding[0];
+            paddingRight = padding[1];
             paddingTop = paddingBottom = 0;
         }
         updateBackground(paddingLeft, paddingTop, paddingRight, paddingBottom);
@@ -167,10 +166,6 @@ public abstract class BaseContainerView extends FrameLayout
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         return handleTouchEvent(ev);
-    }
-
-    public void setRevealDrawableColor(int color) {
-        ((ColorDrawable) mBaseDrawable).setColor(color);
     }
 
     public final View getContentView() {

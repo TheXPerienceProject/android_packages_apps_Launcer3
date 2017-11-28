@@ -24,7 +24,6 @@ import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Rect;
@@ -36,7 +35,6 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
-import android.widget.TextView;
 
 import com.android.launcher3.dragndrop.DragController;
 import com.android.launcher3.dragndrop.DragLayer;
@@ -87,11 +85,12 @@ public abstract class ButtonDropTarget extends android.support.v7.widget.AppComp
         Resources resources = getResources();
         mBottomDragPadding = resources.getDimensionPixelSize(R.dimen.drop_target_drag_padding);
 
-        TypedArray a = context.obtainStyledAttributes(attrs,
+        /*TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.ButtonDropTarget, defStyle, 0);
         mHideParentOnDisable = a.getBoolean(R.styleable.ButtonDropTarget_hideParentOnDisable, false);
-        a.recycle();
+        a.recycle();*/
         mDragDistanceThreshold = resources.getDimensionPixelSize(R.dimen.drag_distanceThreshold);
+        mHideParentOnDisable = true;
     }
 
     @Override
@@ -103,8 +102,8 @@ public abstract class ButtonDropTarget extends android.support.v7.widget.AppComp
     protected void setDrawable(int resId) {
         // We do not set the drawable in the xml as that inflates two drawables corresponding to
         // drawableLeft and drawableStart.
-        mDrawable = getResources().getDrawable(resId);
-        setCompoundDrawablesRelativeWithIntrinsicBounds(mDrawable, null, null, null);
+        setCompoundDrawablesRelativeWithIntrinsicBounds(resId, 0, 0, 0);
+        mDrawable = getCompoundDrawablesRelative()[0];
     }
 
     public void setDropTargetBar(DropTargetBar dropTargetBar) {

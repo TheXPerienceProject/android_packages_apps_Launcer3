@@ -25,7 +25,7 @@ public class IconProvider {
     }
 
 
-    public Drawable getIcon(LauncherActivityInfo info, int iconDpi) {
+    public Drawable getIcon(LauncherActivityInfo info, int iconDpi, boolean b) {
         return info.getIcon(iconDpi);
     }
 }

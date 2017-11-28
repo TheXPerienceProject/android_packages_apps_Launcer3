@@ -410,7 +410,7 @@ public class ImportDataTask {
      * {@link LayoutParserCallback} which adds items in empty hotseat spots.
      */
     private static class HotseatParserCallback implements LayoutParserCallback {
-        private final HashSet<String> mExisitingApps;
+        private final HashSet<String> mExistingApps;
         private final LongArrayMap<Object> mExistingItems;
         private final ArrayList<ContentProviderOperation> mOutOps;
         private final int mRequiredSize;
@@ -419,7 +419,7 @@ public class ImportDataTask {
         HotseatParserCallback(
                 HashSet<String> existingApps, LongArrayMap<Object> existingItems,
                 ArrayList<ContentProviderOperation> outOps, int startItemId, int requiredSize) {
-            mExisitingApps = existingApps;
+            mExistingApps = existingApps;
             mExistingItems = existingItems;
             mOutOps = outOps;
             mRequiredSize = requiredSize;
@@ -444,11 +444,11 @@ public class ImportDataTask {
                 return 0;
             }
             String pkg = getPackage(intent);
-            if (pkg == null || mExisitingApps.contains(pkg)) {
+            if (pkg == null || mExistingApps.contains(pkg)) {
                 // The item does not target an app or is already in hotseat.
                 return 0;
             }
-            mExisitingApps.add(pkg);
+            mExistingApps.add(pkg);
 
             // find next vacant spot.
             long screen = 0;

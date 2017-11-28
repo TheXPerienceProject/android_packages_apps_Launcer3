@@ -1,15 +1,12 @@
 package com.android.launcher3;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
-import com.google.android.apps.nexuslauncher.R;
 
 public class InsettableFrameLayout extends FrameLayout implements
     ViewGroup.OnHierarchyChangeListener, Insettable {
@@ -80,11 +77,6 @@ public class InsettableFrameLayout extends FrameLayout implements
 
         public LayoutParams(Context c, AttributeSet attrs) {
             super(c, attrs);
-            TypedArray a = c.obtainStyledAttributes(attrs,
-                    R.styleable.InsettableFrameLayout_Layout);
-            ignoreInsets = a.getBoolean(
-                    R.styleable.InsettableFrameLayout_Layout_layout_ignoreInsets, false);
-            a.recycle();
         }
 
         public LayoutParams(int width, int height) {

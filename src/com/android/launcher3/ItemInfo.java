@@ -133,7 +133,18 @@ public class ItemInfo {
     }
 
     public ComponentName getTargetComponent() {
-        return getIntent() == null ? null : getIntent().getComponent();
+        ComponentName component = null;
+        Intent intent = getIntent();
+        if (intent != null) {
+            component = intent.getComponent();
+            if (itemType == 1 && component == null) {
+                String package1 = intent.getPackage();
+                if (package1 != null) {
+                    return new ComponentName(package1, ".");
+                }
+            }
+        }
+        return component;
     }
 
     public void writeToValues(ContentWriter writer) {

@@ -24,10 +24,10 @@
     <string name="common_signin_button_text_long">Sign in with Google</string>
     <string name="derived_app_name">@string/app_name_pixel_launcher</string>
     <string name="market_search_intent">market://search?c=apps&amp;pcampaignid=nxl_search_12613299#Intent;package=com.android.vending;end</string>
-    <string name="app_filter_class">com.google.android.apps.nexuslauncher.NexusAppFilter</string>
-    <string name="icon_provider_class">com.google.android.apps.nexuslauncher.DynamicIconProvider</string>
-    <string name="drawable_factory_class">com.google.android.apps.nexuslauncher.DynamicDrawableFactory</string>
-    <string name="user_event_dispatcher_class">com.google.android.apps.nexuslauncher.logging.UserEventDispatcherImpl</string>
+    <string name="app_filter_class"></string>
+    <string name="icon_provider_class"></string>
+    <string name="drawable_factory_class"></string>
+    <string name="user_event_dispatcher_class"></string>
     <string name="color_extraction_impl_class" />
     <string name="wallpaper_picker_package">com.google.android.apps.wallpaper</string>
     <string name="app_name">Launcher3</string>

@@ -21,6 +21,9 @@ public class AppWidgetsRestoredReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
         if (AppWidgetManager.ACTION_APPWIDGET_HOST_RESTORED.equals(intent.getAction())) {
+            if (intent.getIntExtra("hostId", 0) != Launcher.APPWIDGET_HOST_ID)
+                return;
+
             final int[] oldIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_OLD_IDS);
             final int[] newIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
             if (oldIds.length == newIds.length) {

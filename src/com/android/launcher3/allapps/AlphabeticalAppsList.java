@@ -619,4 +619,11 @@ public class AlphabeticalAppsList {
         return sectionName;
     }
 
+    public AppInfo findApp(final ComponentKey componentKey) {
+        return this.mComponentToAppMap.get(componentKey);
+    }
+
+    public List getPredictedApps() {
+        return this.mPredictedApps;
+    }
 }

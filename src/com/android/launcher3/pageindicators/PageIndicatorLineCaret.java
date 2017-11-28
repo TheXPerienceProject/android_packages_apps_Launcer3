@@ -7,21 +7,19 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.Property;
 import android.view.ViewConfiguration;
 import android.widget.ImageView;
 
 import com.android.launcher3.Launcher;
-import com.google.android.apps.nexuslauncher.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.dynamicui.ExtractedColors;
+import com.android.launcher3.dynamicui.WallpaperColorInfo;
+import com.google.android.apps.nexuslauncher.R;
 
 /**
  * A PageIndicator that briefly shows a fraction of a line when moving between pages.
@@ -128,16 +126,18 @@ public class PageIndicatorLineCaret extends PageIndicator {
         mLauncher = Launcher.getLauncher(context);
         mLineHeight = res.getDimensionPixelSize(R.dimen.dynamic_grid_page_indicator_line_height);
         setCaretDrawable(new CaretDrawable(context));
+        boolean supportsDarkText = WallpaperColorInfo.getInstance(context).supportsDarkText();
+        mActiveAlpha = supportsDarkText ? 165 : 178;
+        mLinePaint.setColor(supportsDarkText ? -16777216 : -1);
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mAllAppsHandle = (ImageView) findViewById(R.id.all_apps_handle);
+        mAllAppsHandle = findViewById(R.id.all_apps_handle);
         mAllAppsHandle.setImageDrawable(getCaretDrawable());
         mAllAppsHandle.setOnTouchListener(mLauncher.getHapticFeedbackTouchListener());
         mAllAppsHandle.setOnClickListener(mLauncher);
-        mAllAppsHandle.setOnLongClickListener(mLauncher);
         mAllAppsHandle.setOnFocusChangeListener(mLauncher.mFocusHandler);
         mLauncher.setAllAppsButton(mAllAppsHandle);
     }
@@ -220,21 +220,6 @@ public class PageIndicatorLineCaret extends PageIndicator {
      * - mostly opaque black if the hotseat is black (ignoring alpha)
      */
     public void updateColor(ExtractedColors extractedColors) {
-        int originalLineAlpha = mLinePaint.getAlpha();
-        int color = extractedColors.getColor(ExtractedColors.HOTSEAT_INDEX, Color.TRANSPARENT);
-        if (color != Color.TRANSPARENT) {
-            color = ColorUtils.setAlphaComponent(color, 255);
-            if (color == Color.BLACK) {
-                mActiveAlpha = BLACK_ALPHA;
-            } else if (color == Color.WHITE) {
-                mActiveAlpha = WHITE_ALPHA;
-            } else {
-                Log.e(TAG, "Setting workspace page indicators to an unsupported color: #"
-                        + Integer.toHexString(color));
-            }
-            mLinePaint.setColor(color);
-            mLinePaint.setAlpha(originalLineAlpha);
-        }
     }
 
     private void animateLineToAlpha(int alpha) {

@@ -256,7 +256,7 @@ public class AllAppsContainerView extends BaseContainerView implements DragSourc
             }
         });
 
-        mSearchContainer = findViewById(R.id.search_container);
+        mSearchContainer = findViewById(R.id.search_container_all_apps);
         mSearchInput = (ExtendedEditText) findViewById(R.id.search_box_input);
 
         // Update the hint to contain the icon.

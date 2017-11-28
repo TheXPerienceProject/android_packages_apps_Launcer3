@@ -349,7 +349,7 @@ public class AllAppsRecyclerView extends BaseRecyclerView {
     }
 
     @Override
-    protected boolean supportsFastScrolling() {
+    public boolean supportsFastScrolling() {
         // Only allow fast scrolling when the user is not searching, since the results are not
         // grouped in a meaningful order
         return !mApps.hasFilter();
@@ -404,7 +404,7 @@ public class AllAppsRecyclerView extends BaseRecyclerView {
     }
 
     @Override
-    protected int getScrollbarTrackHeight() {
+    public int getScrollbarTrackHeight() {
         return super.getScrollbarTrackHeight()
                 - Launcher.getLauncher(getContext()).getDragLayer().getInsets().bottom;
     }
@@ -434,6 +434,10 @@ public class AllAppsRecyclerView extends BaseRecyclerView {
         mEmptySearchBackground.setBounds(x, y,
                 x + mEmptySearchBackground.getIntrinsicWidth(),
                 y + mEmptySearchBackground.getIntrinsicHeight());
+    }
+
+    public AlphabeticalAppsList getApps() {
+        return this.mApps;
     }
 
 }

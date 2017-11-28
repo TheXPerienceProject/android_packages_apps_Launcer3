@@ -25,9 +25,9 @@ import android.util.Log;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherSettings.Favorites;
 import com.android.launcher3.LauncherSettings.WorkspaceScreens;
-import com.android.launcher3.logging.FileLog;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * A set of utility methods for Launcher DB used for DB updates and migration.
@@ -104,19 +104,34 @@ public class LauncherDbUtils {
      * Parses the cursor containing workspace screens table and returns the list of screen IDs
      */
     public static ArrayList<Long> getScreenIdsFromCursor(Cursor sc) {
-        ArrayList<Long> screenIds = new ArrayList<Long>();
         try {
-            final int idIndex = sc.getColumnIndexOrThrow(WorkspaceScreens._ID);
-            while (sc.moveToNext()) {
-                try {
-                    screenIds.add(sc.getLong(idIndex));
-                } catch (Exception e) {
-                    FileLog.d(TAG, "Invalid screen id", e);
-                }
-            }
+            return (ArrayList<Long>)iterateCursor(sc, sc.getColumnIndexOrThrow(WorkspaceScreens._ID), new ArrayList<Long>());
         } finally {
             sc.close();
         }
-        return screenIds;
+    }
+
+    public static Collection iterateCursor(Cursor cursor, int n, Collection collection) {
+        while (cursor.moveToNext()) {
+            collection.add(cursor.getLong(n));
+        }
+        return collection;
+    }
+
+    public static class SQLiteTransaction implements AutoCloseable
+    {
+        private SQLiteDatabase mDb;
+
+        public SQLiteTransaction(final SQLiteDatabase db) {
+            (mDb = db).beginTransaction();
+        }
+
+        public void close() {
+            mDb.endTransaction();
+        }
+
+        public void commit() {
+            mDb.setTransactionSuccessful();
+        }
     }
 }
