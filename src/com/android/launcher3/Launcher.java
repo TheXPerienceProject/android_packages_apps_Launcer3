@@ -57,6 +57,7 @@ import android.os.SystemClock;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationManagerCompat;
 import android.text.Selection;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -119,7 +120,6 @@ import com.android.launcher3.userevent.nano.LauncherLogProto.Action;
 import com.android.launcher3.userevent.nano.LauncherLogProto.ContainerType;
 import com.android.launcher3.userevent.nano.LauncherLogProto.ControlType;
 import com.android.launcher3.util.ActivityResultInfo;
-import com.android.launcher3.util.RunnableWithId;
 import com.android.launcher3.util.ComponentKey;
 import com.android.launcher3.util.ComponentKeyMapper;
 import com.android.launcher3.util.ItemInfoMatcher;
@@ -127,6 +127,7 @@ import com.android.launcher3.util.MultiHashMap;
 import com.android.launcher3.util.PackageManagerHelper;
 import com.android.launcher3.util.PackageUserKey;
 import com.android.launcher3.util.PendingRequestArgs;
+import com.android.launcher3.util.RunnableWithId;
 import com.android.launcher3.util.SystemUiController;
 import com.android.launcher3.util.TestingUtils;
 import com.android.launcher3.util.Themes;
@@ -137,7 +138,6 @@ import com.android.launcher3.widget.PendingAddWidgetInfo;
 import com.android.launcher3.widget.WidgetAddFlowHandler;
 import com.android.launcher3.widget.WidgetHostViewLoader;
 import com.android.launcher3.widget.WidgetsContainerView;
-
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -3613,6 +3613,15 @@ public class Launcher extends BaseActivity
 
         InstallShortcutReceiver.disableAndFlushInstallQueue(
                 InstallShortcutReceiver.FLAG_LOADER_RUNNING, this);
+
+        if (Utilities.ATLEAST_MARSHMALLOW) {
+            boolean hasNotificationAccess = false;
+            for (String packageName : NotificationManagerCompat.getEnabledListenerPackages(this)) {
+                hasNotificationAccess |= packageName.equals(getApplicationContext().getPackageName());
+            }
+            if (!hasNotificationAccess)
+                startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+        }
 
         NotificationListener.setNotificationsChangedListener(mPopupDataProvider);
 
