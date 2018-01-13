@@ -10,6 +10,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.Process;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.UserHandle;
@@ -21,6 +22,7 @@ import com.android.launcher3.R;
 import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.shortcuts.DeepShortcutManager;
 import com.android.launcher3.shortcuts.ShortcutInfoCompat;
+import com.google.android.apps.nexuslauncher.clock.DynamicClock;
 
 import java.util.Calendar;
 import java.util.List;
@@ -91,6 +93,11 @@ public class DynamicIconProvider extends IconProvider {
                 }
             } catch (NameNotFoundException e) {
             }
+        } else if (!flattenDrawable &&
+                DynamicClock.DESK_CLOCK.equals(launcherActivityInfo.getComponentName()) &&
+                Process.myUserHandle().equals(launcherActivityInfo.getUser()) &&
+                mContext.getResources().getString(R.string.drawable_factory_class).equals(DynamicDrawableFactory.class.getName())) {
+            drawable = DynamicClock.getClock(mContext, iconDpi);
         }
         return drawable == null ? super.getIcon(launcherActivityInfo, iconDpi, flattenDrawable) : drawable;
     }
