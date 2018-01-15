@@ -27,12 +27,13 @@ import com.google.android.apps.nexuslauncher.clock.DynamicClock;
 import java.util.Calendar;
 import java.util.List;
 
-public class DynamicIconProvider extends IconProvider {
+public class DynamicIconProvider extends CustomIconProvider {
     private final BroadcastReceiver mDateChangeReceiver;
     private final Context mContext;
     private final PackageManager mPackageManager;
 
     public DynamicIconProvider(Context context) {
+        super(context);
         mContext = context;
         mDateChangeReceiver = new BroadcastReceiver() {
             @Override
