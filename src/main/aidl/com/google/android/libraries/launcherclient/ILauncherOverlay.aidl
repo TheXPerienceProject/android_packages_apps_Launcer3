@@ -33,6 +33,8 @@ interface ILauncherOverlay {
 
     oneway void windowAttached2(in Bundle bundle, in ILauncherOverlayCallback cb);
 
+    oneway void unusedMethod();
+
     oneway void setActivityState(in int flags);
 
     boolean startSearch(in byte[] data, in Bundle bundle);

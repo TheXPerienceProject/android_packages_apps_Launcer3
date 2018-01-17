@@ -129,9 +129,7 @@ public class GoogleNow {
 
                 if (API_VERSION >= 4) {
                     mOverlay.setActivityState(mFlags);
-                }
-
-                if ((mFlags & 2) != 0) {
+                } else if ((mFlags & 2) != 0) {
                     mOverlay.onResume();
                 } else {
                     mOverlay.onPause();
