@@ -133,4 +133,13 @@
     <string name="label_voice_search">Φωνητική αναζήτηση</string>
     <string name="pref_icon_pack">Πακέτο εικονιδίων</string>
     <string name="state_loading">Εφαρμογή…</string>
+    <string name="smartspace_preferences_in_settings">Με μια ματιά</string>
+    <string name="smartspace_preferences_in_settings_desc">Στην κορυφή της Αρχικής οθόνης</string>
+    <string name="title_show_google_app">Προβολή %1$s</string>
+    <string name="msg_minus_one_on_left">Στα αριστερά της κύριας Αρχικής οθόνης</string>
+    <string name="about">Σχετικά με</string>
+    <string name="title_google_app">Εφαρμογή Google</string>
+    <string name="title_app_suggestions">Εμφάνιση προτάσεων εφαρμογών</string>
+    <string name="summary_app_suggestions">Στο επάνω μέρος της λίστας \"Όλες οι εφαρμογές\".</string>
+    <string name="about_app_version">Έκδοση</string>
 </resources>

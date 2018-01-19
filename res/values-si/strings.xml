@@ -131,4 +131,13 @@
     <string name="smartspace_preferences">මනාප</string>
     <string name="label_search">සොයන්න</string>
     <string name="label_voice_search">හඬ සෙවීම</string>
+    <string name="smartspace_preferences_in_settings">එක් බැල්මකින්</string>
+    <string name="smartspace_preferences_in_settings_desc">ඔබගේ මුල් පිටු තිරයෙහි ඉහළින්ම</string>
+    <string name="title_show_google_app">%1$s සංදර්ශනය කරන්න</string>
+    <string name="msg_minus_one_on_left">ප්‍රධාන මුල් පිටු තිරයේ වමෙන්</string>
+    <string name="about">පිළිබඳ</string>
+    <string name="title_google_app">Google යෙදුම</string>
+    <string name="title_app_suggestions">සංදර්ශක යෙදුම් යෝජනා</string>
+    <string name="summary_app_suggestions">ඔබගේ සියලු යෙදුම් ලැයිස්තුවේ ඉහළින්ම</string>
+    <string name="about_app_version">අනුවාදය</string>
 </resources>

@@ -131,4 +131,13 @@
     <string name="smartspace_preferences">Preferences</string>
     <string name="label_search">Meklēt</string>
     <string name="label_voice_search">Meklēt ar balsi</string>
+    <string name="smartspace_preferences_in_settings">Īsumā</string>
+    <string name="smartspace_preferences_in_settings_desc">Sākuma ekrāna augšdaļā</string>
+    <string name="title_show_google_app">Rādīt: %1$s</string>
+    <string name="msg_minus_one_on_left">Galvenā sākuma ekrāna kreisajā pusē</string>
+    <string name="about">Par</string>
+    <string name="title_google_app">Google lietotne</string>
+    <string name="title_app_suggestions">Lietotnes ieteikumu rādīšana</string>
+    <string name="summary_app_suggestions">Visu lietotņu saraksta augšdaļā</string>
+    <string name="about_app_version">Versija</string>
 </resources>

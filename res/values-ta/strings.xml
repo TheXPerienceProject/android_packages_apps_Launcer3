@@ -131,4 +131,13 @@
     <string name="smartspace_preferences">விருப்பத்தேர்வுகள்</string>
     <string name="label_search">தேடு</string>
     <string name="label_voice_search">குரல் தேடல்</string>
+    <string name="smartspace_preferences_in_settings">முகப்புத் தகவல்</string>
+    <string name="smartspace_preferences_in_settings_desc">முகப்புத் திரையின் மேற்புறம்</string>
+    <string name="title_show_google_app">%1$sஐக் காட்டு</string>
+    <string name="msg_minus_one_on_left">முதன்மை முகப்புத் திரையின் இடப்புறம்</string>
+    <string name="about">அறிமுகம்</string>
+    <string name="title_google_app">Google பயன்பாடு</string>
+    <string name="title_app_suggestions">பயன்பாட்டிற்கான பரிந்துரைகளைக் காட்டு</string>
+    <string name="summary_app_suggestions">எல்லாப் பயன்பாடுகளும் பட்டியலின் மேற்புறம்</string>
+    <string name="about_app_version">பதிப்பு</string>
 </resources>

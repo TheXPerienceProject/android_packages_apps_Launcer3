@@ -131,4 +131,13 @@
     <string name="smartspace_preferences">Pilihan</string>
     <string name="label_search">Cari</string>
     <string name="label_voice_search">Carian suara</string>
+    <string name="smartspace_preferences_in_settings">Sekilas Pandang</string>
+    <string name="smartspace_preferences_in_settings_desc">Di bahagian atas Skrin Utama anda</string>
+    <string name="title_show_google_app">Paparkan %1$s</string>
+    <string name="msg_minus_one_on_left">Di sebelah kiri Skrin paling utama</string>
+    <string name="about">Perihal</string>
+    <string name="title_google_app">Apl Google</string>
+    <string name="title_app_suggestions">Paparkan cadangan apl</string>
+    <string name="summary_app_suggestions">Di bahagian atas senarai Semua Apl anda</string>
+    <string name="about_app_version">Versi</string>
 </resources>
