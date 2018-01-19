@@ -1,40 +1,39 @@
-package com.google.android.apps.nexuslauncher.smartspace.b_package;
+package com.google.android.apps.nexuslauncher.smartspace.nano;
 
 import com.google.protobuf.nano.f;
-import com.google.protobuf.nano.c;
 import com.google.protobuf.nano.b;
 import com.google.protobuf.nano.a;
 
 import java.io.IOException;
 
-public final class h extends a
+public final class c extends a
 {
-    public long da;
-    public int db;
+    public d cL;
+    public d cM;
     
-    public h() {
+    public c() {
         this.clear();
     }
     
-    public h clear() {
-        this.da = 0L;
-        this.db = 0;
+    public c clear() {
+        this.cL = null;
+        this.cM = null;
         this.cachedSize = -1;
         return this;
     }
     
     protected int computeSerializedSize() {
         int computeSerializedSize = super.computeSerializedSize();
-        if (this.da != 0L) {
-            computeSerializedSize += b.Vz(1, this.da);
+        if (this.cL != null) {
+            computeSerializedSize += b.Vo(1, this.cL);
         }
-        if (this.db != 0) {
-            computeSerializedSize += b.VA(2, this.db);
+        if (this.cM != null) {
+            computeSerializedSize += b.Vo(2, this.cM);
         }
         return computeSerializedSize;
     }
     
-    public h mergeFrom(final c c) throws IOException {
+    public c mergeFrom(final com.google.protobuf.nano.c c) throws IOException {
         while (true) {
             final int ws = c.Ws();
             switch (ws) {
@@ -47,12 +46,18 @@ public final class h extends a
                 case 0: {
                     return this;
                 }
-                case 8: {
-                    this.da = c.Wz();
+                case 10: {
+                    if (this.cL == null) {
+                        this.cL = new d();
+                    }
+                    c.Ww(this.cL);
                     continue;
                 }
-                case 16: {
-                    this.db = c.WF();
+                case 18: {
+                    if (this.cM == null) {
+                        this.cM = new d();
+                    }
+                    c.Ww(this.cM);
                     continue;
                 }
             }
@@ -60,11 +65,11 @@ public final class h extends a
     }
     
     public void writeTo(final b b) throws IOException {
-        if (this.da != 0L) {
-            b.Wc(1, this.da);
+        if (this.cL != null) {
+            b.VK(1, this.cL);
         }
-        if (this.db != 0) {
-            b.Vv(2, this.db);
+        if (this.cM != null) {
+            b.VK(2, this.cM);
         }
         super.writeTo(b);
     }

@@ -1,4 +1,4 @@
-package com.google.android.apps.nexuslauncher.smartspace.b_package;
+package com.google.android.apps.nexuslauncher.smartspace.nano;
 
 import com.google.protobuf.nano.a;
 

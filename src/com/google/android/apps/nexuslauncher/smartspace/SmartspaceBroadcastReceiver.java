@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.SystemClock;
 import android.util.Log;
 
-import com.google.android.apps.nexuslauncher.smartspace.b_package.b;
+import com.google.android.apps.nexuslauncher.smartspace.nano.b;
 import com.google.protobuf.nano.InvalidProtocolBufferNanoException;
 
 public class SmartspaceBroadcastReceiver extends BroadcastReceiver {
@@ -28,7 +28,7 @@ public class SmartspaceBroadcastReceiver extends BroadcastReceiver {
         Log.w(SmartspaceBroadcastReceiver.class.getName(), "Google's update event");
         byte[] byteArrayExtra = intent.getByteArrayExtra("com.google.android.apps.nexuslauncher.extra.SMARTSPACE_CARD");
         if (byteArrayExtra != null) {
-            com.google.android.apps.nexuslauncher.smartspace.b_package.a a = new com.google.android.apps.nexuslauncher.smartspace.b_package.a();
+            com.google.android.apps.nexuslauncher.smartspace.nano.a a = new com.google.android.apps.nexuslauncher.smartspace.nano.a();
             try {
                 com.google.protobuf.nano.a.mergeFrom(a, byteArrayExtra);
                 b[] cw = a.cw;

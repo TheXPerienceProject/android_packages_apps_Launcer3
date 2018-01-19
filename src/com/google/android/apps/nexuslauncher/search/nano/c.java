@@ -1,4 +1,4 @@
-package com.google.android.apps.nexuslauncher.search.a_package;
+package com.google.android.apps.nexuslauncher.search.nano;
 
 import com.google.protobuf.nano.a;
 import com.google.protobuf.nano.f;
@@ -9,19 +9,19 @@ public final class c extends a
 {
     public boolean eA;
     public int em;
-    public com.google.android.apps.nexuslauncher.search.a_package.a en;
+    public com.google.android.apps.nexuslauncher.search.nano.a en;
     public b[] eo;
     public String ep;
     public boolean eq;
     public String er;
     public int es;
-    public com.google.android.apps.nexuslauncher.search.a_package.a et;
+    public com.google.android.apps.nexuslauncher.search.nano.a et;
     public String eu;
-    public com.google.android.apps.nexuslauncher.search.a_package.a ev;
+    public com.google.android.apps.nexuslauncher.search.nano.a ev;
     public int ew;
     public int ex;
     public String ey;
-    public com.google.android.apps.nexuslauncher.search.a_package.a ez;
+    public com.google.android.apps.nexuslauncher.search.nano.a ez;
     
     public c() {
         this.clear();
@@ -131,7 +131,7 @@ public final class c extends a
                 }
                 case 34: {
                     if (this.en == null) {
-                        this.en = new com.google.android.apps.nexuslauncher.search.a_package.a();
+                        this.en = new com.google.android.apps.nexuslauncher.search.nano.a();
                     }
                     c.Ww(this.en);
                     continue;
@@ -164,7 +164,7 @@ public final class c extends a
                 }
                 case 58: {
                     if (this.ev == null) {
-                        this.ev = new com.google.android.apps.nexuslauncher.search.a_package.a();
+                        this.ev = new com.google.android.apps.nexuslauncher.search.nano.a();
                     }
                     c.Ww(this.ev);
                     continue;
@@ -187,7 +187,7 @@ public final class c extends a
                 }
                 case 98: {
                     if (this.et == null) {
-                        this.et = new com.google.android.apps.nexuslauncher.search.a_package.a();
+                        this.et = new com.google.android.apps.nexuslauncher.search.nano.a();
                     }
                     c.Ww(this.et);
                     continue;
@@ -198,7 +198,7 @@ public final class c extends a
                 }
                 case 114: {
                     if (this.ez == null) {
-                        this.ez = new com.google.android.apps.nexuslauncher.search.a_package.a();
+                        this.ez = new com.google.android.apps.nexuslauncher.search.nano.a();
                     }
                     c.Ww(this.ez);
                     continue;

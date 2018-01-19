@@ -28,10 +28,10 @@ import com.android.launcher3.util.ComponentKeyMapper;
 import com.android.launcher3.util.Themes;
 import com.google.android.apps.nexuslauncher.NexusLauncherActivity;
 import com.google.android.apps.nexuslauncher.search.AppSearchProvider;
-import com.google.android.apps.nexuslauncher.search.a_package.a;
-import com.google.android.apps.nexuslauncher.search.a_package.b;
-import com.google.android.apps.nexuslauncher.search.a_package.c;
-import com.google.android.apps.nexuslauncher.search.a_package.d;
+import com.google.android.apps.nexuslauncher.search.nano.a;
+import com.google.android.apps.nexuslauncher.search.nano.b;
+import com.google.android.apps.nexuslauncher.search.nano.c;
+import com.google.android.apps.nexuslauncher.search.nano.d;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
-import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -18,12 +17,11 @@ import android.view.View;
 import com.android.launcher3.Launcher;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
-import com.android.launcher3.dynamicui.WallpaperColorInfo;
 import com.android.launcher3.graphics.ShadowGenerator;
-import com.google.android.apps.nexuslauncher.smartspace.b_package.b;
-import com.google.android.apps.nexuslauncher.smartspace.b_package.c;
-import com.google.android.apps.nexuslauncher.smartspace.b_package.e;
-import com.google.android.apps.nexuslauncher.smartspace.b_package.i;
+import com.google.android.apps.nexuslauncher.smartspace.nano.b;
+import com.google.android.apps.nexuslauncher.smartspace.nano.c;
+import com.google.android.apps.nexuslauncher.smartspace.nano.e;
+import com.google.android.apps.nexuslauncher.smartspace.nano.i;
 import com.google.android.apps.nexuslauncher.utils.ColorManipulation;
 
 public class d {
@@ -99,10 +97,10 @@ public class d {
         return s;
     }
 
-    private com.google.android.apps.nexuslauncher.smartspace.b_package.d cG(final boolean b) {
+    private com.google.android.apps.nexuslauncher.smartspace.nano.d cG(final boolean b) {
         final c ch = this.cH();
         if (ch != null) {
-            com.google.android.apps.nexuslauncher.smartspace.b_package.d d;
+            com.google.android.apps.nexuslauncher.smartspace.nano.d d;
             if (b) {
                 d = ch.cL;
             } else {
@@ -166,7 +164,7 @@ public class d {
         return array2;
     }
 
-    private boolean cL(final com.google.android.apps.nexuslauncher.smartspace.b_package.d d) {
+    private boolean cL(final com.google.android.apps.nexuslauncher.smartspace.nano.d d) {
         boolean b = false;
         if (d != null && d.cN != null && d.cO != null && d.cO.length > 0) {
             b = true;
@@ -179,7 +177,7 @@ public class d {
     }
 
     private String cO(final boolean b, final String s) {
-        final com.google.android.apps.nexuslauncher.smartspace.b_package.d cg = this.cG(b);
+        final com.google.android.apps.nexuslauncher.smartspace.nano.d cg = this.cG(b);
         if (cg == null || cg.cN == null) {
             return "";
         }

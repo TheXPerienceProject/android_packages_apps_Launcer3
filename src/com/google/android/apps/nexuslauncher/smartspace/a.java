@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.graphics.LauncherIcons;
-import com.google.android.apps.nexuslauncher.smartspace.b_package.b;
+import com.google.android.apps.nexuslauncher.smartspace.nano.b;
 
 public class a {
     public final b di;
@@ -37,7 +37,7 @@ public class a {
     }
 
     public Bitmap ci(final Context context) {
-        com.google.android.apps.nexuslauncher.smartspace.b_package.f fVar = this.di.cx;
+        com.google.android.apps.nexuslauncher.smartspace.nano.f fVar = this.di.cx;
         if (fVar == null) {
             return null;
         }

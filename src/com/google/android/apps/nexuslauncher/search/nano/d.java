@@ -2,7 +2,7 @@
 // Decompiled by Procyon v0.5.30
 // 
 
-package com.google.android.apps.nexuslauncher.search.a_package;
+package com.google.android.apps.nexuslauncher.search.nano;
 
 import com.google.protobuf.nano.a;
 import com.google.protobuf.nano.b;
