@@ -54,11 +54,13 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
 
     public static class MySettingsFragment extends com.android.launcher3.SettingsActivity.LauncherSettingsFragment implements Preference.OnPreferenceChangeListener {
         private ListPreference mIconPackPref;
+        private Context mContext;
 
         @Override
         public void onCreate(Bundle bundle) {
             super.onCreate(bundle);
 
+            mContext = getActivity();
             mIconPackPref = (ListPreference) findPreference(ICON_PACK_PREF);
             mIconPackPref.setOnPreferenceChangeListener(this);
         }
@@ -67,10 +69,10 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
         public void onResume() {
             super.onResume();
 
-            HashMap<String, CharSequence> packList = CustomIconUtils.getPackProviders(getContext());
+            HashMap<String, CharSequence> packList = CustomIconUtils.getPackProviders(mContext);
 
             CharSequence[] keys = new String[packList.size() + 1];
-            keys[0] = getContext().getResources().getString(R.string.icon_shape_system_default);
+            keys[0] = mContext.getResources().getString(R.string.icon_shape_system_default);
 
             CharSequence[] values = new String[keys.length];
             values[0] = "";
@@ -89,7 +91,7 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
         public boolean onPreferenceChange(Preference preference, final Object newValue) {
             SharedPreferences pref = getPreferenceManager().getSharedPreferences();
             if (!pref.getString(ICON_PACK_PREF, "").equals(newValue)) {
-                ProgressDialog.show(getContext(),
+                ProgressDialog.show(mContext,
                         null /* title */,
                         getContext().getString(R.string.state_loading),
                         true /* indeterminate */,
@@ -100,7 +102,7 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
                     @Override
                     public void run() {
                         // Clear the icon cache.
-                        LauncherAppState.getInstance(getContext()).getIconCache().clear();
+                        LauncherAppState.getInstance(mContext).getIconCache().clear();
 
                         // Wait for it
                         try {
@@ -113,9 +115,9 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
                             // Schedule an alarm before we kill ourself.
                             Intent homeIntent = new Intent(Intent.ACTION_MAIN)
                                     .addCategory(Intent.CATEGORY_HOME)
-                                    .setPackage(getContext().getPackageName())
+                                    .setPackage(mContext.getPackageName())
                                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            PendingIntent pi = PendingIntent.getActivity(getContext(), 0,
+                            PendingIntent pi = PendingIntent.getActivity(mContext, 0,
                                     homeIntent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_ONE_SHOT);
                             getContext().getSystemService(AlarmManager.class).setExact(
                                     AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 50, pi);
@@ -129,22 +131,6 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
                 return true;
             }
             return false;
-        }
-
-        private static class OverrideApplyHandler implements Runnable {
-
-            private final Context mContext;
-            private final String mValue;
-
-            private OverrideApplyHandler(Context context, String value) {
-                mContext = context;
-                mValue = value;
-            }
-
-            @Override
-            public void run() {
-
-            }
         }
     }
 }

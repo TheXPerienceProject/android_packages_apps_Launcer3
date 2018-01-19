@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.icu.text.DateFormat;
 import android.icu.text.DisplayContext;
+import android.text.format.DateUtils;
 import android.util.AttributeSet;
 
 import com.android.launcher3.R;
@@ -35,6 +36,12 @@ public class IcuDateTextView extends DoubleShadowTextView {
 
     @TargetApi(24)
     public void reloadDateFormat(boolean forcedChange) {
+        if (!Utilities.ATLEAST_MARSHMALLOW) {
+            String format = DateUtils.formatDateTime(getContext(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH);
+            setText(format);
+            setContentDescription(format);
+            return;
+        }
         if (mDateFormat == null || forcedChange) {
             (mDateFormat = DateFormat.getInstanceForSkeleton(getContext()
                     .getString(R.string.icu_abbrev_wday_month_day_no_year), Locale.getDefault()))
