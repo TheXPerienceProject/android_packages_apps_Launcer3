@@ -70,9 +70,9 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
             HashMap<String, CharSequence> packList = CustomIconUtils.getPackProviders(getContext());
 
             CharSequence[] keys = new String[packList.size() + 1];
-            CharSequence[] values = new String[keys.length];
-
             keys[0] = getContext().getResources().getString(R.string.icon_shape_system_default);
+
+            CharSequence[] values = new String[keys.length];
             values[0] = "";
 
             int i = 1;
@@ -83,8 +83,6 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
 
             mIconPackPref.setEntries(keys);
             mIconPackPref.setEntryValues(values);
-
-            //getPreferenceScreen().removePreference(mIconPackPref);
         }
 
         @Override
