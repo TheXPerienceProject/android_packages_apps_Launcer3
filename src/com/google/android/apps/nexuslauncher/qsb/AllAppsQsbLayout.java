@@ -3,9 +3,8 @@ package com.google.android.apps.nexuslauncher.qsb;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.support.animation.FloatValueHolder;
+import android.support.animation.FloatPropertyCompat;
 import android.support.animation.SpringAnimation;
-import android.support.animation.SpringForce;
 import android.support.annotation.NonNull;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +30,7 @@ public class AllAppsQsbLayout extends e implements SearchUiManager, WallpaperCol
     private Bitmap mBitmap;
     private AlphabeticalAppsList mApps;
     private SpringAnimation mSpring;
+    private float mStartY;
 
     public AllAppsQsbLayout(final Context context) {
         this(context, null);
@@ -45,8 +45,18 @@ public class AllAppsQsbLayout extends e implements SearchUiManager, WallpaperCol
         mAlpha = 0;
         setOnClickListener(this);
 
-        // Note: This spring does nothing.
-        mSpring = new SpringAnimation(new FloatValueHolder()).setSpring(new SpringForce(0));
+        mStartY = getTranslationY();
+        mSpring = new SpringAnimation(this, new FloatPropertyCompat<AllAppsQsbLayout>("allAppsQsbLayoutSpringAnimation") {
+            @Override
+            public float getValue(AllAppsQsbLayout allAppsQsbLayout) {
+                return allAppsQsbLayout.getTranslationY() + mStartY;
+            }
+
+            @Override
+            public void setValue(AllAppsQsbLayout allAppsQsbLayout, float v) {
+                allAppsQsbLayout.setTranslationY(mStartY + v);
+            }
+        }, 0f);
     }
 
     private void searchFallback() {
