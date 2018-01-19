@@ -98,6 +98,8 @@ public class NexusLauncher {
             fy = new com.google.android.libraries.launcherclient.GoogleNow(fB, fz, dZ(prefs));
             fz.setNowConnection(fy);
 
+            prefs.registerOnSharedPreferenceChangeListener(this);
+
             f.get(fB).cW();
             mSmartspace = fB.findViewById(R.id.search_container_workspace);
 
@@ -109,6 +111,7 @@ public class NexusLauncher {
 
         public void onDestroy() {
             fy.onDestroy();
+            Utilities.getPrefs(fB).unregisterOnSharedPreferenceChangeListener(this);
         }
 
         public void onDetachedFromWindow() {
@@ -235,7 +238,9 @@ public class NexusLauncher {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-
+            if (SettingsActivity.ENABLE_MINUS_ONE_PREF.equals(key)) {
+                fy.RB(dZ(sharedPreferences));
+            }
         }
 
         @Override
