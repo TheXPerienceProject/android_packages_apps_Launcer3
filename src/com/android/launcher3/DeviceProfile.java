@@ -666,8 +666,10 @@ public class DeviceProfile {
         } else {
             // For phones, layout the hotseat without any bottom margin
             // to ensure that we have space for the folders
-            if (mInsets.bottom < hotseatBarTopPaddingPx)
-                mInsets.bottom = hotseatBarTopPaddingPx;
+            if (mInsets.bottom == 0) {
+                mInsets.bottom = hotseat.getContext().getResources()
+                        .getDimensionPixelSize(R.dimen.qsb_hotseat_bottom_margin_hw);
+            }
             lp.gravity = Gravity.BOTTOM;
             lp.width = LayoutParams.MATCH_PARENT;
             lp.height = hotseatBarSizePx + mInsets.bottom;

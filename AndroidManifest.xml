@@ -49,6 +49,16 @@
     <uses-permission android:name="com.google.android.apps.nexuslauncher.permission.READ_SETTINGS" />
     <uses-permission android:name="com.google.android.apps.nexuslauncher.permission.WRITE_SETTINGS" />
 
+    <!-- Pixel -->
+    <permission
+        android:name="com.google.android.apps.nexuslauncher.permission.QSB"
+        android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
+        android:protectionLevel="signatureOrSystem"/>
+    <uses-permission android:name="com.google.android.apps.nexuslauncher.permission.QSB" />
+
+    <!-- Custom -->
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+
     <application
         android:backupAgent="com.android.launcher3.LauncherBackupAgent"
         android:fullBackupOnly="true"
@@ -66,7 +76,7 @@
         attributes and intent filters the same
         -->
         <activity
-            android:name="com.android.launcher3.Launcher"
+            android:name="com.google.android.apps.nexuslauncher.NexusLauncherActivity"
             android:launchMode="singleTask"
             android:clearTaskOnLaunch="true"
             android:stateNotNeeded="true"
@@ -90,9 +100,9 @@
         The settings activity. When extending keep the intent filter present
         -->
         <activity
-            android:name="com.android.launcher3.SettingsActivity"
+            android:name="com.google.android.apps.nexuslauncher.SettingsActivity"
             android:label="@string/settings_button_text"
-            android:theme="@android:style/Theme.DeviceDefault.Settings"
+            android:theme="@style/SettingsTheme"
             android:autoRemoveFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
@@ -111,6 +121,19 @@
             android:exported="true"
             android:writePermission="com.google.android.apps.nexuslauncher.permission.WRITE_SETTINGS"
             android:readPermission="com.google.android.apps.nexuslauncher.permission.READ_SETTINGS" />
+
+        <!--
+        Pixel
+        -->
+        <receiver android:name="com.google.android.apps.nexuslauncher.smartspace.SmartspaceBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.google.android.apps.nexuslauncher.UPDATE_SMARTSPACE" />
+            </intent-filter>
+        </receiver>
+        <provider
+            android:authorities="com.google.android.apps.nexuslauncher.appssearch"
+            android:exported="true"
+            android:name="com.google.android.apps.nexuslauncher.search.AppSearchProvider" />
 
         <!-- ENABLE_FOR_TESTING
 

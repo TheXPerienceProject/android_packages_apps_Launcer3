@@ -128,4 +128,9 @@
     <string name="shortcuts_menu_with_notifications_description" msgid="8985659504915468840">"<xliff:g id="APP_NAME">%3$s</xliff:g> ആപ്പിനായുള്ള <xliff:g id="NUMBER_OF_SHORTCUTS">%1$d</xliff:g> കുറുക്കുവഴികളും <xliff:g id="NUMBER_OF_NOTIFICATIONS">%2$d</xliff:g> അറിയിപ്പുകളും"</string>
     <string name="action_dismiss_notification" msgid="5909461085055959187">"നിരസിക്കുക"</string>
     <string name="notification_dismissed" msgid="6002233469409822874">"അറിയിപ്പ് നിരസിച്ചു"</string>
+    <string name="smartspace_preferences">മുൻഗണനകൾ</string>
+    <string name="label_search">തിരയുക</string>
+    <string name="label_voice_search">ശബ്ദതിരയൽ</string>
+    <string name="pref_icon_pack">ഐക്കണ്‍ പാക്ക്</string>
+    <string name="state_loading">ബാധകമാക്കുന്നു…</string>
 </resources>

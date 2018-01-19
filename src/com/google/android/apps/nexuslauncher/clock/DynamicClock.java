@@ -40,7 +40,11 @@ public class DynamicClock extends BroadcastReceiver
         mLayers = new ClockLayers();
         mContext = context;
         final Handler handler = new Handler(LauncherModel.getWorkerLooper());
-        mContext.registerReceiver(this, ActionIntentFilter.newInstance("com.google.android.deskclock", "android.intent.action.PACKAGE_ADDED", "android.intent.action.PACKAGE_CHANGED"), null, handler);
+        mContext.registerReceiver(this,
+                ActionIntentFilter.newInstance("com.google.android.deskclock",
+                    Intent.ACTION_PACKAGE_ADDED,
+                    Intent.ACTION_PACKAGE_CHANGED),
+                null, handler);
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -53,11 +57,11 @@ public class DynamicClock extends BroadcastReceiver
             public void onReceive(Context context, Intent intent) {
                 loadTimeZone(intent.getStringExtra("time-zone"));
             }
-        }, new IntentFilter("android.intent.action.TIMEZONE_CHANGED"), null, new Handler(Looper.getMainLooper()));
+        }, new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED), null, new Handler(Looper.getMainLooper()));
     }
     
     public static Drawable getClock(Context context, int iconDpi) {
-        final ClockLayers clone = getClockLayers(context, iconDpi, false).clone();
+        ClockLayers clone = getClockLayers(context, iconDpi, false).clone();
         if (clone != null) {
             clone.updateAngles();
             return clone.mDrawable;

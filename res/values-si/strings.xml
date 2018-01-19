@@ -128,4 +128,7 @@
     <string name="shortcuts_menu_with_notifications_description" msgid="8985659504915468840">"<xliff:g id="APP_NAME">%3$s</xliff:g> සඳහා කෙටි මං <xliff:g id="NUMBER_OF_SHORTCUTS">%1$d</xliff:g>ක් සහ දැනුම්දීම් <xliff:g id="NUMBER_OF_NOTIFICATIONS">%2$d</xliff:g>ක්"</string>
     <string name="action_dismiss_notification" msgid="5909461085055959187">"ඉවතලන්න"</string>
     <string name="notification_dismissed" msgid="6002233469409822874">"දැනුම්දීම ඉවතලන ලදී"</string>
+    <string name="smartspace_preferences">මනාප</string>
+    <string name="label_search">සොයන්න</string>
+    <string name="label_voice_search">හඬ සෙවීම</string>
 </resources>

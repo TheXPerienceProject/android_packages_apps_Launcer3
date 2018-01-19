@@ -128,4 +128,7 @@
     <string name="shortcuts_menu_with_notifications_description" msgid="8985659504915468840">"<xliff:g id="APP_NAME">%3$s</xliff:g> کے <xliff:g id="NUMBER_OF_SHORTCUTS">%1$d</xliff:g> شارٹ کٹس اور <xliff:g id="NUMBER_OF_NOTIFICATIONS">%2$d</xliff:g> اطلاعات"</string>
     <string name="action_dismiss_notification" msgid="5909461085055959187">"برخاست کریں"</string>
     <string name="notification_dismissed" msgid="6002233469409822874">"اطلاع مسترد ہو گئی"</string>
+    <string name="smartspace_preferences">ترجیحات</string>
+    <string name="label_search">تلاش کریں</string>
+    <string name="label_voice_search">صوتی تلاش</string>
 </resources>

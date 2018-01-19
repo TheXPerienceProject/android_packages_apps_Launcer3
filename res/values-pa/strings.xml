@@ -128,4 +128,7 @@
     <string name="shortcuts_menu_with_notifications_description" msgid="8985659504915468840">"<xliff:g id="APP_NAME">%3$s</xliff:g> ਲਈ <xliff:g id="NUMBER_OF_SHORTCUTS">%1$d</xliff:g> ਸ਼ਾਰਟਕੱਟ ਅਤੇ <xliff:g id="NUMBER_OF_NOTIFICATIONS">%2$d</xliff:g> ਸੂਚਨਾਵਾਂ"</string>
     <string name="action_dismiss_notification" msgid="5909461085055959187">"ਖਾਰਜ ਕਰੋ"</string>
     <string name="notification_dismissed" msgid="6002233469409822874">"ਸੂਚਨਾ ਖਾਰਜ ਕੀਤੀ ਗਈ"</string>
+    <string name="smartspace_preferences">ਤਰਜੀਹਾਂ</string>
+    <string name="label_search">ਖੋਜ</string>
+    <string name="label_voice_search">ਵੌਇਸ ਖੋਜ</string>
 </resources>

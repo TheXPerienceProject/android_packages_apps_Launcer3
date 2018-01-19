@@ -27,13 +27,12 @@ import com.google.android.apps.nexuslauncher.clock.DynamicClock;
 import java.util.Calendar;
 import java.util.List;
 
-public class DynamicIconProvider extends CustomIconProvider {
+public class DynamicIconProvider extends IconProvider {
     private final BroadcastReceiver mDateChangeReceiver;
     private final Context mContext;
     private final PackageManager mPackageManager;
 
     public DynamicIconProvider(Context context) {
-        super(context);
         mContext = context;
         mDateChangeReceiver = new BroadcastReceiver() {
             @Override
@@ -49,9 +48,9 @@ public class DynamicIconProvider extends CustomIconProvider {
             }
         };
 
-        IntentFilter intentFilter = new IntentFilter("android.intent.action.DATE_CHANGED");
-        intentFilter.addAction("android.intent.action.TIME_SET");
-        intentFilter.addAction("android.intent.action.TIMEZONE_CHANGED");
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_DATE_CHANGED);
+        intentFilter.addAction(Intent.ACTION_TIME_CHANGED);
+        intentFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
         mContext.registerReceiver(mDateChangeReceiver, intentFilter, null, new Handler(LauncherModel.getWorkerLooper()));
         mPackageManager = mContext.getPackageManager();
     }
@@ -96,8 +95,7 @@ public class DynamicIconProvider extends CustomIconProvider {
             }
         } else if (!flattenDrawable &&
                 DynamicClock.DESK_CLOCK.equals(launcherActivityInfo.getComponentName()) &&
-                Process.myUserHandle().equals(launcherActivityInfo.getUser()) &&
-                mContext.getResources().getString(R.string.drawable_factory_class).equals(DynamicDrawableFactory.class.getName())) {
+                Process.myUserHandle().equals(launcherActivityInfo.getUser())) {
             drawable = DynamicClock.getClock(mContext, iconDpi);
         }
         return drawable == null ? super.getIcon(launcherActivityInfo, iconDpi, flattenDrawable) : drawable;

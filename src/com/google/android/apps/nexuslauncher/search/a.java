@@ -1,0 +1,73 @@
+package com.google.android.apps.nexuslauncher.search;
+
+import android.content.SharedPreferences;
+
+import com.android.launcher3.AppInfo;
+import com.android.launcher3.IconCache;
+import com.android.launcher3.ItemInfoWithIcon;
+import com.android.launcher3.Launcher;
+import com.android.launcher3.LauncherAppState;
+import com.android.launcher3.LauncherCallbacks;
+import com.android.launcher3.R;
+import com.android.launcher3.allapps.AllAppsRecyclerView;
+import com.android.launcher3.allapps.AlphabeticalAppsList;
+import com.android.launcher3.util.ComponentKeyMapper;
+//import com.google.android.apps.nexuslauncher.reflection.g;
+
+import java.util.Iterator;
+
+public class a implements IconCache.ItemInfoUpdateReceiver, SharedPreferences.OnSharedPreferenceChangeListener
+{
+    private final LauncherCallbacks eC;
+    private final int eD;
+    private final Launcher mLauncher;
+    
+    public a(final Launcher mLauncher, final LauncherCallbacks ec) {
+        this.mLauncher = mLauncher;
+        this.eC = ec;
+        this.eD = mLauncher.getDeviceProfile().allAppsNumCols;
+    }
+    
+    public void di() {
+        final AlphabeticalAppsList apps = ((AllAppsRecyclerView)this.mLauncher.findViewById(R.id.apps_list_view)).getApps();
+        final IconCache iconCache = LauncherAppState.getInstance(this.mLauncher).getIconCache();
+        final Iterator iterator = this.eC.getPredictedApps().iterator();
+        int n = 0;
+        while (iterator.hasNext()) {
+            final AppInfo app = apps.findApp((ComponentKeyMapper<AppInfo>) iterator.next());
+            int n2;
+            if (app != null) {
+                if (app.usingLowResIcon) {
+                    iconCache.updateIconInBackground(this, app);
+                }
+                n2 = n + 1;
+                if (n2 >= this.eD) {
+                    break;
+                }
+            }
+            else {
+                n2 = n;
+            }
+            n = n2;
+        }
+    }
+    
+    public void onCreate() {
+        this.mLauncher.getSharedPrefs().registerOnSharedPreferenceChangeListener(this);
+        //g.aT(this.mLauncher).registerOnSharedPreferenceChangeListener(this);
+    }
+    
+    public void onDestroy() {
+        this.mLauncher.getSharedPrefs().unregisterOnSharedPreferenceChangeListener(this);
+        //g.aT(this.mLauncher).unregisterOnSharedPreferenceChangeListener(this);
+    }
+    
+    public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String s) {
+        if ("reflection_last_predictions".equals(s) || "pref_show_predictions".equals(s)) {
+            this.di();
+        }
+    }
+    
+    public void reapplyItemInfo(final ItemInfoWithIcon itemInfoWithIcon) {
+    }
+}
