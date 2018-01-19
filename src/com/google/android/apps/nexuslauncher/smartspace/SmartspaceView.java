@@ -7,6 +7,7 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Process;
@@ -53,7 +54,7 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
     private e dq;
     private BubbleTextView dr;
     private boolean ds;
-    private boolean dt;
+    private boolean mDoubleLine;
     private final OnClickListener mCalendarClickListener;
     private final OnClickListener mWeatherClickListener;
     private ImageView mSubtitleIcon;
@@ -105,13 +106,13 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
 
     private void initListeners(final e e) {
         final boolean cs = e.cS();
-        if (dt != cs) {
-            dt = cs;
+        if (mDoubleLine != cs) {
+            mDoubleLine = cs;
             cs();
         }
         setOnClickListener(this);
         setOnLongClickListener(co());
-        if (dt) {
+        if (mDoubleLine) {
             loadDoubleLine(e);
         } else {
             loadSingleLine(e);
@@ -187,6 +188,17 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
         mSubtitleWeatherText = findViewById(R.id.subtitle_weather_text);
         mClockView = findViewById(R.id.clock);
         mTitleSeparator = findViewById(R.id.title_sep);
+
+        setGoogleSans(mTitleText, mSubtitleText, mTitleWeatherText, mSubtitleWeatherText, mClockView);
+    }
+
+    private void setGoogleSans(TextView... views) {
+        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/GoogleSans-Regular.ttf");
+        for (TextView view : views) {
+            if (view != null) {
+                view.setTypeface(tf);
+            }
+        }
     }
 
     private String cn() {
@@ -203,13 +215,9 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
         final int indexOfChild = indexOfChild(mSmartspaceContent);
         removeView(mSmartspaceContent);
         final LayoutInflater from = LayoutInflater.from(getContext());
-        int n;
-        if (dt) {
-            n = R.layout.smartspace_twolines;
-        } else {
-            n = R.layout.smartspace_singleline;
-        }
-        addView(from.inflate(n, this, false), indexOfChild);
+        addView(from.inflate(mDoubleLine ?
+                R.layout.smartspace_twolines :
+                R.layout.smartspace_singleline, this, false), indexOfChild);
         loadViews();
     }
 
