@@ -13,10 +13,10 @@ import com.android.launcher3.userevent.nano.LauncherLogProto;
 import com.android.launcher3.widget.PendingAddShortcutInfo;
 import com.android.launcher3.widget.PendingItemDragHelper;
 
-public class b extends BaseItemDragListener {
+public class ItemDragListener extends BaseItemDragListener {
     private final LauncherActivityInfo mActivityInfo;
 
-    public b(LauncherActivityInfo activityInfo, Rect rect) {
+    public ItemDragListener(LauncherActivityInfo activityInfo, Rect rect) {
         super(rect, rect.width(), rect.width());
         mActivityInfo = activityInfo;
     }

@@ -23,7 +23,7 @@ import com.android.launcher3.allapps.SearchUiManager;
 import com.android.launcher3.dynamicui.WallpaperColorInfo;
 import com.android.launcher3.util.Themes;
 
-public class AllAppsQsbLayout extends e implements SearchUiManager, WallpaperColorInfo.OnChangeListener {
+public class AllAppsQsbLayout extends AbstractQsbLayout implements SearchUiManager, WallpaperColorInfo.OnChangeListener {
     private AllAppsRecyclerView mRecyclerView;
     private FallbackAppsSearchView mFallback;
     private int mAlpha;
@@ -104,16 +104,16 @@ public class AllAppsQsbLayout extends e implements SearchUiManager, WallpaperCol
         return n - layout.getPaddingLeft() - layout.getPaddingRight();
     }
 
-    protected void by() {
+    protected void loadBottomMargin() {
     }
 
     public void draw(final Canvas canvas) {
         if (mAlpha > 0) {
             if (mBitmap == null) {
-                mBitmap = bB(getResources().getDimension(R.dimen.hotseat_qsb_scroll_shadow_blur_radius), getResources().getDimension(R.dimen.hotseat_qsb_scroll_key_shadow_offset), 0);
+                mBitmap = createBitmap(getResources().getDimension(R.dimen.hotseat_qsb_scroll_shadow_blur_radius), getResources().getDimension(R.dimen.hotseat_qsb_scroll_key_shadow_offset), 0);
             }
             mShadowPaint.setAlpha(mAlpha);
-            bC(mBitmap, canvas);
+            loadDimensions(mBitmap, canvas);
             mShadowPaint.setAlpha(255);
         }
         super.draw(canvas);
@@ -134,6 +134,8 @@ public class AllAppsQsbLayout extends e implements SearchUiManager, WallpaperCol
             }
         });
 
+        recyclerView.setVerticalFadingEdgeEnabled(true);
+
         mRecyclerView = recyclerView;
     }
 
@@ -147,7 +149,7 @@ public class AllAppsQsbLayout extends e implements SearchUiManager, WallpaperCol
     public void onClick(final View view) {
         super.onClick(view);
         if (view == this) {
-            final f f = new f(this, true);
+            final SearchBarManager f = new SearchBarManager(this, true);
             if (!mActivity.getGoogleNow().startSearch(f.build(), f.getExtras())) {
                 searchFallback();
             }

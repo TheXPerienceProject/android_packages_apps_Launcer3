@@ -13,7 +13,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.os.RemoteException;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -26,9 +25,8 @@ import com.android.launcher3.Launcher;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.dragndrop.DragLayer;
-import com.google.android.apps.nexuslauncher.NexusLauncherActivity;
 
-public class HotseatQsbWidget extends e {
+public class HotseatQsbWidget extends AbstractQsbLayout {
     private boolean mIsDefaultLiveWallpaper;
     private boolean mGoogleHasFocus;
     private AnimatorSet mAnimatorSet;
@@ -48,7 +46,7 @@ public class HotseatQsbWidget extends e {
         mBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                bM();
+                setGoogleColored();
             }
         };
         mIsDefaultLiveWallpaper = isDefaultLiveWallpaper();
@@ -69,13 +67,11 @@ public class HotseatQsbWidget extends e {
         bz(mIsDefaultLiveWallpaper ? -855638017 : -1711604998);
     }
 
-    //Open QSB
     private void openQSB() {
         mSearchRequested = false;
         playAnimation(mGoogleHasFocus = true, true);
     }
 
-    //Close QSB
     private void closeQSB(boolean longDuration) {
         mSearchRequested = false;
         if (mGoogleHasFocus) {
@@ -89,15 +85,15 @@ public class HotseatQsbWidget extends e {
         Rect rect = new Rect(0, 0, getWidth(), getHeight());
         rect.offset(array[0], array[1]);
         rect.inset(getPaddingLeft(), getPaddingTop());
-        return f.getSearchIntent(rect, findViewById(R.id.g_icon), mMicIconView);
+        return SearchBarManager.getSearchIntent(rect, findViewById(R.id.g_icon), mMicIconView);
     }
 
-    private void bM() {
+    private void setGoogleColored() {
         if (mIsDefaultLiveWallpaper != isDefaultLiveWallpaper()) {
             mIsDefaultLiveWallpaper ^= true;
             removeAllViews();
             setColors();
-            bE();
+            loadAndGetPreferences();
         }
     }
 
@@ -115,7 +111,7 @@ public class HotseatQsbWidget extends e {
     }
 
     private void doOnClick() {
-        final f f = new f(this, false);
+        final SearchBarManager f = new SearchBarManager(this, false);
         if (mActivity.getGoogleNow().startSearch(f.build(), f.getExtras())) {
             SharedPreferences devicePrefs = Utilities.getDevicePrefs(getContext());
             devicePrefs.edit().putInt("key_hotseat_qsb_tap_count", devicePrefs.getInt("key_hotseat_qsb_tap_count", 0) + 1).apply();
@@ -182,7 +178,7 @@ public class HotseatQsbWidget extends e {
         return n - layout.getPaddingLeft() - layout.getPaddingRight();
     }
 
-    protected void by() {
+    protected void loadBottomMargin() {
         ((MarginLayoutParams) getLayoutParams()).bottomMargin = getBottomMargin(mActivity);
     }
 

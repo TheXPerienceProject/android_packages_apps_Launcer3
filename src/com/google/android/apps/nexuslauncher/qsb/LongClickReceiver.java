@@ -32,7 +32,7 @@ public class LongClickReceiver extends BroadcastReceiver {
         if (resolveActivity == null) {
             return;
         }
-        final b onDragListener = new b(resolveActivity, intent.getSourceBounds());
+        final ItemDragListener onDragListener = new ItemDragListener(resolveActivity, intent.getSourceBounds());
         onDragListener.setLauncher(launcher);
         launcher.showWorkspace(false);
         launcher.getDragLayer().setOnDragListener(onDragListener);

@@ -31,9 +31,9 @@ import com.android.launcher3.compat.LauncherAppsCompat;
 import com.android.launcher3.graphics.ShadowGenerator.Builder;
 import com.google.android.apps.nexuslauncher.NexusLauncherActivity;
 
-public abstract class e extends FrameLayout implements LauncherLayoutChangeListener, OnClickListener, OnSharedPreferenceChangeListener {
+public abstract class AbstractQsbLayout extends FrameLayout implements LauncherLayoutChangeListener, OnClickListener, OnSharedPreferenceChangeListener {
     protected final NexusLauncherActivity mActivity;
-    protected int cc;
+    protected int mColor;
     protected View mMicIconView;
     private final RectF mDestRect;
     private final Rect mSrcRect;
@@ -42,22 +42,22 @@ public abstract class e extends FrameLayout implements LauncherLayoutChangeListe
 
     protected abstract int getWidth(int i);
 
-    protected abstract void by();
+    protected abstract void loadBottomMargin();
 
-    public e(Context context) {
+    public AbstractQsbLayout(Context context) {
         this(context, null);
     }
 
-    public e(Context context, AttributeSet attrs) {
+    public AbstractQsbLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public e(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AbstractQsbLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mSrcRect = new Rect();
         mDestRect = new RectF();
         mShadowPaint = new Paint(1);
-        cc = 0;
+        mColor = 0;
         mActivity = (NexusLauncherActivity) Launcher.getLauncher(context);
     }
 
@@ -65,14 +65,14 @@ public abstract class e extends FrameLayout implements LauncherLayoutChangeListe
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mActivity.getDeviceProfile().addLauncherLayoutChangedListener(this);
-        bE().registerOnSharedPreferenceChangeListener(this);
+        loadAndGetPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
-    protected SharedPreferences bE() {
+    protected SharedPreferences loadAndGetPreferences() {
         mMicIconView = findViewById(R.id.mic_icon);
         mMicIconView.setOnClickListener(this);
         SharedPreferences devicePrefs = Utilities.getDevicePrefs(getContext());
-        bG(devicePrefs);
+        loadPreferences(devicePrefs);
         return devicePrefs;
     }
 
@@ -84,8 +84,8 @@ public abstract class e extends FrameLayout implements LauncherLayoutChangeListe
     }
 
     public void bz(int i) {
-        if (cc != i) {
-            cc = i;
+        if (mColor != i) {
+            mColor = i;
             mShadowBitmap = null;
             invalidate();
         }
@@ -97,7 +97,7 @@ public abstract class e extends FrameLayout implements LauncherLayoutChangeListe
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        by();
+        loadBottomMargin();
         DeviceProfile deviceProfile = this.mActivity.getDeviceProfile();
         int bw = getWidth(MeasureSpec.getSize(widthMeasureSpec));
         int calculateCellWidth = DeviceProfile.calculateCellWidth(bw, deviceProfile.inv.numHotseatIcons);
@@ -117,14 +117,14 @@ public abstract class e extends FrameLayout implements LauncherLayoutChangeListe
 
     public void draw(Canvas canvas) {
         if (mShadowBitmap == null) {
-            int i = LauncherAppState.getIDP(getContext()).iconBitmapSize;
-            mShadowBitmap = bB(((float) i) * 0.010416667f, ((float) i) * 0.020833334f, cc);
+            int iconBitmapSize = LauncherAppState.getIDP(getContext()).iconBitmapSize;
+            mShadowBitmap = createBitmap(((float) iconBitmapSize) * 0.010416667f, ((float) iconBitmapSize) * 0.020833334f, mColor);
         }
-        bC(mShadowBitmap, canvas);
+        loadDimensions(mShadowBitmap, canvas);
         super.draw(canvas);
     }
 
-    protected void bC(Bitmap bitmap, Canvas canvas) {
+    protected void loadDimensions(Bitmap bitmap, Canvas canvas) {
         int height = getHeight() - getPaddingTop() - getPaddingBottom();
         int i = height + 20;
         int width = bitmap.getWidth();
@@ -136,15 +136,15 @@ public abstract class e extends FrameLayout implements LauncherLayoutChangeListe
         float f = (float) ((width - i) / 2);
         int i2 = width / 2;
         float paddingLeft = ((float) getPaddingLeft()) - f;
-        bD(bitmap, canvas, 0, i2, paddingLeft, paddingLeft + ((float) i2));
+        drawWithDimensions(bitmap, canvas, 0, i2, paddingLeft, paddingLeft + ((float) i2));
         float width2 = ((float) (getWidth() - getPaddingRight())) + f;
-        bD(bitmap, canvas, i2, width, width2 - ((float) i2), width2);
+        drawWithDimensions(bitmap, canvas, i2, width, width2 - ((float) i2), width2);
         Bitmap bitmap2 = bitmap;
         Canvas canvas2 = canvas;
-        bD(bitmap2, canvas2, i2 - 5, i2 + 5, paddingLeft + ((float) i2), width2 - ((float) i2));
+        drawWithDimensions(bitmap2, canvas2, i2 - 5, i2 + 5, paddingLeft + ((float) i2), width2 - ((float) i2));
     }
 
-    private void bD(Bitmap bitmap, Canvas canvas, int srcLeft, int srcRight, float destLeft, float destRight) {
+    private void drawWithDimensions(Bitmap bitmap, Canvas canvas, int srcLeft, int srcRight, float destLeft, float destRight) {
         mSrcRect.left = srcLeft;
         mSrcRect.right = srcRight;
         mDestRect.left = destLeft;
@@ -152,21 +152,21 @@ public abstract class e extends FrameLayout implements LauncherLayoutChangeListe
         canvas.drawBitmap(bitmap, mSrcRect, mDestRect, mShadowPaint);
     }
 
-    protected Bitmap bB(float f, float f2, int i) {
+    protected Bitmap createBitmap(float shadowBlur, float keyShadowDistance, int color) {
         int height = (getHeight() - getPaddingTop()) - getPaddingBottom();
         int i2 = height + 20;
-        Builder builder = new Builder(i);
-        builder.shadowBlur = f;
-        builder.keyShadowDistance = f2;
+        Builder builder = new Builder(color);
+        builder.shadowBlur = shadowBlur;
+        builder.keyShadowDistance = keyShadowDistance;
         builder.keyShadowAlpha = builder.ambientShadowAlpha;
         Bitmap createPill = builder.createPill(i2, height);
-        if (Color.alpha(i) < 255) {
+        if (Color.alpha(color) < 255) {
             Canvas canvas = new Canvas(createPill);
             Paint paint = new Paint();
             paint.setXfermode(new PorterDuffXfermode(Mode.CLEAR));
             canvas.drawRoundRect(builder.bounds, (float) (height / 2), (float) (height / 2), paint);
             paint.setXfermode(null);
-            paint.setColor(i);
+            paint.setColor(color);
             canvas.drawRoundRect(builder.bounds, (float) (height / 2), (float) (height / 2), paint);
             canvas.setBitmap(null);
         }
@@ -195,13 +195,12 @@ public abstract class e extends FrameLayout implements LauncherLayoutChangeListe
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String str) {
         if ("opa_enabled".equals(str)) {
-            bG(sharedPreferences);
+            loadPreferences(sharedPreferences);
         }
     }
 
-    private void bG(SharedPreferences sharedPreferences) {
+    private void loadPreferences(SharedPreferences sharedPreferences) {
         mMicIconView.setVisibility(sharedPreferences.getBoolean("opa_enabled", true) ? View.GONE : View.VISIBLE);
-        //mMicIconView.setVisibility(View.VISIBLE);
         requestLayout();
     }
 }

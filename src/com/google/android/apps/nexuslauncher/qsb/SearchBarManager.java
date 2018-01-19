@@ -36,23 +36,23 @@ import com.google.android.apps.nexuslauncher.search.nano.d;
 import java.util.ArrayList;
 import java.util.List;
 
-public class f {
+public class SearchBarManager {
     private final c cl;
     private final NexusLauncherActivity mActivity;
     private final Bundle cn;
     private boolean co;
-    private final e cp;
+    private final AbstractQsbLayout cp;
     private BubbleTextView cq;
     private final boolean cr;
     private final UserManagerCompat mUserManager;
 
-    public f(e cp, boolean cr) {
-        this.cn = new Bundle();
-        this.cl = new c();
+    public SearchBarManager(AbstractQsbLayout cp, boolean cr) {
+        cn = new Bundle();
+        cl = new c();
         this.cp = cp;
-        this.mActivity = this.cp.mActivity;
+        mActivity = cp.mActivity;
         this.cr = cr;
-        this.mUserManager = UserManagerCompat.getInstance(this.mActivity);
+        mUserManager = UserManagerCompat.getInstance(mActivity);
     }
 
     public static Intent getSearchIntent(Rect sourceBounds, View gIcon, View micIcon) {
@@ -88,7 +88,7 @@ public class f {
     }
 
     private int bY() {
-        return android.support.v4.graphics.ColorUtils.compositeColors(Themes.getAttrColor(this.mActivity, R.attr.allAppsScrimColor), android.support.v4.graphics.ColorUtils.setAlphaComponent(WallpaperColorInfo.getInstance(this.mActivity).getMainColor(), 255));
+        return android.support.v4.graphics.ColorUtils.compositeColors(Themes.getAttrColor(mActivity, R.attr.allAppsScrimColor), android.support.v4.graphics.ColorUtils.setAlphaComponent(WallpaperColorInfo.getInstance(mActivity).getMainColor(), 255));
     }
 
     private b bZ(final AppInfo appInfo, final int n) {
@@ -96,44 +96,44 @@ public class f {
         b.label = appInfo.title.toString();
         b.ej = "icon_bitmap_" + n;
         cn.putParcelable(b.ej, appInfo.iconBitmap);
-        final Uri dm = AppSearchProvider.dm(appInfo, this.mUserManager);
+        Uri dm = AppSearchProvider.dm(appInfo, mUserManager);
         b.el = dm.toString();
         b.ek = new Intent("com.google.android.apps.nexuslauncher.search.APP_LAUNCH", dm.buildUpon().appendQueryParameter("predictionRank", Integer.toString(n)).build()).toUri(0);
         return b;
     }
 
     private RemoteViews ca() {
-        final RemoteViews remoteViews = new RemoteViews(this.mActivity.getPackageName(), R.layout.apps_search_icon_template);
-        final int iconSize = this.cq.getIconSize();
-        final int n2 = (this.cq.getWidth() - iconSize) / 2;
-        final int paddingTop = this.cq.getPaddingTop();
-        final int n3 = this.cq.getHeight() - iconSize - paddingTop;
+        final RemoteViews remoteViews = new RemoteViews(mActivity.getPackageName(), R.layout.apps_search_icon_template);
+        final int iconSize = cq.getIconSize();
+        final int n2 = (cq.getWidth() - iconSize) / 2;
+        final int paddingTop = cq.getPaddingTop();
+        final int n3 = cq.getHeight() - iconSize - paddingTop;
         remoteViews.setViewPadding(R.id.icon, n2, paddingTop, n2, n3);
         final int min = Math.min((int) (iconSize * 0.12f), Math.min(n2, Math.min(paddingTop, n3)));
         remoteViews.setViewPadding(R.id.click_feedback_wrapper, n2 - min, paddingTop - min, n2 - min, n3 - min);
-        remoteViews.setTextViewTextSize(R.id.title, 0, this.mActivity.getDeviceProfile().allAppsIconTextSizePx);
-        remoteViews.setViewPadding(R.id.title, this.cq.getPaddingLeft(), this.cq.getCompoundDrawablePadding() + this.cq.getIconSize(), this.cq.getPaddingRight(), 0);
+        remoteViews.setTextViewTextSize(R.id.title, 0, mActivity.getDeviceProfile().allAppsIconTextSizePx);
+        remoteViews.setViewPadding(R.id.title, cq.getPaddingLeft(), cq.getCompoundDrawablePadding() + cq.getIconSize(), cq.getPaddingRight(), 0);
         return remoteViews;
     }
 
     private RemoteViews cb() {
-        final RemoteViews remoteViews = new RemoteViews(this.mActivity.getPackageName(), R.layout.apps_search_qsb_template);
-        final int n = this.cp.getHeight() - this.cp.getPaddingTop() - this.cp.getPaddingBottom() + 20;
-        final Bitmap mShadowBitmap = this.cp.mShadowBitmap;
+        final RemoteViews remoteViews = new RemoteViews(mActivity.getPackageName(), R.layout.apps_search_qsb_template);
+        final int n = cp.getHeight() - cp.getPaddingTop() - cp.getPaddingBottom() + 20;
+        final Bitmap mShadowBitmap = cp.mShadowBitmap;
         final int n2 = (mShadowBitmap.getWidth() - n) / 2;
-        final int n3 = (this.cp.getHeight() - mShadowBitmap.getHeight()) / 2;
-        remoteViews.setViewPadding(R.layout.all_apps_discovery_loading_divider, this.cp.getPaddingLeft() - n2, n3, this.cp.getPaddingRight() - n2, n3);
+        final int n3 = (cp.getHeight() - mShadowBitmap.getHeight()) / 2;
+        remoteViews.setViewPadding(R.layout.all_apps_discovery_loading_divider, cp.getPaddingLeft() - n2, n3, cp.getPaddingRight() - n2, n3);
         final Bitmap bitmap = Bitmap.createBitmap(mShadowBitmap, 0, 0, mShadowBitmap.getWidth() / 2, mShadowBitmap.getHeight());
         remoteViews.setImageViewBitmap(R.id.qsb_background_1, bitmap);
         remoteViews.setImageViewBitmap(R.id.qsb_background_3, bitmap);
         remoteViews.setImageViewBitmap(R.id.qsb_background_2, Bitmap.createBitmap(mShadowBitmap, (mShadowBitmap.getWidth() - 20) / 2, 0, 20, mShadowBitmap.getHeight()));
-        if (this.cp.mMicIconView.getVisibility() != View.VISIBLE) {
+        if (cp.mMicIconView.getVisibility() != View.VISIBLE) {
             remoteViews.setViewVisibility(R.id.mic_icon, View.INVISIBLE);
         }
-        final View viewById = this.cp.findViewById(R.id.g_icon);
+        final View viewById = cp.findViewById(R.id.g_icon);
         int left;
-        if (this.cp.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
-            left = this.cp.getWidth() - viewById.getRight();
+        if (cp.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
+            left = cp.getWidth() - viewById.getRight();
         } else {
             left = viewById.getLeft();
         }
@@ -151,43 +151,43 @@ public class f {
     }
 
     private void cd() {
-        this.cl.ey = "search_box_template";
-        this.cn.putParcelable(this.cl.ey, this.cb());
-        this.cl.ew = R.id.g_icon;
+        cl.ey = "search_box_template";
+        cn.putParcelable(cl.ey, cb());
+        cl.ew = R.id.g_icon;
         final c cl = this.cl;
         int ex;
-        if (this.cp.mMicIconView.getVisibility() != View.VISIBLE) {
+        if (cp.mMicIconView.getVisibility() != View.VISIBLE) {
             ex = 0;
         } else {
             ex = R.id.mic_icon;
         }
         cl.ex = ex;
-        final a viewBounds = getViewBounds(this.mActivity.getDragLayer());
-        int eg = this.cl.en.eg;
-        if (!this.co) {
-            eg += this.cl.en.ee;
+        final a viewBounds = getViewBounds(mActivity.getDragLayer());
+        int eg = cl.en.eg;
+        if (!co) {
+            eg += cl.en.ee;
         }
         viewBounds.eg += eg;
         viewBounds.ee -= eg;
-        this.cl.et = viewBounds;
+        cl.et = viewBounds;
         final Bitmap bitmap = Bitmap.createBitmap(viewBounds.eh, viewBounds.ee, Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(bitmap);
         canvas.translate(0.0f, (float) (-eg));
-        final AllAppsRecyclerView bx = this.bX();
+        final AllAppsRecyclerView bx = bX();
         final int[] array = {0, 0};
-        this.mActivity.getDragLayer().mapCoordInSelfToDescendant(bx, array);
+        mActivity.getDragLayer().mapCoordInSelfToDescendant(bx, array);
         canvas.translate((float) (-array[0]), (float) (-array[1]));
         bx.draw(canvas);
         canvas.setBitmap(null);
-        this.cl.eu = "preview_bitmap";
-        this.cn.putParcelable(this.cl.eu, bitmap);
+        cl.eu = "preview_bitmap";
+        cn.putParcelable(cl.eu, bitmap);
     }
 
     private void ce() {
         int i = 0;
-        final AllAppsRecyclerView bx = this.bX();
+        final AllAppsRecyclerView bx = bX();
         final GridLayoutManager.SpanSizeLookup spanSizeLookup = ((GridLayoutManager) bx.getLayoutManager()).getSpanSizeLookup();
-        final int allAppsNumCols = this.mActivity.getDeviceProfile().allAppsNumCols;
+        final int allAppsNumCols = mActivity.getDeviceProfile().allAppsNumCols;
         final int childCount = bx.getChildCount();
         final BubbleTextView[] bubbleTextViews = new BubbleTextView[allAppsNumCols];
         int n = -1;
@@ -214,69 +214,69 @@ public class f {
         View o = childViewHolder.itemView;
         if (bubbleTextViews[0] == null) {
             Log.e("ConfigBuilder", "No icons rendered in all apps");
-            this.cf();
+            cf();
             return;
         }
 
-        this.cq = bubbleTextViews[0];
-        this.cl.es = allAppsNumCols;
-        this.co = (bx.getChildViewHolder(bubbleTextViews[0]).getItemViewType() == 4);
+        cq = bubbleTextViews[0];
+        cl.es = allAppsNumCols;
+        co = (bx.getChildViewHolder(bubbleTextViews[0]).getItemViewType() == 4);
         a viewBounds = getViewBounds(bubbleTextViews[allAppsNumCols - 1]);
         a viewBounds2 = getViewBounds(bubbleTextViews[0]);
-        if (!Utilities.isRtl(this.mActivity.getResources())) {
+        if (!Utilities.isRtl(mActivity.getResources())) {
             final a a = viewBounds2;
             viewBounds2 = viewBounds;
             viewBounds = a;
         }
         viewBounds.eh = viewBounds2.eh + viewBounds2.ef - viewBounds.ef;
-        this.cl.en = viewBounds;
-        if (!this.co) {
+        cl.en = viewBounds;
+        if (!co) {
             viewBounds.eg -= viewBounds.ee;
         } else if (o != null) {
             final a viewBounds3 = getViewBounds(o);
             viewBounds3.eh = viewBounds.eh;
-            this.cl.ez = viewBounds3;
+            cl.ez = viewBounds3;
         }
-        this.bW();
+        bW();
 
         List<AppInfo> predictedApps = bx.getApps().getPredictedApps();
         int min = Math.min(predictedApps.size(), allAppsNumCols);
-        this.cl.eo = new b[min];
+        cl.eo = new b[min];
         while (i < min) {
-            this.cl.eo[i] = this.bZ(predictedApps.get(i), i);
+            cl.eo[i] = bZ(predictedApps.get(i), i);
             ++i;
         }
     }
 
     private void cf() {
         int n2 = 0;
-        this.cl.es = this.mActivity.getDeviceProfile().allAppsNumCols;
-        final int width = this.mActivity.getHotseat().getWidth();
-        final int dimensionPixelSize = this.mActivity.getResources().getDimensionPixelSize(R.dimen.dynamic_grid_edge_margin);
+        cl.es = mActivity.getDeviceProfile().allAppsNumCols;
+        final int width = mActivity.getHotseat().getWidth();
+        final int dimensionPixelSize = mActivity.getResources().getDimensionPixelSize(R.dimen.dynamic_grid_edge_margin);
         final a en = new a();
         en.ef = dimensionPixelSize;
         en.eh = width - dimensionPixelSize - dimensionPixelSize;
-        en.ee = this.mActivity.getDeviceProfile().allAppsCellHeightPx;
-        this.cl.en = en;
-        this.bW();
-        final AlphabeticalAppsList apps = this.bX().getApps();
-        this.cq = (BubbleTextView) this.mActivity.getLayoutInflater().inflate(R.layout.all_apps_icon, this.bX(), false);
-        final ViewGroup.LayoutParams layoutParams = this.cq.getLayoutParams();
+        en.ee = mActivity.getDeviceProfile().allAppsCellHeightPx;
+        cl.en = en;
+        bW();
+        final AlphabeticalAppsList apps = bX().getApps();
+        cq = (BubbleTextView) mActivity.getLayoutInflater().inflate(R.layout.all_apps_icon, bX(), false);
+        final ViewGroup.LayoutParams layoutParams = cq.getLayoutParams();
         layoutParams.height = en.ee;
-        layoutParams.width = en.eh / this.cl.es;
+        layoutParams.width = en.eh / cl.es;
         if (!apps.getApps().isEmpty()) {
-            this.cq.applyFromApplicationInfo(apps.getApps().get(0));
+            cq.applyFromApplicationInfo(apps.getApps().get(0));
         }
-        this.cq.measure(View.MeasureSpec.makeMeasureSpec(layoutParams.width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(layoutParams.height, View.MeasureSpec.EXACTLY));
-        this.cq.layout(0, 0, layoutParams.width, layoutParams.height);
-        final ArrayList<b> list = new ArrayList<>(this.cl.es);
+        cq.measure(View.MeasureSpec.makeMeasureSpec(layoutParams.width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(layoutParams.height, View.MeasureSpec.EXACTLY));
+        cq.layout(0, 0, layoutParams.width, layoutParams.height);
+        final ArrayList<b> list = new ArrayList<>(cl.es);
         for (ComponentKeyMapper<AppInfo> cmp : mActivity.getPredictedApps()) {
             final AppInfo app = apps.findApp(cmp);
             int n3;
             if (app != null) {
-                list.add(this.bZ(app, n2));
+                list.add(bZ(app, n2));
                 n3 = n2 + 1;
-                if (n3 >= this.cl.es) {
+                if (n3 >= cl.es) {
                     break;
                 }
             } else {
@@ -285,7 +285,7 @@ public class f {
             n2 = n3;
         }
 
-        this.cl.eo = list.toArray(new b[list.size()]);
+        cl.eo = list.toArray(new b[list.size()]);
     }
 
     private static a getViewBounds(final View view) {
@@ -300,29 +300,29 @@ public class f {
     }
 
     public byte[] build() {
-        this.cl.em = this.bY();
-        this.cl.eq = Themes.getAttrBoolean(this.mActivity, R.attr.isMainColorDark);
-        if (this.cr) {
-            this.ce();
+        cl.em = bY();
+        cl.eq = Themes.getAttrBoolean(mActivity, R.attr.isMainColorDark);
+        if (cr) {
+            ce();
         } else {
-            this.cf();
+            cf();
         }
-        this.cl.ep = "icon_view_template";
-        this.cn.putParcelable(this.cl.ep, this.ca());
-        this.cl.er = "icon_long_click";
-        this.cn.putParcelable(this.cl.er, PendingIntent.getBroadcast(this.mActivity, 2055, new Intent().setComponent(new ComponentName(this.mActivity, LongClickReceiver.class)), PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT));
-        LongClickReceiver.bq(this.mActivity);
-        this.cl.ev = getViewBounds(this.cp);
-        this.cl.eA = this.cr;
-        if (this.cr) {
-            this.cd();
+        cl.ep = "icon_view_template";
+        cn.putParcelable(cl.ep, ca());
+        cl.er = "icon_long_click";
+        cn.putParcelable(cl.er, PendingIntent.getBroadcast(mActivity, 2055, new Intent().setComponent(new ComponentName(mActivity, LongClickReceiver.class)), PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT));
+        LongClickReceiver.bq(mActivity);
+        cl.ev = getViewBounds(cp);
+        cl.eA = cr;
+        if (cr) {
+            cd();
         }
         final d d = new d();
-        d.eB = this.cl;
+        d.eB = cl;
         return com.google.protobuf.nano.a.toByteArray(d);
     }
 
     public Bundle getExtras() {
-        return this.cn;
+        return cn;
     }
 }
