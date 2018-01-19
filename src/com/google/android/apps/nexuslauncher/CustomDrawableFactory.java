@@ -8,7 +8,7 @@ import com.android.launcher3.ItemInfo;
 import com.android.launcher3.Utilities;
 
 public class CustomDrawableFactory extends DynamicDrawableFactory {
-    private boolean hasIconPack;
+    private final boolean hasIconPack;
 
     public CustomDrawableFactory(Context context) {
         super(context);
