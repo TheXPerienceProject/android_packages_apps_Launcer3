@@ -1,9 +1,11 @@
 package com.google.android.apps.nexuslauncher;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.support.v4.graphics.ColorUtils;
 import android.view.Menu;
 import android.view.View;
 
@@ -13,8 +15,10 @@ import com.android.launcher3.LauncherCallbacks;
 import com.android.launcher3.LauncherExterns;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
+import com.android.launcher3.dynamicui.WallpaperColorInfo;
 import com.android.launcher3.graphics.DrawableFactory;
 import com.android.launcher3.util.ComponentKeyMapper;
+import com.android.launcher3.util.Themes;
 import com.google.android.apps.nexuslauncher.smartspace.SmartspaceView;
 import com.google.android.apps.nexuslauncher.smartspace.f;
 import com.google.android.libraries.launcherclient.GoogleNow;
@@ -33,6 +37,7 @@ public class NexusLauncher {
     com.google.android.libraries.launcherclient.GoogleNow fy;
     com.google.android.apps.nexuslauncher.NexusLauncherOverlay fz;
     private boolean mStarted;
+    private final Bundle mUiInformation = new Bundle();
 
     public NexusLauncher(NexusLauncherActivity activity) {
         fB = activity;
@@ -46,7 +51,7 @@ public class NexusLauncher {
                 (sharedPreferences.getBoolean("pref_enable_minus_one", true) ? 1 : 0) | 0x2 | 0x4 | 0x8);
     }
 
-    class NexusLauncherCallbacks implements LauncherCallbacks {
+    class NexusLauncherCallbacks implements LauncherCallbacks, SharedPreferences.OnSharedPreferenceChangeListener, WallpaperColorInfo.OnChangeListener {
         private SmartspaceView mSmartspace;
 
         public void bindAllApplications(final ArrayList<AppInfo> list) {
@@ -96,9 +101,10 @@ public class NexusLauncher {
             f.get(fB).cW();
             mSmartspace = fB.findViewById(R.id.search_container_workspace);
 
-            Bundle bundle2 = new Bundle();
-            bundle2.putInt("system_ui_visibility", fB.getWindow().getDecorView().getSystemUiVisibility());
-            fy.redraw(bundle2);
+            mUiInformation.putInt("system_ui_visibility", fB.getWindow().getDecorView().getSystemUiVisibility());
+            WallpaperColorInfo instance = WallpaperColorInfo.getInstance(fB);
+            instance.addOnChangeListener(this);
+            onExtractedColorsChanged(instance);
         }
 
         public void onDestroy() {
@@ -212,19 +218,47 @@ public class NexusLauncher {
         }
 
         public boolean startSearch(String s, boolean b, Bundle bundle) {
-                /*View viewById = fB.findViewById(R.id.g_icon);
-                while (viewById != null && !viewById.isClickable()) {
-                    if (viewById.getParent() instanceof View) {
-                        viewById = (View)viewById.getParent();
-                    } else {
-                        viewById = null;
-                    }
+            View gIcon = fB.findViewById(R.id.g_icon);
+            while (gIcon != null && !gIcon.isClickable()) {
+                if (gIcon.getParent() instanceof View) {
+                    gIcon = (View)gIcon.getParent();
+                } else {
+                    gIcon = null;
                 }
-                if (viewById != null && viewById.performClick()) {
-                    fD.clearTypedText();
-                    return true;
-                }*/
+            }
+            if (gIcon != null && gIcon.performClick()) {
+                fD.clearTypedText();
+                return true;
+            }
             return false;
         }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        }
+
+        @Override
+        public void onExtractedColorsChanged(WallpaperColorInfo wallpaperColorInfo) {
+            int alpha = fB.getResources().getInteger(R.integer.extracted_color_gradient_alpha);
+
+            mUiInformation.putInt("background_color_hint", primaryColor(wallpaperColorInfo, fB, alpha));
+            mUiInformation.putInt("background_secondary_color_hint", secondaryColor(wallpaperColorInfo, fB, alpha));
+            mUiInformation.putBoolean("is_background_dark", Themes.getAttrBoolean(fB, R.attr.isMainColorDark));
+
+            fy.redraw(mUiInformation);
+        }
+    }
+
+    public static int primaryColor(WallpaperColorInfo wallpaperColorInfo, Context context, int alpha) {
+        return compositeAllApps(ColorUtils.setAlphaComponent(wallpaperColorInfo.getMainColor(), alpha), context);
+    }
+
+    public static int secondaryColor(WallpaperColorInfo wallpaperColorInfo, Context context, int alpha) {
+        return compositeAllApps(ColorUtils.setAlphaComponent(wallpaperColorInfo.getSecondaryColor(), alpha), context);
+    }
+
+    private static int compositeAllApps(int color, Context context) {
+        return ColorUtils.compositeColors(Themes.getAttrColor(context, R.attr.allAppsScrimColor), color);
     }
 }
