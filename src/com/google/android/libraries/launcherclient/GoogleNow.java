@@ -279,8 +279,9 @@ public class GoogleNow {
                 try {
                     if (GoogleNow.API_VERSION >= 4) {
                         mOverlay.setActivityState(mFlags);
+                    } else {
+                        mOverlay.onPause();
                     }
-                    mOverlay.onPause();
                 } catch (RemoteException ex) {
                     ex.printStackTrace();
                 }
@@ -294,8 +295,9 @@ public class GoogleNow {
             if (mOverlay != null && mLayoutParams != null) {
                 if (GoogleNow.API_VERSION >= 4) {
                     mOverlay.setActivityState(mFlags);
+                } else {
+                    mOverlay.onResume();
                 }
-                mOverlay.onResume();
             }
         }
     }
