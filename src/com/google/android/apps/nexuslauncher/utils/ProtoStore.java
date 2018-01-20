@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.launcher3.util.IOUtils;
+import com.google.protobuf.nano.MessageNano;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,11 +17,11 @@ public class ProtoStore {
         mContext = context.getApplicationContext();
     }
 
-    public void dw(com.google.protobuf.nano.a p1, String name) {
+    public void dw(MessageNano p1, String name) {
         try {
             FileOutputStream fos = mContext.openFileOutput(name, 0);
             if (fos != null) {
-                fos.write(com.google.protobuf.nano.a.toByteArray(p1));
+                fos.write(MessageNano.toByteArray(p1));
             } else {
                 Log.d("ProtoStore", "deleting " + name);
                 mContext.deleteFile(name);
@@ -28,14 +29,14 @@ public class ProtoStore {
         } catch (FileNotFoundException e) {
             Log.d("ProtoStore", "file does not exist");
         } catch (Exception e) {
-            Log.e("ProtoStore", "unable to write file");
+            Log.e("ProtoStore", "unable to write file", e);
         }
     }
 
-    public boolean dv(String name, com.google.protobuf.nano.a a) {
+    public boolean dv(String name, MessageNano a) {
         File fileStreamPath = mContext.getFileStreamPath(name);
         try {
-            a.mergeFrom(a, IOUtils.toByteArray(fileStreamPath));
+            MessageNano.mergeFrom(a, IOUtils.toByteArray(fileStreamPath));
             return true;
         }
         catch (FileNotFoundException ex2) {
