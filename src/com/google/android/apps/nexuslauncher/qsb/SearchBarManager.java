@@ -28,16 +28,16 @@ import com.android.launcher3.util.ComponentKeyMapper;
 import com.android.launcher3.util.Themes;
 import com.google.android.apps.nexuslauncher.NexusLauncherActivity;
 import com.google.android.apps.nexuslauncher.search.AppSearchProvider;
-import com.google.android.apps.nexuslauncher.search.nano.a;
-import com.google.android.apps.nexuslauncher.search.nano.b;
-import com.google.android.apps.nexuslauncher.search.nano.c;
-import com.google.android.apps.nexuslauncher.search.nano.d;
+import com.google.android.apps.nexuslauncher.search.nano.SearchProto.a_search;
+import com.google.android.apps.nexuslauncher.search.nano.SearchProto.b_search;
+import com.google.android.apps.nexuslauncher.search.nano.SearchProto.c_search;
+import com.google.android.apps.nexuslauncher.search.nano.SearchProto.d_search;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchBarManager {
-    private final c cl;
+    private final c_search cl;
     private final NexusLauncherActivity mActivity;
     private final Bundle cn;
     private boolean co;
@@ -48,7 +48,7 @@ public class SearchBarManager {
 
     public SearchBarManager(AbstractQsbLayout cp, boolean cr) {
         cn = new Bundle();
-        cl = new c();
+        cl = new c_search();
         this.cp = cp;
         mActivity = cp.mActivity;
         this.cr = cr;
@@ -74,8 +74,8 @@ public class SearchBarManager {
         if (cl.ez != null) {
             return;
         }
-        final a en = cl.en;
-        final a ez = new a();
+        final a_search en = cl.en;
+        final a_search ez = new a_search();
         ez.ef = en.ef;
         ez.eg = en.eg + en.ee;
         ez.ee = en.ee;
@@ -91,8 +91,8 @@ public class SearchBarManager {
         return android.support.v4.graphics.ColorUtils.compositeColors(Themes.getAttrColor(mActivity, R.attr.allAppsScrimColor), android.support.v4.graphics.ColorUtils.setAlphaComponent(WallpaperColorInfo.getInstance(mActivity).getMainColor(), 255));
     }
 
-    private b bZ(final AppInfo appInfo, final int n) {
-        final b b = new b();
+    private b_search bZ(final AppInfo appInfo, final int n) {
+        final b_search b = new b_search();
         b.label = appInfo.title.toString();
         b.ej = "icon_bitmap_" + n;
         cn.putParcelable(b.ej, appInfo.iconBitmap);
@@ -154,7 +154,7 @@ public class SearchBarManager {
         cl.ey = "search_box_template";
         cn.putParcelable(cl.ey, cb());
         cl.ew = R.id.g_icon;
-        final c cl = this.cl;
+        final c_search cl = this.cl;
         int ex;
         if (cp.mMicIconView.getVisibility() != View.VISIBLE) {
             ex = 0;
@@ -162,7 +162,7 @@ public class SearchBarManager {
             ex = R.id.mic_icon;
         }
         cl.ex = ex;
-        final a viewBounds = getViewBounds(mActivity.getDragLayer());
+        final a_search viewBounds = getViewBounds(mActivity.getDragLayer());
         int eg = cl.en.eg;
         if (!co) {
             eg += cl.en.ee;
@@ -221,10 +221,10 @@ public class SearchBarManager {
         cq = bubbleTextViews[0];
         cl.es = allAppsNumCols;
         co = (bx.getChildViewHolder(bubbleTextViews[0]).getItemViewType() == 4);
-        a viewBounds = getViewBounds(bubbleTextViews[allAppsNumCols - 1]);
-        a viewBounds2 = getViewBounds(bubbleTextViews[0]);
+        a_search viewBounds = getViewBounds(bubbleTextViews[allAppsNumCols - 1]);
+        a_search viewBounds2 = getViewBounds(bubbleTextViews[0]);
         if (!Utilities.isRtl(mActivity.getResources())) {
-            final a a = viewBounds2;
+            final a_search a = viewBounds2;
             viewBounds2 = viewBounds;
             viewBounds = a;
         }
@@ -233,7 +233,7 @@ public class SearchBarManager {
         if (!co) {
             viewBounds.eg -= viewBounds.ee;
         } else if (o != null) {
-            final a viewBounds3 = getViewBounds(o);
+            final a_search viewBounds3 = getViewBounds(o);
             viewBounds3.eh = viewBounds.eh;
             cl.ez = viewBounds3;
         }
@@ -241,7 +241,7 @@ public class SearchBarManager {
 
         List<AppInfo> predictedApps = bx.getApps().getPredictedApps();
         int min = Math.min(predictedApps.size(), allAppsNumCols);
-        cl.eo = new b[min];
+        cl.eo = new b_search[min];
         while (i < min) {
             cl.eo[i] = bZ(predictedApps.get(i), i);
             ++i;
@@ -253,7 +253,7 @@ public class SearchBarManager {
         cl.es = mActivity.getDeviceProfile().allAppsNumCols;
         final int width = mActivity.getHotseat().getWidth();
         final int dimensionPixelSize = mActivity.getResources().getDimensionPixelSize(R.dimen.dynamic_grid_edge_margin);
-        final a en = new a();
+        final a_search en = new a_search();
         en.ef = dimensionPixelSize;
         en.eh = width - dimensionPixelSize - dimensionPixelSize;
         en.ee = mActivity.getDeviceProfile().allAppsCellHeightPx;
@@ -269,7 +269,7 @@ public class SearchBarManager {
         }
         cq.measure(View.MeasureSpec.makeMeasureSpec(layoutParams.width, View.MeasureSpec.EXACTLY), View.MeasureSpec.makeMeasureSpec(layoutParams.height, View.MeasureSpec.EXACTLY));
         cq.layout(0, 0, layoutParams.width, layoutParams.height);
-        final ArrayList<b> list = new ArrayList<>(cl.es);
+        final ArrayList<b_search> list = new ArrayList<>(cl.es);
         for (ComponentKeyMapper<AppInfo> cmp : mActivity.getPredictedApps()) {
             final AppInfo app = apps.findApp(cmp);
             int n3;
@@ -285,11 +285,11 @@ public class SearchBarManager {
             n2 = n3;
         }
 
-        cl.eo = list.toArray(new b[list.size()]);
+        cl.eo = list.toArray(new b_search[list.size()]);
     }
 
-    private static a getViewBounds(final View view) {
-        final a a = new a();
+    private static a_search getViewBounds(final View view) {
+        final a_search a = new a_search();
         a.eh = view.getWidth();
         a.ee = view.getHeight();
         final int[] array = new int[2];
@@ -317,9 +317,9 @@ public class SearchBarManager {
         if (cr) {
             cd();
         }
-        final d d = new d();
+        final d_search d = new d_search();
         d.eB = cl;
-        return com.google.protobuf.nano.a.toByteArray(d);
+        return com.google.protobuf.nano.MessageNano.toByteArray(d);
     }
 
     public Bundle getExtras() {
