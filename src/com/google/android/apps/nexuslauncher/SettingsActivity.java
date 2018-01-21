@@ -13,7 +13,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.text.TextUtils;
@@ -25,9 +24,6 @@ import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.util.LooperExecutor;
 import com.google.android.apps.nexuslauncher.smartspace.f;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class SettingsActivity extends com.android.launcher3.SettingsActivity implements PreferenceFragment.OnPreferenceStartFragmentCallback {
     public final static String ICON_PACK_PREF = "pref_icon_pack";
@@ -55,8 +51,9 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
         return true;
     }
 
-    public static class MySettingsFragment extends com.android.launcher3.SettingsActivity.LauncherSettingsFragment implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
-        private ListPreference mIconPackPref;
+    public static class MySettingsFragment extends com.android.launcher3.SettingsActivity.LauncherSettingsFragment
+            implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
+        private CustomIconsPreference mIconPackPref;
         private Context mContext;
 
         @Override
@@ -81,7 +78,7 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
                 Log.e("SettingsActivity", "Unable to load my own package info", ex);
             }
 
-            mIconPackPref = (ListPreference) findPreference(ICON_PACK_PREF);
+            mIconPackPref = (CustomIconsPreference) findPreference(ICON_PACK_PREF);
             mIconPackPref.setOnPreferenceChangeListener(this);
 
             //ToDo: Add
@@ -108,23 +105,7 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
         @Override
         public void onResume() {
             super.onResume();
-
-            HashMap<String, CharSequence> packList = CustomIconUtils.getPackProviders(mContext);
-
-            CharSequence[] keys = new String[packList.size() + 1];
-            keys[0] = mContext.getResources().getString(R.string.icon_shape_system_default);
-
-            CharSequence[] values = new String[keys.length];
-            values[0] = "";
-
-            int i = 1;
-            for (Map.Entry<String, CharSequence> entry : packList.entrySet()) {
-                keys[i] = entry.getValue();
-                values[i++] = entry.getKey();
-            }
-
-            mIconPackPref.setEntries(keys);
-            mIconPackPref.setEntryValues(values);
+            mIconPackPref.reloadIconPacks();
         }
 
         @Override
@@ -133,7 +114,7 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
                 case ICON_PACK_PREF:
                     ProgressDialog.show(mContext,
                             null /* title */,
-                            getContext().getString(R.string.state_loading),
+                            mContext.getString(R.string.state_loading),
                             true /* indeterminate */,
                             false /* cancelable */);
 

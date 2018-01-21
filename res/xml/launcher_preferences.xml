@@ -74,7 +74,7 @@
         android:defaultValue=""
         android:persistent="false" />
 
-    <ListPreference
+    <com.google.android.apps.nexuslauncher.CustomIconsPreference
         android:key="pref_icon_pack"
         android:title="@string/pref_icon_pack"
         android:summary="%s"
