@@ -139,6 +139,7 @@ import com.android.launcher3.widget.WidgetAddFlowHandler;
 import com.android.launcher3.widget.WidgetHostViewLoader;
 import com.android.launcher3.widget.WidgetsContainerView;
 
+
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -3615,12 +3616,20 @@ public class Launcher extends BaseActivity
                 InstallShortcutReceiver.FLAG_LOADER_RUNNING, this);
 
         if (Utilities.ATLEAST_MARSHMALLOW) {
-            boolean hasNotificationAccess = false;
-            for (String packageName : NotificationManagerCompat.getEnabledListenerPackages(this)) {
-                hasNotificationAccess |= packageName.equals(getApplicationContext().getPackageName());
+            final String notifAccessPopupPref = "notif_access_popup";
+            boolean hasNotificationAccess = mSharedPrefs.getBoolean(notifAccessPopupPref, false);
+            if (!hasNotificationAccess) {
+                mSharedPrefs.edit().putBoolean(notifAccessPopupPref, true).apply();
+                for (String packageName : NotificationManagerCompat.getEnabledListenerPackages(this)) {
+                    if (packageName.equals(getApplicationContext().getPackageName())) {
+                        hasNotificationAccess = true;
+                        break;
+                    }
+                }
+                if (!hasNotificationAccess) {
+                    startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+                }
             }
-            if (!hasNotificationAccess)
-                startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
         }
 
         NotificationListener.setNotificationsChangedListener(mPopupDataProvider);
