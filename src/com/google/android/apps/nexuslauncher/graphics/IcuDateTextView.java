@@ -36,18 +36,18 @@ public class IcuDateTextView extends DoubleShadowTextView {
 
     @TargetApi(24)
     public void reloadDateFormat(boolean forcedChange) {
-        if (!Utilities.ATLEAST_MARSHMALLOW) {
-            String format = DateUtils.formatDateTime(getContext(), System.currentTimeMillis(), DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH);
-            setText(format);
-            setContentDescription(format);
-            return;
+        String format;
+        if (Utilities.ATLEAST_NOUGAT) {
+            if (mDateFormat == null || forcedChange) {
+                (mDateFormat = DateFormat.getInstanceForSkeleton(getContext()
+                        .getString(R.string.icu_abbrev_wday_month_day_no_year), Locale.getDefault()))
+                        .setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE);
+            }
+            format = mDateFormat.format(System.currentTimeMillis());
+        } else {
+            format = DateUtils.formatDateTime(getContext(), System.currentTimeMillis(),
+                    DateUtils.FORMAT_SHOW_WEEKDAY | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_MONTH);
         }
-        if (mDateFormat == null || forcedChange) {
-            (mDateFormat = DateFormat.getInstanceForSkeleton(getContext()
-                    .getString(R.string.icu_abbrev_wday_month_day_no_year), Locale.getDefault()))
-                    .setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE);
-        }
-        String format = mDateFormat.format(System.currentTimeMillis());
         setText(format);
         setContentDescription(format);
     }
