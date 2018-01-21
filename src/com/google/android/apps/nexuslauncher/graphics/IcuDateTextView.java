@@ -18,7 +18,7 @@ import java.util.Locale;
 public class IcuDateTextView extends DoubleShadowTextView {
     private DateFormat mDateFormat;
     private final BroadcastReceiver mTimeChangeReceiver;
-    private boolean mIsVisible;
+    private boolean mIsVisible = false;
 
     public IcuDateTextView(final Context context) {
         this(context, null);
@@ -52,7 +52,7 @@ public class IcuDateTextView extends DoubleShadowTextView {
         setContentDescription(format);
     }
 
-    public void registerReceiver() {
+    private void registerReceiver() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_TIME_TICK);
         intentFilter.addAction(Intent.ACTION_TIME_CHANGED);
@@ -60,12 +60,14 @@ public class IcuDateTextView extends DoubleShadowTextView {
         getContext().registerReceiver(mTimeChangeReceiver, intentFilter);
     }
 
-    public void unregisterReceiver() {
+    private void unregisterReceiver() {
         getContext().unregisterReceiver(mTimeChangeReceiver);
     }
 
     public void onVisibilityAggregated(boolean isVisible) {
-        super.onVisibilityAggregated(isVisible);
+        if (Utilities.ATLEAST_NOUGAT) {
+            super.onVisibilityAggregated(isVisible);
+        }
         if (!mIsVisible && isVisible) {
             mIsVisible = true;
             registerReceiver();
