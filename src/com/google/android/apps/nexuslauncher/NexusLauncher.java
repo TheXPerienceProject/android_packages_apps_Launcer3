@@ -48,7 +48,7 @@ public class NexusLauncher {
 
     private static GoogleNow.IntegerReference dZ(SharedPreferences sharedPreferences) {
         return new GoogleNow.IntegerReference(
-                (sharedPreferences.getBoolean("pref_enable_minus_one", true) ? 1 : 0) | 0x2 | 0x4 | 0x8);
+                (sharedPreferences.getBoolean(SettingsActivity.ENABLE_MINUS_ONE_PREF, true) ? 1 : 0) | 0x2 | 0x4 | 0x8);
     }
 
     class NexusLauncherCallbacks implements LauncherCallbacks, SharedPreferences.OnSharedPreferenceChangeListener, WallpaperColorInfo.OnChangeListener {
@@ -65,7 +65,7 @@ public class NexusLauncher {
         }
 
         public List<ComponentKeyMapper<AppInfo>> getPredictedApps() {
-            return new ArrayList<>();
+            return ((CustomAppPredictor) fB.getUserEventDispatcher()).getPredictions();
         }
 
         @Override

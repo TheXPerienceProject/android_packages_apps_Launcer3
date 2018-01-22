@@ -68,10 +68,12 @@ public class SearchThread implements SearchAlgorithm, Handler.Callback {
             }
             case 100: {
                 dj((SearchResult) message.obj);
+                break;
             }
             case 200: {
                 SearchResult searchResult = (SearchResult) message.obj;
                 searchResult.mCallbacks.onSearchResult(searchResult.mQuery, searchResult.mApps);
+                break;
             }
         }
         return true;

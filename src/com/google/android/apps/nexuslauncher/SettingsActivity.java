@@ -2,11 +2,14 @@ package com.google.android.apps.nexuslauncher;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -15,6 +18,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.TwoStatePreference;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -81,8 +85,7 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
             mIconPackPref = (CustomIconsPreference) findPreference(ICON_PACK_PREF);
             mIconPackPref.setOnPreferenceChangeListener(this);
 
-            //ToDo: Add
-            getPreferenceScreen().removePreference(findPreference(SHOW_PREDICTIONS_PREF));
+            findPreference(SHOW_PREDICTIONS_PREF).setOnPreferenceChangeListener(this);
         }
 
         private String getDisplayGoogleTitle() {
@@ -150,7 +153,12 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
                     });
                     return true;
                 case SHOW_PREDICTIONS_PREF:
-                    //ToDo: Toggle
+                    if ((boolean) newValue) {
+                        return true;
+                    }
+                    SettingsActivity.SuggestionConfirmationFragment confirmationFragment = new SettingsActivity.SuggestionConfirmationFragment();
+                    confirmationFragment.setTargetFragment(this, 0);
+                    confirmationFragment.show(getFragmentManager(), preference.getKey());
                     break;
             }
             return false;
@@ -163,6 +171,25 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
                 return true;
             }
             return false;
+        }
+    }
+
+    public static class SuggestionConfirmationFragment extends DialogFragment implements DialogInterface.OnClickListener {
+        public void onClick(final DialogInterface dialogInterface, final int n) {
+            if (getTargetFragment() instanceof PreferenceFragment) {
+                Preference preference = ((PreferenceFragment) getTargetFragment()).findPreference(SHOW_PREDICTIONS_PREF);
+                if (preference instanceof TwoStatePreference) {
+                    ((TwoStatePreference) preference).setChecked(false);
+                }
+            }
+        }
+
+        public Dialog onCreateDialog(final Bundle bundle) {
+            return new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.title_disable_suggestions_prompt)
+                    .setMessage(R.string.msg_disable_suggestions_prompt)
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .setPositiveButton(R.string.label_turn_off_suggestions, this).create();
         }
     }
 }

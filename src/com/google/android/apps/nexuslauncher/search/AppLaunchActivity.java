@@ -53,7 +53,7 @@ public class AppLaunchActivity extends BaseActivity {
         if (data != null) {
             this.dk(data);
         } else {
-            final String stringExtra = this.getIntent().getStringExtra("mQuery");
+            final String stringExtra = this.getIntent().getStringExtra("query");
             if (!TextUtils.isEmpty(stringExtra)) {
                 this.startActivity(PackageManagerHelper.getMarketSearchIntent(this, stringExtra));
             }
