@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-class CustomAppPredictor extends UserEventDispatcher implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class CustomAppPredictor extends UserEventDispatcher implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final int MAX_PREDICTIONS = 10;
     private static final int BOOST_ON_OPEN = 7;
     private static final String PREDICTION_SET = "pref_prediction_set";
@@ -67,7 +67,7 @@ class CustomAppPredictor extends UserEventDispatcher implements SharedPreference
             "com.google.android.talk"
     };
 
-    CustomAppPredictor(Context context) {
+    public CustomAppPredictor(Context context) {
         mContext = context;
         mPrefs = Utilities.getPrefs(context);
         mPrefs.registerOnSharedPreferenceChangeListener(this);
