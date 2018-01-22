@@ -172,7 +172,7 @@ public class CustomIconProvider extends DynamicIconProvider implements Runnable 
                         if (parseXml.getAttributeName(i).equals("roundIcon"))
                             return resourcesForApplication.getDrawableForDensity(Integer.parseInt(parseXml.getAttributeValue(i).substring(1)), iconDpi);
             parseXml.close();
-        } catch (PackageManager.NameNotFoundException | IOException | XmlPullParserException ex) {
+        } catch (PackageManager.NameNotFoundException | Resources.NotFoundException | IOException | XmlPullParserException ex) {
             ex.printStackTrace();
         }
         return null;
