@@ -18,25 +18,34 @@ import android.os.UserHandle;
 import com.android.launcher3.IconProvider;
 import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.LauncherModel;
-import com.android.launcher3.R;
+import com.android.launcher3.Utilities;
 import com.android.launcher3.compat.UserManagerCompat;
 import com.android.launcher3.shortcuts.DeepShortcutManager;
 import com.android.launcher3.shortcuts.ShortcutInfoCompat;
 import com.google.android.apps.nexuslauncher.clock.DynamicClock;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class DynamicIconProvider extends IconProvider {
     private final BroadcastReceiver mDateChangeReceiver;
     private final Context mContext;
     private final PackageManager mPackageManager;
+    private int mDateOfMonth;
 
     public DynamicIconProvider(Context context) {
         mContext = context;
         mDateChangeReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                if (!Utilities.ATLEAST_NOUGAT) {
+                    int dateOfMonth = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+                    if (dateOfMonth == mDateOfMonth) {
+                        return;
+                    }
+                    mDateOfMonth = dateOfMonth;
+                }
                 for (UserHandle user : UserManagerCompat.getInstance(context).getUserProfiles()) {
                     LauncherModel model = LauncherAppState.getInstance(context).getModel();
                     model.onPackageChanged("com.google.android.calendar", user);
@@ -51,6 +60,9 @@ public class DynamicIconProvider extends IconProvider {
         IntentFilter intentFilter = new IntentFilter(Intent.ACTION_DATE_CHANGED);
         intentFilter.addAction(Intent.ACTION_TIME_CHANGED);
         intentFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
+        if (!Utilities.ATLEAST_NOUGAT) {
+            intentFilter.addAction(Intent.ACTION_TIME_TICK);
+        }
         mContext.registerReceiver(mDateChangeReceiver, intentFilter, null, new Handler(LauncherModel.getWorkerLooper()));
         mPackageManager = mContext.getPackageManager();
     }

@@ -40,6 +40,7 @@ public class CustomIconProvider extends DynamicIconProvider implements Runnable 
     private final Map<String, String> mIconPackCalendars = new HashMap<>();
     private Thread mThread;
     private String mIconPack;
+    private int mDateOfMonth;
 
     public CustomIconProvider(Context context) {
         super(context);
@@ -47,6 +48,13 @@ public class CustomIconProvider extends DynamicIconProvider implements Runnable 
         mDateChangeReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                if (!Utilities.ATLEAST_NOUGAT) {
+                    int dateOfMonth = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+                    if (dateOfMonth == mDateOfMonth) {
+                        return;
+                    }
+                    mDateOfMonth = dateOfMonth;
+                }
                 for (UserHandle user : UserManagerCompat.getInstance(context).getUserProfiles()) {
                     LauncherModel model = LauncherAppState.getInstance(context).getModel();
                     LauncherAppsCompat apps = LauncherAppsCompat.getInstance(mContext);
@@ -69,6 +77,9 @@ public class CustomIconProvider extends DynamicIconProvider implements Runnable 
         IntentFilter intentFilter = new IntentFilter(Intent.ACTION_DATE_CHANGED);
         intentFilter.addAction(Intent.ACTION_TIME_CHANGED);
         intentFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
+        if (!Utilities.ATLEAST_NOUGAT) {
+            intentFilter.addAction(Intent.ACTION_TIME_TICK);
+        }
         mContext.registerReceiver(mDateChangeReceiver, intentFilter, null, new Handler(LauncherModel.getWorkerLooper()));
 
         mPackageManager = context.getPackageManager();
