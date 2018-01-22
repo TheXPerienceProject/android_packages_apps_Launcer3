@@ -23,7 +23,7 @@ import com.android.launcher3.LauncherModel;
 import com.android.launcher3.R;
 import com.android.launcher3.Utilities;
 import com.android.launcher3.util.LooperExecutor;
-import com.google.android.apps.nexuslauncher.smartspace.f;
+import com.google.android.apps.nexuslauncher.smartspace.SmartspaceController;
 
 public class SettingsActivity extends com.android.launcher3.SettingsActivity implements PreferenceFragment.OnPreferenceStartFragmentCallback {
     public final static String ICON_PACK_PREF = "pref_icon_pack";
@@ -69,7 +69,7 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
             try {
                 PackageInfo packageInfo = packageManager.getPackageInfo(mContext.getPackageName(), 0);
                 findPreference(APP_VERSION_PREF).setSummary(packageInfo.versionName);
-                if (com.google.android.apps.nexuslauncher.smartspace.f.get(mContext).cY()) {
+                if (SmartspaceController.get(mContext).cY()) {
                     findPreference(SMARTSPACE_PREF).setOnPreferenceClickListener(this);
                 } else {
                     getPreferenceScreen().removePreference(findPreference("pref_smartspace"));
@@ -159,7 +159,7 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
         @Override
         public boolean onPreferenceClick(Preference preference) {
             if (SMARTSPACE_PREF.equals(preference.getKey())) {
-                f.get(mContext).cZ();
+                SmartspaceController.get(mContext).cZ();
                 return true;
             }
             return false;

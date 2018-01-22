@@ -38,7 +38,7 @@ import com.google.android.apps.nexuslauncher.graphics.IcuDateTextView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class SmartspaceView extends FrameLayout implements c, ValueAnimator.AnimatorUpdateListener, View.OnClickListener, View.OnLongClickListener, Runnable {
+public class SmartspaceView extends FrameLayout implements ISmartspace, ValueAnimator.AnimatorUpdateListener, View.OnClickListener, View.OnLongClickListener, Runnable {
     private TextView mSubtitleWeatherText;
     private final TextPaint dB;
     private View mTitleSeparator;
@@ -50,8 +50,8 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
     private final int mSmartspaceBackgroundRes;
     private IcuDateTextView mClockView;
     private ViewGroup mSmartspaceContent;
-    private final f dp;
-    private e dq;
+    private final SmartspaceController dp;
+    private SmartspaceDataWraper dq;
     private BubbleTextView dr;
     private boolean ds;
     private boolean mDoubleLine;
@@ -90,12 +90,12 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
             public void onClick(View v) {
                 if (dq != null && dq.isWeatherAvailable()) {
                     cp(10001);
-                    dq.dO.cu(v);
+                    dq.dO.click(v);
                 }
             }
         };
 
-        dp = f.get(context);
+        dp = SmartspaceController.get(context);
         mHandler = new Handler();
         dH = ColorStateList.valueOf(Themes.getAttrColor(getContext(), R.attr.workspaceTextColor));
         ds = dp.cY();
@@ -104,7 +104,7 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
         dB.setTextSize((float) getResources().getDimensionPixelSize(R.dimen.smartspace_title_size));
     }
 
-    private void initListeners(final e e) {
+    private void initListeners(final SmartspaceDataWraper e) {
         final boolean cs = e.cS();
         if (mDoubleLine != cs) {
             mDoubleLine = cs;
@@ -128,10 +128,10 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
         }
     }
 
-    private void loadDoubleLine(final e e) {
+    private void loadDoubleLine(final SmartspaceDataWraper e) {
         ColorStateList dh = null;
         setBackgroundResource(mSmartspaceBackgroundRes);
-        final d dp = e.dP;
+        final SmartspaceCard dp = e.dP;
         if (!TextUtils.isEmpty(dp.getTitle())) {
             mTitleText.setText(dp.cv() ? cn() : dp.getTitle());
             mTitleText.setEllipsize(dp.cx(true));
@@ -158,7 +158,7 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
         }
     }
 
-    private void loadSingleLine(final e e) {
+    private void loadSingleLine(final SmartspaceDataWraper e) {
         setBackgroundResource(0);
         mClockView.setOnClickListener(mCalendarClickListener);
         mClockView.setOnLongClickListener(co());
@@ -173,6 +173,10 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
             mTitleWeatherContent.setVisibility(View.GONE);
             mTitleSeparator.setVisibility(View.GONE);
         }
+
+        if (!Utilities.ATLEAST_NOUGAT) {
+            mClockView.onVisibilityAggregated(true);
+        }
     }
 
     private void loadViews() {
@@ -186,7 +190,9 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
         mSubtitleWeatherContent = findViewById(R.id.subtitle_weather_content);
         mTitleWeatherText = findViewById(R.id.title_weather_text);
         mSubtitleWeatherText = findViewById(R.id.subtitle_weather_text);
+        backportClockVisibility(false);
         mClockView = findViewById(R.id.clock);
+        backportClockVisibility(true);
         mTitleSeparator = findViewById(R.id.title_sep);
 
         setGoogleSans(mTitleText, mSubtitleText, mTitleWeatherText, mSubtitleWeatherText, mClockView);
@@ -203,7 +209,7 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
 
     private String cn() {
         final boolean b = true;
-        final d dp = dq.dP;
+        final SmartspaceCard dp = dq.dP;
         return dp.cC(TextUtils.ellipsize(dp.cB(b), dB, getWidth() - getPaddingLeft() - getPaddingRight() - getResources().getDimensionPixelSize(R.dimen.smartspace_horizontal_padding) - dB.measureText(dp.cA(b)), TextUtils.TruncateAt.END).toString());
     }
 
@@ -234,7 +240,7 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
         }
     }
 
-    public void cr(final e dq2) {
+    public void cr(final SmartspaceDataWraper dq2) {
         dq = dq2;
         boolean visible = mSmartspaceContent.getVisibility() == View.VISIBLE;
         initListeners(dq);
@@ -252,25 +258,18 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         dp.da(this);
-        if (!Utilities.ATLEAST_NOUGAT) {
-            mClockView.registerReceiver();
-            mClockView.reloadDateFormat(true);
-        }
     }
 
     public void onClick(final View view) {
         if (dq != null && dq.cS()) {
             cp(10002);
-            dq.dP.cu(view);
+            dq.dP.click(view);
         }
     }
 
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        f.get(getContext()).da(null);
-        if (!Utilities.ATLEAST_NOUGAT) {
-            mClockView.unregisterReceiver();
-        }
+        SmartspaceController.get(getContext()).da(null);
     }
 
     protected void onFinishInflate() {
@@ -310,11 +309,19 @@ public class SmartspaceView extends FrameLayout implements c, ValueAnimator.Anim
 
     public void onPause() {
         mHandler.removeCallbacks(this);
+        backportClockVisibility(false);
     }
 
     public void onResume() {
         if (dq != null) {
             initListeners(dq);
+        }
+        backportClockVisibility(true);
+    }
+
+    private void backportClockVisibility(boolean show) {
+        if (!Utilities.ATLEAST_NOUGAT && mClockView != null) {
+            mClockView.onVisibilityAggregated(show && !mDoubleLine);
         }
     }
 

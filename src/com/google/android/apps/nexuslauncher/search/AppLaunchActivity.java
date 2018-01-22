@@ -21,7 +21,7 @@ public class AppLaunchActivity extends BaseActivity {
     private void dk(Uri uri) {
         try {
             ComponentKey dl = AppSearchProvider.dl(uri, this);
-            ItemInfo dVar = new d(dl);
+            ItemInfo dVar = new AppItemInfoWithIcon(dl);
             if (!getPackageManager().isSafeMode() || Utilities.isSystemApp(this, dVar.getIntent())) {
                 if (dl.user.equals(android.os.Process.myUserHandle())) {
                     startActivity(dVar.getIntent());
@@ -36,7 +36,7 @@ public class AppLaunchActivity extends BaseActivity {
                     i = ((Launcher) callback).getWorkspace().getState().containerType;
                 }
                 String queryParameter = uri.getQueryParameter("predictionRank");
-                new e(this, TextUtils.isEmpty(queryParameter) ? -1 : Integer.parseInt(queryParameter)).addView(view);
+                new LogContainerProvider(this, TextUtils.isEmpty(queryParameter) ? -1 : Integer.parseInt(queryParameter)).addView(view);
                 return;
             }
             Toast.makeText(this, R.string.safemode_shortcut_error, Toast.LENGTH_SHORT).show();
@@ -53,7 +53,7 @@ public class AppLaunchActivity extends BaseActivity {
         if (data != null) {
             this.dk(data);
         } else {
-            final String stringExtra = this.getIntent().getStringExtra("query");
+            final String stringExtra = this.getIntent().getStringExtra("mQuery");
             if (!TextUtils.isEmpty(stringExtra)) {
                 this.startActivity(PackageManagerHelper.getMarketSearchIntent(this, stringExtra));
             }

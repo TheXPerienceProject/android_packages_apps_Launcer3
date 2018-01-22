@@ -14,18 +14,17 @@ import com.google.protobuf.nano.InvalidProtocolBufferNanoException;
 public class SmartspaceBroadcastReceiver extends BroadcastReceiver {
     private void cg(b b, Context context, Intent intent, boolean b2) throws PackageManager.NameNotFoundException {
         if (b.cy) {
-            f.get(context).cV(null);
+            SmartspaceController.get(context).cV(null);
             return;
         }
         try {
             PackageInfo packageInfo = context.getPackageManager().getPackageInfo("com.google.android.googlequicksearchbox", 0);
-            f.get(context).cV(new a(b, intent, b2, SystemClock.uptimeMillis(), packageInfo));
+            SmartspaceController.get(context).cV(new NewCardInfo(b, intent, b2, SystemClock.uptimeMillis(), packageInfo));
         } catch (PackageManager.NameNotFoundException ex) {
         }
     }
 
     public void onReceive(Context context, Intent intent) {
-        Log.w(SmartspaceBroadcastReceiver.class.getName(), "Google's update event");
         byte[] byteArrayExtra = intent.getByteArrayExtra("com.google.android.apps.nexuslauncher.extra.SMARTSPACE_CARD");
         if (byteArrayExtra != null) {
             com.google.android.apps.nexuslauncher.smartspace.nano.SmartspaceProto.a a = new com.google.android.apps.nexuslauncher.smartspace.nano.SmartspaceProto.a();

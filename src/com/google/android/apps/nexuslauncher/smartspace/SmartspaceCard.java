@@ -24,7 +24,9 @@ import com.google.android.apps.nexuslauncher.smartspace.nano.SmartspaceProto.e;
 import com.google.android.apps.nexuslauncher.smartspace.nano.SmartspaceProto.i;
 import com.google.android.apps.nexuslauncher.utils.ColorManipulation;
 
-public class d {
+import java.net.URISyntaxException;
+
+public class SmartspaceCard {
     private final b dI;
     private final long dJ;
     private final int dK;
@@ -35,7 +37,7 @@ public class d {
     private Bitmap mIcon;
     private final Intent mIntent;
 
-    public d(final Context context, final b di, final Intent mIntent, final boolean dm, final Bitmap mIcon, final boolean dl, final long dn, final long dj, final int dk) {
+    public SmartspaceCard(final Context context, final b di, final Intent mIntent, final boolean dm, final Bitmap mIcon, final boolean dl, final long dn, final long dj, final int dk) {
         this.mContext = context.getApplicationContext();
         this.dI = di;
         this.dM = dm;
@@ -47,7 +49,7 @@ public class d {
         this.dL = dl;
     }
 
-    static d cD(Context context, i iVar, boolean z) {
+    static SmartspaceCard cD(Context context, i iVar, boolean z) {
         if (iVar != null) {
             try {
                 Intent parseUri = TextUtils.isEmpty(iVar.de.cG.cZ) ?
@@ -69,7 +71,7 @@ public class d {
                             55);
                 }
 
-                return new d(context, iVar.de, parseUri, z, bitmap, iVar.dc, iVar.df, iVar.dh, iVar.dg);
+                return new SmartspaceCard(context, iVar.de, parseUri, z, bitmap, iVar.dc, iVar.df, iVar.dh, iVar.dg);
             } catch (Throwable e) {
                 Log.e("SmartspaceCard", "from proto", e);
             }
@@ -199,12 +201,12 @@ public class d {
         return bitmap2;
     }
 
-    static i cQ(final Context context, final a a) {
+    static i cQ(final Context context, final NewCardInfo a) {
         if (a == null) {
             return null;
         }
         final i i = new i();
-        final Bitmap ci = a.ci(context);
+        final Bitmap ci = a.getBitmap(context);
         Bitmap cp;
         if (ci != null && i.dc) {
             if (a.dj) {
@@ -272,7 +274,7 @@ public class d {
         return System.currentTimeMillis() > this.cF();
     }
 
-    void cu(View view) {
+    void click(View view) {
         if (this.dI.cG == null) {
             Log.e("SmartspaceCard", "no tap action available: " + this);
             return;
@@ -285,6 +287,16 @@ public class d {
                 break;
             }
             case 1: {
+                if (!Utilities.ATLEAST_NOUGAT) {
+                    try {
+                        Intent internal = Intent.parseUri(intent.getExtras()
+                                .getString("com.google.android.apps.gsa.smartspace.extra.SMARTSPACE_INTENT"), Intent.URI_INTENT_SCHEME);
+                        launcher.startActivitySafely(view, internal, null);
+                        return;
+                    } catch (URISyntaxException | NullPointerException e) {
+                        e.printStackTrace();
+                    }
+                }
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setSourceBounds(launcher.getViewBounds(view));
                 view.getContext().sendBroadcast(intent);

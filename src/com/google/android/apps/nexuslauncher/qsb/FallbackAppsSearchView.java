@@ -13,7 +13,7 @@ import com.android.launcher3.allapps.AlphabeticalAppsList;
 import com.android.launcher3.allapps.search.AllAppsSearchBarController;
 import com.android.launcher3.discovery.AppDiscoveryItem;
 import com.android.launcher3.discovery.AppDiscoveryUpdateState;
-import com.google.android.apps.nexuslauncher.search.b;
+import com.google.android.apps.nexuslauncher.search.SearchThread;
 
 import java.util.ArrayList;
 
@@ -47,7 +47,7 @@ public class FallbackAppsSearchView extends ExtendedEditText implements AllAppsS
         mApps = apps;
         mAppsRecyclerView = appsRecyclerView;
         mAdapter = (AllAppsGridAdapter) appsRecyclerView.getAdapter();
-        mSearchBarController.initialize(new b(getContext()), this, Launcher.getLauncher(getContext()), this);
+        mSearchBarController.initialize(new SearchThread(getContext()), this, Launcher.getLauncher(getContext()), this);
     }
 
     public void clearSearchResult() {

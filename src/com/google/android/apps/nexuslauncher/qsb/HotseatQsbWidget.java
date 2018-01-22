@@ -64,7 +64,7 @@ public class HotseatQsbWidget extends AbstractQsbLayout {
 
     private void setColors() {
         View.inflate(new ContextThemeWrapper(getContext(), mIsDefaultLiveWallpaper ? R.style.HotseatQsbTheme_Colored : R.style.HotseatQsbTheme), R.layout.qsb_hotseat_content, this);
-        bz(mIsDefaultLiveWallpaper ? -855638017 : -1711604998);
+        bz(mIsDefaultLiveWallpaper ? 0xCCFFFFFF : 0x99FAFAFA);
     }
 
     private void openQSB() {
@@ -85,7 +85,7 @@ public class HotseatQsbWidget extends AbstractQsbLayout {
         Rect rect = new Rect(0, 0, getWidth(), getHeight());
         rect.offset(array[0], array[1]);
         rect.inset(getPaddingLeft(), getPaddingTop());
-        return SearchBarManager.getSearchIntent(rect, findViewById(R.id.g_icon), mMicIconView);
+        return ConfigBuilder.getSearchIntent(rect, findViewById(R.id.g_icon), mMicIconView);
     }
 
     private void setGoogleColored() {
@@ -111,7 +111,7 @@ public class HotseatQsbWidget extends AbstractQsbLayout {
     }
 
     private void doOnClick() {
-        final SearchBarManager f = new SearchBarManager(this, false);
+        final ConfigBuilder f = new ConfigBuilder(this, false);
         if (mActivity.getGoogleNow().startSearch(f.build(), f.getExtras())) {
             SharedPreferences devicePrefs = Utilities.getDevicePrefs(getContext());
             devicePrefs.edit().putInt("key_hotseat_qsb_tap_count", devicePrefs.getInt("key_hotseat_qsb_tap_count", 0) + 1).apply();

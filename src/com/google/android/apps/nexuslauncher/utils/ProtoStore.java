@@ -20,16 +20,16 @@ public class ProtoStore {
     public void dw(MessageNano p1, String name) {
         try {
             FileOutputStream fos = mContext.openFileOutput(name, 0);
-            if (fos != null) {
+            if (p1 != null) {
                 fos.write(MessageNano.toByteArray(p1));
             } else {
                 Log.d("ProtoStore", "deleting " + name);
                 mContext.deleteFile(name);
             }
         } catch (FileNotFoundException e) {
-            Log.d("ProtoStore", "file does not exist");
+            Log.d("ProtoStore", "file does not exist " + name);
         } catch (Exception e) {
-            Log.e("ProtoStore", "unable to write file", e);
+            Log.e("ProtoStore", "unable to write file " + name, e);
         }
     }
 

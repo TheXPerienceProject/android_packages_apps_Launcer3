@@ -8,14 +8,15 @@ import com.android.launcher3.ItemInfo;
 import com.android.launcher3.logging.UserEventDispatcher;
 import com.android.launcher3.userevent.nano.LauncherLogProto;
 
-class e extends FrameLayout implements UserEventDispatcher.LogContainerProvider {
+class LogContainerProvider extends FrameLayout implements UserEventDispatcher.LogContainerProvider {
     private final int mPredictedRank;
 
-    public e(Context context, int predictedRank) {
+    public LogContainerProvider(Context context, int predictedRank) {
         super(context);
         mPredictedRank = predictedRank;
     }
 
+    @Override
     public void fillInLogContainerData(View v, ItemInfo info, LauncherLogProto.Target target, LauncherLogProto.Target targetParent) {
         if (mPredictedRank >= 0) {
             targetParent.containerType = 7;

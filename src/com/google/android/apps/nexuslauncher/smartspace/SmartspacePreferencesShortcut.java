@@ -16,7 +16,7 @@ class SmartspacePreferencesShortcut extends SystemShortcut {
     public View.OnClickListener getOnClickListener(final Launcher launcher, ItemInfo itemInfo) {
         return new View.OnClickListener() {
             public void onClick(final View view) {
-                f.get(view.getContext()).cZ();
+                SmartspaceController.get(view.getContext()).cZ();
                 AbstractFloatingView.closeAllOpenViews(launcher);
             }
         };

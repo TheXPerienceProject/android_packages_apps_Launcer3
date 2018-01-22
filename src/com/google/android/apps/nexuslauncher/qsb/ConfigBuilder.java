@@ -36,7 +36,7 @@ import com.google.android.apps.nexuslauncher.search.nano.SearchProto.d_search;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchBarManager {
+public class ConfigBuilder {
     private final c_search cl;
     private final NexusLauncherActivity mActivity;
     private final Bundle cn;
@@ -46,7 +46,7 @@ public class SearchBarManager {
     private final boolean cr;
     private final UserManagerCompat mUserManager;
 
-    public SearchBarManager(AbstractQsbLayout cp, boolean cr) {
+    public ConfigBuilder(AbstractQsbLayout cp, boolean cr) {
         cn = new Bundle();
         cl = new c_search();
         this.cp = cp;
@@ -108,11 +108,11 @@ public class SearchBarManager {
         final int n2 = (cq.getWidth() - iconSize) / 2;
         final int paddingTop = cq.getPaddingTop();
         final int n3 = cq.getHeight() - iconSize - paddingTop;
-        remoteViews.setViewPadding(R.id.icon, n2, paddingTop, n2, n3);
+        remoteViews.setViewPadding(android.R.id.icon, n2, paddingTop, n2, n3);
         final int min = Math.min((int) (iconSize * 0.12f), Math.min(n2, Math.min(paddingTop, n3)));
         remoteViews.setViewPadding(R.id.click_feedback_wrapper, n2 - min, paddingTop - min, n2 - min, n3 - min);
-        remoteViews.setTextViewTextSize(R.id.title, 0, mActivity.getDeviceProfile().allAppsIconTextSizePx);
-        remoteViews.setViewPadding(R.id.title, cq.getPaddingLeft(), cq.getCompoundDrawablePadding() + cq.getIconSize(), cq.getPaddingRight(), 0);
+        remoteViews.setTextViewTextSize(android.R.id.title, 0, mActivity.getDeviceProfile().allAppsIconTextSizePx);
+        remoteViews.setViewPadding(android.R.id.title, cq.getPaddingLeft(), cq.getCompoundDrawablePadding() + cq.getIconSize(), cq.getPaddingRight(), 0);
         return remoteViews;
     }
 
@@ -184,34 +184,36 @@ public class SearchBarManager {
     }
 
     private void ce() {
-        int i = 0;
-        final AllAppsRecyclerView bx = bX();
-        final GridLayoutManager.SpanSizeLookup spanSizeLookup = ((GridLayoutManager) bx.getLayoutManager()).getSpanSizeLookup();
-        final int allAppsNumCols = mActivity.getDeviceProfile().allAppsNumCols;
-        final int childCount = bx.getChildCount();
-        final BubbleTextView[] bubbleTextViews = new BubbleTextView[allAppsNumCols];
-        int n = -1;
-        RecyclerView.ViewHolder childViewHolder = null;
-        for (int j = 0; j < childCount; ++j) {
-            childViewHolder = bx.getChildViewHolder(bx.getChildAt(j));
-            if (childViewHolder.itemView instanceof BubbleTextView) {
-                int spanGroupIndex = spanSizeLookup.getSpanGroupIndex(childViewHolder.getLayoutPosition(), allAppsNumCols);
-                if (spanGroupIndex >= 0) {
-                    if (n < 0) {
-                        //First row
-                        n = spanGroupIndex;
-                    } else if (spanGroupIndex != n) {
-                        //Second row
-                        break;
-                    }
+        AllAppsRecyclerView allAppsRecyclerView = bX();
+        GridLayoutManager.SpanSizeLookup spanSizeLookup = ((GridLayoutManager) allAppsRecyclerView.getLayoutManager())
+                .getSpanSizeLookup();
+        int columnCount = mActivity.getDeviceProfile().allAppsNumCols;
+        int appCount = allAppsRecyclerView.getChildCount();
+        BubbleTextView[] bubbleTextViews = new BubbleTextView[columnCount];
+        int lastGroupIndex = -1;
 
-                    GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) childViewHolder.itemView.getLayoutParams();
-                    bubbleTextViews[params.getSpanIndex()] = (BubbleTextView) childViewHolder.itemView;
+        BubbleTextView nextRowItem = null;
+        for (int app = 0; app < appCount; ++app) {
+            RecyclerView.ViewHolder viewHolder = allAppsRecyclerView.getChildViewHolder(allAppsRecyclerView.getChildAt(app));
+            if (viewHolder.itemView instanceof BubbleTextView) {
+                int groupIndex = spanSizeLookup.getSpanGroupIndex(viewHolder.getLayoutPosition(), columnCount);
+                if (groupIndex >= 0) {
+                    if (lastGroupIndex >= 0) {
+                        if (groupIndex != lastGroupIndex) {
+                            nextRowItem = (BubbleTextView) viewHolder.itemView;
+                            break;
+                        }
+                    } else {
+                        lastGroupIndex = groupIndex;
+                    }
+                    GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams)
+                            viewHolder.itemView.getLayoutParams();
+                    bubbleTextViews[params.getSpanIndex()] = (BubbleTextView) viewHolder.itemView;
                 }
             }
+
         }
 
-        View o = childViewHolder.itemView;
         if (bubbleTextViews[0] == null) {
             Log.e("ConfigBuilder", "No icons rendered in all apps");
             cf();
@@ -219,32 +221,34 @@ public class SearchBarManager {
         }
 
         cq = bubbleTextViews[0];
-        cl.es = allAppsNumCols;
-        co = (bx.getChildViewHolder(bubbleTextViews[0]).getItemViewType() == 4);
-        a_search viewBounds = getViewBounds(bubbleTextViews[allAppsNumCols - 1]);
-        a_search viewBounds2 = getViewBounds(bubbleTextViews[0]);
-        if (!Utilities.isRtl(mActivity.getResources())) {
-            final a_search a = viewBounds2;
-            viewBounds2 = viewBounds;
-            viewBounds = a;
+        cl.es = columnCount;
+        co = (allAppsRecyclerView.getChildViewHolder(bubbleTextViews[0]).getItemViewType() == 4);
+        a_search lastViewBounds = getViewBounds(bubbleTextViews[columnCount - 1]);
+        a_search firstViewBounds = getViewBounds(bubbleTextViews[0]);
+        if (Utilities.isRtl(mActivity.getResources())) {
+            //Swap for RTL
+            a_search temp = firstViewBounds;
+            firstViewBounds = lastViewBounds;
+            lastViewBounds = temp;
         }
-        viewBounds.eh = viewBounds2.eh + viewBounds2.ef - viewBounds.ef;
-        cl.en = viewBounds;
+        lastViewBounds.eh = firstViewBounds.eh + firstViewBounds.ef - lastViewBounds.ef;
+        cl.en = lastViewBounds;
         if (!co) {
-            viewBounds.eg -= viewBounds.ee;
-        } else if (o != null) {
-            final a_search viewBounds3 = getViewBounds(o);
-            viewBounds3.eh = viewBounds.eh;
+            lastViewBounds.eg -= lastViewBounds.ee;
+        } else if (nextRowItem != null) {
+            //Next line
+            a_search viewBounds3 = getViewBounds(nextRowItem);
+            viewBounds3.eh = lastViewBounds.eh;
             cl.ez = viewBounds3;
         }
         bW();
 
-        List<AppInfo> predictedApps = bx.getApps().getPredictedApps();
-        int min = Math.min(predictedApps.size(), allAppsNumCols);
+        List<AppInfo> predictedApps = allAppsRecyclerView.getApps().getPredictedApps();
+        int min = Math.min(predictedApps.size(), columnCount);
         cl.eo = new b_search[min];
-        while (i < min) {
-            cl.eo[i] = bZ(predictedApps.get(i), i);
-            ++i;
+        for (int v2 = 1; v2 < min; ++v2) {
+            cl.eo[v2] = bZ(predictedApps.get(v2), v2);
+
         }
     }
 

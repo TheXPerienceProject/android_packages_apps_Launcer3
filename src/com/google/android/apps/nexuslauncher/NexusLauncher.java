@@ -20,7 +20,7 @@ import com.android.launcher3.graphics.DrawableFactory;
 import com.android.launcher3.util.ComponentKeyMapper;
 import com.android.launcher3.util.Themes;
 import com.google.android.apps.nexuslauncher.smartspace.SmartspaceView;
-import com.google.android.apps.nexuslauncher.smartspace.f;
+import com.google.android.apps.nexuslauncher.smartspace.SmartspaceController;
 import com.google.android.libraries.launcherclient.GoogleNow;
 
 import java.io.FileDescriptor;
@@ -58,7 +58,7 @@ public class NexusLauncher {
         }
 
         public void dump(final String s, final FileDescriptor fileDescriptor, final PrintWriter printWriter, final String[] array) {
-            f.get(fB).cX(s, printWriter);
+            SmartspaceController.get(fB).cX(s, printWriter);
         }
 
         public void finishBindingItems(final boolean b) {
@@ -100,7 +100,7 @@ public class NexusLauncher {
 
             prefs.registerOnSharedPreferenceChangeListener(this);
 
-            f.get(fB).cW();
+            SmartspaceController.get(fB).cW();
             mSmartspace = fB.findViewById(R.id.search_container_workspace);
 
             mUiInformation.putInt("system_ui_visibility", fB.getWindow().getDecorView().getSystemUiVisibility());

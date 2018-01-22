@@ -16,25 +16,25 @@ import com.android.launcher3.util.ComponentKeyMapper;
 
 import java.util.Iterator;
 
-public class a implements IconCache.ItemInfoUpdateReceiver, SharedPreferences.OnSharedPreferenceChangeListener
+public class ItemInfoUpdateReceiver implements IconCache.ItemInfoUpdateReceiver, SharedPreferences.OnSharedPreferenceChangeListener
 {
-    private final LauncherCallbacks eC;
+    private final LauncherCallbacks mCallbacks;
     private final int eD;
     private final Launcher mLauncher;
     
-    public a(final Launcher mLauncher, final LauncherCallbacks ec) {
-        this.mLauncher = mLauncher;
-        this.eC = ec;
-        this.eD = mLauncher.getDeviceProfile().allAppsNumCols;
+    public ItemInfoUpdateReceiver(final Launcher launcher, final LauncherCallbacks callbacks) {
+        this.mLauncher = launcher;
+        this.mCallbacks = callbacks;
+        this.eD = launcher.getDeviceProfile().allAppsNumCols;
     }
     
     public void di() {
         final AlphabeticalAppsList apps = ((AllAppsRecyclerView)this.mLauncher.findViewById(R.id.apps_list_view)).getApps();
         final IconCache iconCache = LauncherAppState.getInstance(this.mLauncher).getIconCache();
-        final Iterator iterator = this.eC.getPredictedApps().iterator();
+        final Iterator<ComponentKeyMapper<AppInfo>> iterator = this.mCallbacks.getPredictedApps().iterator();
         int n = 0;
         while (iterator.hasNext()) {
-            final AppInfo app = apps.findApp((ComponentKeyMapper<AppInfo>) iterator.next());
+            final AppInfo app = apps.findApp(iterator.next());
             int n2;
             if (app != null) {
                 if (app.usingLowResIcon) {

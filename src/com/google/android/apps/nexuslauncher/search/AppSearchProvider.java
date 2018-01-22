@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.android.launcher3.AllAppsList;
@@ -40,17 +42,30 @@ import java.util.concurrent.TimeoutException;
 
 public class AppSearchProvider extends ContentProvider
 {
-    private static final String[] eK;
-    private final PipeDataWriter eL;
+    private static final String[] eK = new String[] { "_id", "suggest_text_1", "suggest_icon_1", "suggest_intent_action", "suggest_intent_data" };
+    private final PipeDataWriter<Future> eL;
     private LooperExecutor eM;
     private LauncherAppState mApp;
 
-    static {
-        eK = new String[] { "_id", "suggest_text_1", "suggest_icon_1", "suggest_intent_action", "suggest_intent_data" };
-    }
-
     public AppSearchProvider() {
-        this.eL = new h(this);
+        this.eL = new PipeDataWriter<Future>() {
+            @Override
+            public void writeDataToPipe(@NonNull ParcelFileDescriptor output, @NonNull Uri uri, @NonNull String mimeType, @Nullable Bundle opts, @Nullable Future args) {
+                ParcelFileDescriptor.AutoCloseOutputStream outStream = null;
+                try {
+                    outStream = new ParcelFileDescriptor.AutoCloseOutputStream(output);
+                    ((Bitmap) args.get()).compress(Bitmap.CompressFormat.PNG, 100, outStream);
+                } catch (Throwable e) {
+                    Log.w("AppSearchProvider", "fail to write to pipe", e);
+                }
+                if (outStream != null) {
+                    try {
+                        outStream.close();
+                    } catch (Throwable ignored) {
+                    }
+                }
+            }
+        };
     }
 
     public static ComponentKey dl(final Uri uri, final Context context) {
@@ -227,22 +242,9 @@ public class AppSearchProvider extends ContentProvider
         }
 
         public Bitmap call() {
-            final d d = new d(this.eO);
+            final AppItemInfoWithIcon d = new AppItemInfoWithIcon(this.eO);
             this.eP.mApp.getIconCache().getTitleAndIcon(d, false);
             return d.iconBitmap;
-        }
-    }
-
-    final class h implements PipeDataWriter<Future>
-    {
-        final /* synthetic */ AppSearchProvider eQ;
-
-        h(final AppSearchProvider eq) {
-            this.eQ = eq;
-        }
-
-        public void writeDataToPipe(final ParcelFileDescriptor p0, final Uri p1, final String p2, final Bundle p3, final Future p4) {
-            //ToDo: Smali
         }
     }
 }

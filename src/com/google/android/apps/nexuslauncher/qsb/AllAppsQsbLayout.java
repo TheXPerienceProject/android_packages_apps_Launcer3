@@ -149,7 +149,7 @@ public class AllAppsQsbLayout extends AbstractQsbLayout implements SearchUiManag
     public void onClick(final View view) {
         super.onClick(view);
         if (view == this) {
-            final SearchBarManager f = new SearchBarManager(this, true);
+            final ConfigBuilder f = new ConfigBuilder(this, true);
             if (!mActivity.getGoogleNow().startSearch(f.build(), f.getExtras())) {
                 searchFallback();
             }

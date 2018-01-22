@@ -1,10 +1,10 @@
 package com.google.android.apps.nexuslauncher.smartspace;
 
-public class e {
-    d dO;
-    d dP;
+public class SmartspaceDataWraper {
+    SmartspaceCard dO;
+    SmartspaceCard dP;
 
-    public e() {
+    public SmartspaceDataWraper() {
         dO = null;
         dP = null;
     }

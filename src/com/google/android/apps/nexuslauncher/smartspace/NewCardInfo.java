@@ -14,14 +14,14 @@ import com.android.launcher3.LauncherAppState;
 import com.android.launcher3.graphics.LauncherIcons;
 import com.google.android.apps.nexuslauncher.smartspace.nano.SmartspaceProto.*;
 
-public class a {
+public class NewCardInfo {
     public final b di;
     public final boolean dj;
     public final PackageInfo dk;
     public final long dl;
     public final Intent intent;
 
-    public a(b di, Intent intent, boolean dj, long dl, PackageInfo dk) {
+    public NewCardInfo(b di, Intent intent, boolean dj, long dl, PackageInfo dk) {
         this.di = di;
         this.dj = dj;
         this.intent = intent;
@@ -29,19 +29,19 @@ public class a {
         this.dk = dk;
     }
 
-    private static Object ch(String s, Intent intent) {
-        if (!TextUtils.isEmpty(s)) {
-            return intent.getParcelableExtra(s);
+    private static Object getParcelableExtra(String name, Intent intent) {
+        if (!TextUtils.isEmpty(name)) {
+            return intent.getParcelableExtra(name);
         }
         return null;
     }
 
-    public Bitmap ci(final Context context) {
+    public Bitmap getBitmap(final Context context) {
         com.google.android.apps.nexuslauncher.smartspace.nano.SmartspaceProto.f fVar = this.di.cx;
         if (fVar == null) {
             return null;
         }
-        Bitmap bitmap = (Bitmap) ch(fVar.cV, this.intent);
+        Bitmap bitmap = (Bitmap) getParcelableExtra(fVar.cV, this.intent);
         if (bitmap != null) {
             return bitmap;
         }

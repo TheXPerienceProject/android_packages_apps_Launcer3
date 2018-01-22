@@ -1,7 +1,7 @@
 package com.google.android.apps.nexuslauncher.smartspace;
 
-public interface c {
+public interface ISmartspace {
     void cq();
 
-    void cr(final e p0);
+    void cr(final SmartspaceDataWraper p0);
 }
