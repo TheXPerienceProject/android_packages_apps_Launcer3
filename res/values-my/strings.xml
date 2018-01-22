@@ -140,4 +140,5 @@
     <string name="title_app_suggestions">အက်ပ်အကြံပြုချက်များကို ပြသပါ</string>
     <string name="summary_app_suggestions">"သင်၏ 'အက်ပ်အားလုံး' စာရင်း၏ ထိပ်တွင်"</string>
     <string name="about_app_version">ဗားရှင်း</string>
+    <string name="app_name_pixel_launcher">Pixel Launcher</string>
 </resources>

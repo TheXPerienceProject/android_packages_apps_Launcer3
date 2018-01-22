@@ -142,4 +142,5 @@
     <string name="title_app_suggestions">Visa appförslag</string>
     <string name="summary_app_suggestions">Högst upp i listan Alla appar</string>
     <string name="about_app_version">Version</string>
+    <string name="app_name_pixel_launcher">Översikt för Pixel</string>
 </resources>

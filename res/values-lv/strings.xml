@@ -140,4 +140,5 @@
     <string name="title_app_suggestions">Lietotnes ieteikumu rādīšana</string>
     <string name="summary_app_suggestions">Visu lietotņu saraksta augšdaļā</string>
     <string name="about_app_version">Versija</string>
+    <string name="app_name_pixel_launcher">Pixel palaišanas programma</string>
 </resources>

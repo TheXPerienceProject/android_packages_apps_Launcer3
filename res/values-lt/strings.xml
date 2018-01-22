@@ -140,4 +140,5 @@
     <string name="title_app_suggestions">Rodyti programų pasiūlymus</string>
     <string name="summary_app_suggestions">Visų programų sąrašo viršuje</string>
     <string name="about_app_version">Versija</string>
+    <string name="app_name_pixel_launcher">Pixel Launcher</string>
 </resources>

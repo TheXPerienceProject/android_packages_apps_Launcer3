@@ -142,4 +142,5 @@
     <string name="title_app_suggestions">ಅಪ್ಲಿಕೇಶನ್ ಸಲಹೆಗಳನ್ನು ಪ್ರದರ್ಶಿಸಿ</string>
     <string name="summary_app_suggestions">ನಿಮ್ಮ ಎಲ್ಲಾ ಅಪ್ಲಿಕೇಶನ್‌ಗಳ ಪಟ್ಟಿಯ ಮೇಲ್ಭಾಗದಲ್ಲಿ</string>
     <string name="about_app_version">ಆವೃತ್ತಿ</string>
+    <string name="app_name_pixel_launcher">Pixel ಲಾಂಚರ್</string>
 </resources>

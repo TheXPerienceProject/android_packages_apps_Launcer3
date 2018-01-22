@@ -140,4 +140,5 @@
     <string name="title_app_suggestions">Kuva rakenduste soovitused</string>
     <string name="summary_app_suggestions">Loendi Kõik rakendused ülaosas</string>
     <string name="about_app_version">Versioon</string>
+    <string name="app_name_pixel_launcher">Pixeli käivitusprogramm</string>
 </resources>

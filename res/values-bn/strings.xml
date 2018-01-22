@@ -140,4 +140,5 @@
     <string name="title_app_suggestions">অ্যাপের প্রস্তাবনা দেখুন</string>
     <string name="summary_app_suggestions">"আপনার 'সমস্ত অ্যাপ' তালিকার উপরে"</string>
     <string name="about_app_version">ভার্সন</string>
+    <string name="app_name_pixel_launcher">পিক্সেল লঞ্চার</string>
 </resources>

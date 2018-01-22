@@ -142,4 +142,5 @@
     <string name="title_app_suggestions">Prikaz predlogov za aplikacije</string>
     <string name="summary_app_suggestions">Na vrhu seznama »Vse aplikacije«</string>
     <string name="about_app_version">Različica</string>
+    <string name="app_name_pixel_launcher">Zaganjalnik Pixel</string>
 </resources>

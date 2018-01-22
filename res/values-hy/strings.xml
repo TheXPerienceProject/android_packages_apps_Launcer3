@@ -140,4 +140,5 @@
     <string name="title_app_suggestions">Ցուցադրել հավելվածների առաջարկները</string>
     <string name="summary_app_suggestions">«Բոլոր հավելվածները» ցուցակի սկզբում</string>
     <string name="about_app_version">Տարբերակ</string>
+    <string name="app_name_pixel_launcher">Pixel Launcher</string>
 </resources>

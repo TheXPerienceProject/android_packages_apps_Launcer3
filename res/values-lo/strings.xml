@@ -140,4 +140,5 @@
     <string name="title_app_suggestions">ສະແດງການແນະນຳແອັບ</string>
     <string name="summary_app_suggestions">ຢູ່ເທິງສຸດຂອງລາຍຊື່ແອັບທັງໝົດຂອງທ່ານ</string>
     <string name="about_app_version">ເວີຊັນ</string>
+    <string name="app_name_pixel_launcher">ຕົວເປີດ Pixel</string>
 </resources>

@@ -142,4 +142,5 @@
     <string name="title_app_suggestions">顯示應用程式建議</string>
     <string name="summary_app_suggestions">位於「所有應用程式」清單頂端</string>
     <string name="about_app_version">版本</string>
+    <string name="app_name_pixel_launcher">Pixel 啟動器</string>
 </resources>

@@ -142,4 +142,5 @@
     <string name="title_app_suggestions">ऐप्लिकेशन सुझाव दिखाएं</string>
     <string name="summary_app_suggestions">आपकी सभी ऐप्लिकेशन सूची के शीर्ष पर</string>
     <string name="about_app_version">वर्शन</string>
+    <string name="app_name_pixel_launcher">Pixel लॉन्चर</string>
 </resources>

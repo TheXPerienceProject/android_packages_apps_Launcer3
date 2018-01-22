@@ -140,4 +140,5 @@
     <string name="title_app_suggestions">បង្ហាញការណែនាំពីកម្មវិធី</string>
     <string name="summary_app_suggestions">នៅផ្នែកខាងលើបញ្ជីកម្មវិធីទាំងអស់របស់អ្នក</string>
     <string name="about_app_version">កំណែ</string>
+    <string name="app_name_pixel_launcher">កម្មវិធីចាប់ផ្តើម Pixel</string>
 </resources>

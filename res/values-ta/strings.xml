@@ -140,4 +140,5 @@
     <string name="title_app_suggestions">பயன்பாட்டிற்கான பரிந்துரைகளைக் காட்டு</string>
     <string name="summary_app_suggestions">எல்லாப் பயன்பாடுகளும் பட்டியலின் மேற்புறம்</string>
     <string name="about_app_version">பதிப்பு</string>
+    <string name="app_name_pixel_launcher">Pixel துவக்கி</string>
 </resources>

@@ -142,4 +142,5 @@
     <string name="title_app_suggestions">Zobrazovat návrhy aplikací</string>
     <string name="summary_app_suggestions">V horní části seznamu všech aplikací</string>
     <string name="about_app_version">Verze</string>
+    <string name="app_name_pixel_launcher">Pixel Launcher</string>
 </resources>

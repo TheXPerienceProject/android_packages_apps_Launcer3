@@ -142,4 +142,5 @@
     <string name="title_app_suggestions">Prikaz prijedloga za aplikacije</string>
     <string name="summary_app_suggestions">Pri vrhu popisa Sve aplikacije</string>
     <string name="about_app_version">Verzija</string>
+    <string name="app_name_pixel_launcher">Pokretač Pixela</string>
 </resources>

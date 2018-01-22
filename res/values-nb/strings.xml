@@ -142,4 +142,5 @@
     <string name="title_app_suggestions">Vis appforslag</string>
     <string name="summary_app_suggestions">Øverst på Alle apper-listen</string>
     <string name="about_app_version">Versjon</string>
+    <string name="app_name_pixel_launcher">Pixel-appoversikt</string>
 </resources>

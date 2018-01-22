@@ -334,4 +334,5 @@
     <string name="summary_app_suggestions">At the top of your All Apps list</string>
     <string name="about_app_version">Version</string>
     <string name="app_releases_url">https://github.com/amirzaidi/launcher3/releases</string>
+    <string name="app_name_pixel_launcher">Pixel Launcher</string>
 </resources>

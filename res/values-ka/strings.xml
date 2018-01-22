@@ -140,4 +140,5 @@
     <string name="title_app_suggestions">აპების შემოთავაზებების ჩვენება</string>
     <string name="summary_app_suggestions">თქვენი სიის „ყველა აპი“ სათავეში</string>
     <string name="about_app_version">ვერსია</string>
+    <string name="app_name_pixel_launcher">Pixel გამშვები</string>
 </resources>

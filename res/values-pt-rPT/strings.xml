@@ -140,4 +140,5 @@
     <string name="title_app_suggestions">Apresentar sugestões de aplicações</string>
     <string name="summary_app_suggestions">No topo da lista Todas as aplicações</string>
     <string name="about_app_version">Versão</string>
+    <string name="app_name_pixel_launcher">Iniciador do Pixel</string>
 </resources>

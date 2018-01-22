@@ -140,4 +140,5 @@
     <string name="title_app_suggestions">Prikaži prijedloge aplikacija</string>
     <string name="summary_app_suggestions">Na vrhu liste Sve aplikacije</string>
     <string name="about_app_version">Verzija</string>
+    <string name="app_name_pixel_launcher">Pixel pokretač za Nexus</string>
 </resources>

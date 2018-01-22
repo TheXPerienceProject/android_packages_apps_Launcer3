@@ -142,4 +142,5 @@
     <string name="title_app_suggestions">Wyświetl sugerowane aplikacje</string>
     <string name="summary_app_suggestions">U góry listy Wszystkie aplikacje</string>
     <string name="about_app_version">Wersja</string>
+    <string name="app_name_pixel_launcher">Pixel Launcher</string>
 </resources>

@@ -142,4 +142,5 @@
     <string name="title_app_suggestions">הצגת הצעות לאפליקציות</string>
     <string name="summary_app_suggestions">בראש רשימת האפליקציות</string>
     <string name="about_app_version">גרסה</string>
+    <string name="app_name_pixel_launcher">‏מפעיל האפליקציות של Pixel</string>
 </resources>

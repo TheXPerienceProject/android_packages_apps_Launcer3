@@ -142,4 +142,5 @@
     <string name="title_app_suggestions">Uygulama önerileri görüntüle</string>
     <string name="summary_app_suggestions">Tüm Uygulamalar listenizin en üstünde</string>
     <string name="about_app_version">Sürüm</string>
+    <string name="app_name_pixel_launcher">Pixel Launcher</string>
 </resources>

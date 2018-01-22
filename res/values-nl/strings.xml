@@ -142,4 +142,5 @@
     <string name="title_app_suggestions">App-suggesties weergeven</string>
     <string name="summary_app_suggestions">"Bovenaan je lijst 'Alle apps'"</string>
     <string name="about_app_version">Versie</string>
+    <string name="app_name_pixel_launcher">Pixel Launcher</string>
 </resources>

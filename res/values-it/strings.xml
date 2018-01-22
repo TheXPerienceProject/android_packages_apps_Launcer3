@@ -142,4 +142,5 @@
     <string name="title_app_suggestions">Mostra suggerimenti di app</string>
     <string name="summary_app_suggestions">"In cima all'elenco Tutte le app"</string>
     <string name="about_app_version">Versione</string>
+    <string name="app_name_pixel_launcher">Pixel Launcher</string>
 </resources>

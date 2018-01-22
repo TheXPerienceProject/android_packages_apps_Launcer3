@@ -140,4 +140,5 @@
     <string name="title_app_suggestions">Показване на предложения за приложения</string>
     <string name="summary_app_suggestions">В горната част на списъка с всички приложения</string>
     <string name="about_app_version">Версия</string>
+    <string name="app_name_pixel_launcher">Стартов панел Pixel</string>
 </resources>
