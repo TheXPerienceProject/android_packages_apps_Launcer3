@@ -3615,7 +3615,7 @@ public class Launcher extends BaseActivity
         InstallShortcutReceiver.disableAndFlushInstallQueue(
                 InstallShortcutReceiver.FLAG_LOADER_RUNNING, this);
 
-        if (Utilities.ATLEAST_MARSHMALLOW) {
+        if (Utilities.ATLEAST_MARSHMALLOW && !Utilities.ATLEAST_OREO) {
             final String notifAccessPopupPref = "notif_access_popup";
             boolean hasNotificationAccess = mSharedPrefs.getBoolean(notifAccessPopupPref, false);
             if (!hasNotificationAccess) {
