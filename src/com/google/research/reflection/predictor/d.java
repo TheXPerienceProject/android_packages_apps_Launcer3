@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.30
-// 
-
 package com.google.research.reflection.predictor;
 
 import com.google.research.reflection.a.b;
@@ -16,19 +12,18 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class d
-{
+public class d {
     protected boolean MB;
     private int MC;
     protected a MD;
     private long ME_msInHour;
-    
+
     public d() {
         this.ME_msInHour = 3600000L;
         this.MC = 100;
         this.MD = new a(this.MC, false);
     }
-    
+
     public static d SA(final String s, final b b) {
         d sc = new d();
         if (s != null) {
@@ -36,7 +31,7 @@ public class d
         }
         return sc;
     }
-    
+
     public static d SC(final byte[] array, final b b) {
         final d d = new d();
         final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(array);
@@ -44,20 +39,19 @@ public class d
         try {
             d.SB(dataInputStream, b);
             dataInputStream.close();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return d;
     }
-    
+
     public static String SF(final d d) {
         if (d == null) {
             return null;
         }
         return new String(SH(d), StandardCharsets.ISO_8859_1);
     }
-    
+
     public static byte[] SH(final d d) {
         final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         final DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
@@ -65,13 +59,12 @@ public class d
             d.SD(dataOutputStream);
             dataOutputStream.close();
             return byteArrayOutputStream.toByteArray();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
             return null;
         }
     }
-    
+
     public void SB(final DataInputStream dataInputStream, final b b) throws IOException {
         byte[] array = null;
         this.clear();
@@ -87,22 +80,22 @@ public class d
             }
         }
     }
-    
+
     public void SD(final DataOutputStream dataOutputStream) throws IOException {
         final int size = this.size();
         dataOutputStream.writeInt(size);
         for (int i = 0; i < size; ++i) {
-            final byte[] r = ((b)this.MD.ST(i)).R();
+            final byte[] r = ((b) this.MD.ST(i)).R();
             dataOutputStream.writeInt(r.length);
             dataOutputStream.write(r, 0, r.length);
         }
         this.MB = false;
     }
-    
+
     public a SE() {
         return this.MD;
     }
-    
+
     protected boolean SG(final b b) {
         boolean b2 = false;
         if (b.Q() == null || b.Q().equals("") || b.Q().equals("app_launch")) {
@@ -111,7 +104,6 @@ public class d
         return b2;
     }
 
-    //ToDo: Check Smali
     public void Sz(final b b) {
         if (!this.SG(b)) {
             return;
@@ -122,34 +114,34 @@ public class d
             try {
                 b ST = (b) this.MD.ST(0);
                 tn = e.Tn(ST, b);
-            }
-            catch (UncertaintyException ex) {
+            } catch (UncertaintyException ex) {
                 tn = Long.MAX_VALUE;
             }
 
-            if (this.ME_msInHour < tn) {
-                this.MD.SW();
+            if (tn <= this.ME_msInHour) {
+                break;
             }
+            this.MD.SW();
         }
         this.MD.add(b);
         this.MB = true;
     }
-    
+
     public void clear() {
         this.MD.clear();
     }
-    
+
     public int size() {
         return this.MD.SV();
     }
-    
+
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("(size ");
         sb.append(this.MD.SV());
         sb.append("): ");
         for (int i = 0; i < this.MD.SV(); ++i) {
-            sb.append(((b)this.MD.ST(i)).getId());
+            sb.append(((b) this.MD.ST(i)).getId());
             sb.append(" ");
         }
         sb.append("\n");

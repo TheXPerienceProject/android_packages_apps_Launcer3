@@ -2,14 +2,13 @@ package com.google.research.reflection.common;
 
 import java.util.LinkedList;
 
-public class a
-{
-    private LinkedList MQ;
+public class a {
+    private LinkedList<Object> MQ;
     private int MR;
     private int MS;
     private int MT;
     private Object[] MU;
-    
+
     public a(final int n, final boolean b) {
         final int n2 = -1;
         this.MR = n2;
@@ -18,24 +17,24 @@ public class a
         if (n > 0) {
             this.MU = new Object[n];
             if (b) {
-                this.MQ = new LinkedList();
+                this.MQ = new LinkedList<>();
             }
             return;
         }
         throw new RuntimeException();
     }
-    
+
     private boolean SZ() {
         return this.MQ != null && this.MQ.size() < this.MU.length;
     }
-    
+
     public Object SS() {
         if (this.MQ != null && !this.MQ.isEmpty()) {
             return this.MQ.removeLast();
         }
         return null;
     }
-    
+
     public Object ST(final int n) {
         if (n >= 0 && n < this.MS) {
             int n2 = this.MR - (this.MS - n - 1);
@@ -46,18 +45,18 @@ public class a
         }
         return null;
     }
-    
+
     public Object SU() {
         if (this.MS != 0) {
             return this.MU[this.MR];
         }
         return null;
     }
-    
+
     public int SV() {
         return this.MS;
     }
-    
+
     public void SW() {
         if (this.MS != 0) {
             int n = this.MR - (this.MS - 1);
@@ -72,15 +71,15 @@ public class a
             --this.MT;
         }
     }
-    
+
     public int SX() {
         return this.MU.length;
     }
-    
+
     public int SY() {
         return this.MT;
     }
-    
+
     public Object add(final Object o) {
         ++this.MR;
         if (this.MR == this.MU.length) {
@@ -96,7 +95,7 @@ public class a
         ++this.MT;
         return o;
     }
-    
+
     public void clear() {
         final int n = -1;
         this.MR = n;

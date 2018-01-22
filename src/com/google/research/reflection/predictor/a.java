@@ -7,8 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class a
-{
+public class a {
     protected HashMap<Integer, Long> Mq;
     protected b Mr;
     protected HashMap<String, Integer> Ms;
@@ -19,7 +18,7 @@ public class a
     private c Mx;
     private d My;
     protected HashMap<Integer, Long> Mz;
-    
+
     public a() {
         this.Mw = new HashMap<>();
         this.Ms = new HashMap<>();
@@ -28,7 +27,7 @@ public class a
         this.Mt = null;
         this.Mu = 100;
     }
-    
+
     public a(final b mr) {
         this.Mw = new HashMap<>();
         this.Ms = new HashMap<>();
@@ -38,7 +37,7 @@ public class a
         this.Mu = 100;
         (this.Mr = mr).Sr(this);
     }
-    
+
     private String Se() {
         final long n = Long.MAX_VALUE;
         final Iterator<Map.Entry<Integer, Long>> iterator = this.Mz.entrySet().iterator();
@@ -49,8 +48,7 @@ public class a
             int n3;
             if (entry.getValue() >= longValue) {
                 n3 = 1;
-            }
-            else {
+            } else {
                 n3 = 0;
             }
             Integer n5;
@@ -58,8 +56,7 @@ public class a
                 final Integer n4 = entry.getKey();
                 longValue = entry.getValue();
                 n5 = n4;
-            }
-            else {
+            } else {
                 n5 = n2;
             }
             n2 = n5;
@@ -71,7 +68,7 @@ public class a
         }
         return null;
     }
-    
+
     private void Sg(final String s, final String s2) {
         if (!this.Ms.isEmpty()) {
             final Integer n = this.Ms.remove(s);
@@ -81,7 +78,7 @@ public class a
             this.Mr.So(s, s2);
         }
     }
-    
+
     private void Sm(final String s) throws PredictorWrapper.PredictorInvalidException {
         if (this.Ms.isEmpty()) {
             return;
@@ -94,8 +91,7 @@ public class a
                 if (this.Mx != null) {
                     this.Mx.Sy(value, n, s);
                 }
-            }
-            else {
+            } else {
                 this.Mv -= this.Mw.remove(value);
                 this.Mq.remove(value);
                 this.Mz.remove(value);
@@ -119,11 +115,11 @@ public class a
         }
         throw new PredictorWrapper.PredictorInvalidException("Predictor becomes invalid");
     }
-    
+
     public d Sd() {
         return this.My;
     }
-    
+
     public e Sf(final com.google.research.reflection.a.b b) {
         if (this.Mt == null || this.Ms.size() > this.Mt.length) {
             this.Mt = new float[this.Ms.size()];
@@ -141,15 +137,15 @@ public class a
         sv.SK(list);
         return sv;
     }
-    
+
     public e Sh(final com.google.research.reflection.a.b b) {
         if (!this.Ms.containsKey(b.getId()) && this.Sn().size() == this.Sk()) {
             final String se = this.Se();
             if (se != null) {
                 try {
                     this.Sm(se);
+                } catch (PredictorWrapper.PredictorInvalidException ex) {
                 }
-                catch (PredictorWrapper.PredictorInvalidException ex) {}
             }
         }
         final e sq = this.Mr.Sq(b);
@@ -163,7 +159,7 @@ public class a
         this.Mz.put(si, b.F());
         return sq;
     }
-    
+
     public int Si(final com.google.research.reflection.a.b b) {
         final String id = b.getId();
         final long longValue = b.F();
@@ -175,15 +171,15 @@ public class a
         }
         return value;
     }
-    
+
     public void Sj(final d my) {
         this.My = my;
     }
-    
+
     public int Sk() {
         return this.Mu;
     }
-    
+
     public void Sl(final String s, final String s2, final Map map) {
         int n = 0;
         final ArrayList<String> list = new ArrayList<String>();
@@ -193,16 +189,16 @@ public class a
             }
         }
         for (final String s4 : list) {
-            while (this.Ms.containsKey(new StringBuilder(String.valueOf(s2).length() + 11).append(s2).append(n).toString())) {
+            while (this.Ms.containsKey(s2 + n)) {
                 ++n;
             }
-            final String string = new StringBuilder(String.valueOf(s2).length() + 11).append(s2).append(n).toString();
+            final String string = s2 + n;
             map.put(s4, string);
             this.Sg(s4, string);
         }
     }
-    
-    public HashMap Sn() {
+
+    public HashMap<String, Integer> Sn() {
         return this.Ms;
     }
 }

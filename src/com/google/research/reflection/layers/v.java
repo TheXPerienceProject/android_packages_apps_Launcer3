@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.30
-// 
-
 package com.google.research.reflection.layers;
 
 import com.google.research.reflection.common.a;
@@ -11,8 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public abstract class v
-{
+public abstract class v {
     private static double OX;
     boolean OW;
     b OY;
@@ -25,14 +20,14 @@ public abstract class v
     int Pf;
     a Pg;
     b Ph;
-    
+
     static {
         v.OX = 0.1;
     }
-    
+
     v() {
     }
-    
+
     v(final boolean ow, final int n, final int pa, final int pe, final int pf) {
         final boolean b = true;
         this.Pg = new a(n, b);
@@ -49,56 +44,56 @@ public abstract class v
         k.Up(this.OZ.Nl);
         k.Up(this.Ph.Nl);
     }
-    
+
     public static double UV() {
         return v.OX;
     }
-    
+
     public abstract b UB(final boolean p0, final com.google.research.reflection.layers.a p1, final ArrayList<com.google.research.reflection.common.c>[] p2, final b p3) throws InvalidValueException;
-    
+
     void UC() {
         k.Up(this.OY.Nl);
         k.Up(this.OZ.Nl);
         k.Up(this.Ph.Nl);
     }
-    
+
     public abstract void UD(final com.google.research.reflection.layers.a p0, final int p1, final b p2, final b p3, final b p4) throws InvalidValueException;
-    
+
     public void UO() {
         this.Pg.clear();
         this.Pb.clear();
         this.Pc.clear();
     }
-    
+
     void UP(final DataInputStream dataInputStream) throws IOException {
         final String utf = dataInputStream.readUTF();
         if (utf.equals(this.Uu())) {
             return;
         }
         final String value = String.valueOf(this.Uu());
-        throw new RuntimeException(new StringBuilder(String.valueOf(value).length() + 19 + String.valueOf(utf).length()).append("Expected ").append(value).append(" acquired ").append(utf).toString());
+        throw new RuntimeException("Expected " + value + " acquired " + utf);
     }
-    
+
     void UQ(final DataOutputStream dataOutputStream) throws IOException {
         dataOutputStream.writeUTF(this.Uu());
     }
-    
+
     public int UR() {
         return this.Pa;
     }
-    
+
     public int US() {
         return this.Pg.SX();
     }
-    
+
     public int UT() {
         return this.Pe;
     }
-    
+
     public b UU() {
         return this.OZ;
     }
-    
+
     public void UW(final v v) {
         final boolean b = true;
         final int sx = this.Pg.SX();
@@ -116,17 +111,17 @@ public abstract class v
         k.Up(v.OZ.Nl);
         k.Up(v.Ph.Nl);
     }
-    
+
     public int UX() {
         return this.Pf;
     }
-    
+
     public b UY() {
         return this.OY;
     }
-    
+
     public abstract String Uu();
-    
+
     public void Uv(final DataOutputStream dataOutputStream) throws IOException {
         dataOutputStream.writeInt(this.Pa);
         dataOutputStream.writeInt(this.Pf);
@@ -134,7 +129,7 @@ public abstract class v
         dataOutputStream.writeInt(this.Pg.SX());
         dataOutputStream.writeBoolean(this.OW);
     }
-    
+
     public void Uw(final DataInputStream dataInputStream) throws IOException {
         final boolean b = true;
         this.Pa = dataInputStream.readInt();
@@ -152,8 +147,8 @@ public abstract class v
         k.Up(this.OZ.Nl);
         k.Up(this.Ph.Nl);
     }
-    
+
     public abstract v clone();
-    
+
     public abstract void update() throws InvalidValueException;
 }

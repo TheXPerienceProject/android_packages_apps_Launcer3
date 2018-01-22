@@ -1,19 +1,14 @@
-// 
-// Decompiled by Procyon v0.5.30
-// 
-
 package com.google.research.reflection.b;
 
 import com.google.research.reflection.common.a;
 
 import java.util.List;
 
-public class j extends b
-{
+public class j extends b {
     public int Ts() {
         return 2;
     }
-    
+
     public com.google.research.reflection.layers.b Tt(final a a, final com.google.research.reflection.a.b b) {
         final int n = 1;
         final double n2 = 1.0;
@@ -24,14 +19,13 @@ public class j extends b
                 if (tc.get(0).C().get(0).equals("Home")) {
                     b2.Nl[n] = n2;
                 }
-            }
-            else {
+            } else {
                 b2.Nl[0] = n2;
             }
         }
         return b2;
     }
-    
+
     public b clone() {
         return new j();
     }

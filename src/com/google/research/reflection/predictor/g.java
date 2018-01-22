@@ -11,6 +11,7 @@ import com.google.research.reflection.b.f;
 import com.google.research.reflection.b.i;
 import com.google.research.reflection.b.j;
 import com.google.research.reflection.b.k;
+import com.google.research.reflection.layers.InvalidValueException;
 import com.google.research.reflection.layers.e;
 import com.google.research.reflection.layers.m;
 import com.google.research.reflection.layers.o;
@@ -69,14 +70,23 @@ public class g extends b implements a
     public void So(final String s, final String s2) {
         this.MM.Tu(Arrays.asList(".*", s));
     }
-    
-    public com.google.research.reflection.predictor.e Sq(final com.google.research.reflection.a.b b) {
-        final Integer value = this.Sx().Si(b);
-        final com.google.research.reflection.predictor.e e = new com.google.research.reflection.predictor.e();
 
-        //ToDo: Smali
-
-        return e;
+    public com.google.research.reflection.predictor.e Sq(com.google.research.reflection.a.b bVar) {
+        Integer valueOf = Sx().Si(bVar);
+        com.google.research.reflection.predictor.e eVar = new com.google.research.reflection.predictor.e();
+        try {
+            com.google.research.reflection.layers.b Tt = this.MM.Tt(Sx().Sd().SE(), bVar);
+            this.MN.TE();
+            this.MN.TJ(true, null, Tt, true);
+            com.google.research.reflection.layers.k.Up(this.MP.Nl);
+            this.MP.TQ(false, 0, valueOf, 1.0d);
+            this.MN.TH(this.MP, null, 1, true);
+            this.MN.update();
+            eVar.SL(Tt.Nl);
+        } catch (InvalidValueException e) {
+            e.printStackTrace();
+        }
+        return eVar;
     }
     
     public void Ss(final Integer n, final Integer n2, final String s) {

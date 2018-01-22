@@ -6,16 +6,15 @@ import java.util.Calendar;
 import java.util.Objects;
 import java.util.TimeZone;
 
-public class e
-{
+public class e {
     public static int Tk(final b b) {
         return Tm(b).get(Calendar.HOUR_OF_DAY);
     }
-    
+
     public static int Tl(final b b) {
         return Tm(b).get(Calendar.MINUTE);
     }
-    
+
     private static Calendar Tm(final b b) {
         if (b.P() != null && !b.P().isEmpty()) {
             final Calendar instance = Calendar.getInstance(TimeZone.getTimeZone(b.P()));
@@ -26,7 +25,7 @@ public class e
         instance2.setTimeInMillis(b.F() + b.O());
         return instance2;
     }
-    
+
     public static long Tn(final b b, final b b2) throws UncertaintyException {
         final long n = 0L;
         int n2 = 1;
@@ -34,16 +33,14 @@ public class e
         int n4;
         if (b.J() <= n) {
             n4 = n2;
-        }
-        else {
+        } else {
             n4 = 0;
         }
         if (n4 == 0) {
             int n5;
             if (b2.J() <= n) {
                 n5 = n2;
-            }
-            else {
+            } else {
                 n5 = 0;
             }
             if (n5 == 0) {
@@ -65,7 +62,7 @@ public class e
         }
         return n3;
     }
-    
+
     public static int To(final b b) {
         return Tm(b).get(Calendar.DAY_OF_WEEK);
     }

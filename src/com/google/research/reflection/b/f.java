@@ -1,18 +1,13 @@
-// 
-// Decompiled by Procyon v0.5.30
-// 
-
 package com.google.research.reflection.b;
 
 import com.google.research.reflection.common.a;
 import com.google.research.reflection.common.e;
 
-public class f extends b
-{
+public class f extends b {
     public int Ts() {
         return 24;
     }
-    
+
     public com.google.research.reflection.layers.b Tt(final a a, final com.google.research.reflection.a.b b) {
         final int n = 30;
         final int n2 = 23;
@@ -29,8 +24,7 @@ public class f extends b
                 }
                 b2.Nl[n4] = n3;
             }
-        }
-        else {
+        } else {
             int n5 = tk - 1;
             if (n5 < 0) {
                 n5 = n2;
@@ -39,7 +33,7 @@ public class f extends b
         }
         return b2;
     }
-    
+
     public b clone() {
         return new f();
     }

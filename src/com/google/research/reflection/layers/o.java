@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.30
-// 
-
 package com.google.research.reflection.layers;
 
 import java.io.DataInputStream;
@@ -10,8 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class o extends v
-{
+public class o extends v {
     private b OA;
     private float OB;
     private int OC;
@@ -23,10 +18,10 @@ public class o extends v
     private boolean Ox;
     private b Oy;
     private b Oz;
-    
+
     public o() {
     }
-    
+
     public o(final boolean b, final int n, final int ow, final int n2, final int n3, final int n4, final int oe, final int oc, final boolean ox, final boolean b2, final float ob) {
         super(b, n, n2, n3, n4);
         this.OE = oe;
@@ -44,23 +39,22 @@ public class o extends v
         this.OC = oc;
         k.Uo(this.Oy = new b(n4, n4), b2);
     }
-    
+
     private static void UG(final int n, final b b, final b b2) throws InvalidValueException {
         if (n != 1 && n != 0) {
             if (n != 2) {
-                throw new RuntimeException(new StringBuilder(44).append("Unsupported activation function: ").append(n).toString());
+                throw new RuntimeException("Unsupported activation function: " + n);
             }
             e.getInstance().Uc(b.TW(false), new r(b, b2));
-        }
-        else {
+        } else {
             e.getInstance().Uc(b.Nl.length, new g(n, b2, b));
         }
     }
-    
+
     public int UA() {
         return this.OE;
     }
-    
+
     public b UB(final boolean b, final a a, final ArrayList<com.google.research.reflection.common.c>[] array, final b b2) throws InvalidValueException {
         b b3 = null;
         final int pd = 1;
@@ -71,17 +65,16 @@ public class o extends v
             if (b2.TU(false) != this.UT() || b2.TW(false) != this.UR()) {
                 throw new RuntimeException("Inconsistent input matrix");
             }
-        }
-        else {
-            this.Pd = (pd != 0);
+        } else {
+            this.Pd = true;
             this.Pc.add(array);
         }
         if (this.Pg.SX() > pd) {
-            b3 = (b)this.Pg.SU();
+            b3 = (b) this.Pg.SU();
         }
         final b b4 = new b(this.Pa, this.Pf);
         e.getInstance().Uc(this.Pa * this.Pf, new x(this, a, array, b2, b3, b4));
-        final b b5 = (b)this.Pg.add(new b(this.Pa, this.Pf));
+        final b b5 = (b) this.Pg.add(new b(this.Pa, this.Pf));
         UG(this.Ow, b4, b5);
         if (this.OB > 0.0f) {
             if (!b) {
@@ -90,8 +83,7 @@ public class o extends v
                     nl[i] *= 1.0f - this.OB;
                     ++i;
                 }
-            }
-            else {
+            } else {
                 for (int j = 0; j < b5.Nl.length; ++j) {
                     if (Math.random() < this.OB) {
                         b5.Nl[j] = 0.0;
@@ -101,40 +93,40 @@ public class o extends v
         }
         return b5;
     }
-    
+
     void UC() {
         super.UC();
         k.Up(this.Ov.Nl);
         k.Up(this.OD.Nl);
         k.Up(this.OA.Nl);
     }
-    
+
     public void UD(final a a, final int n, final b b, final b b2, final b b3) throws InvalidValueException {
         final boolean b4 = true;
         b.TT(b, b2, this.Ph, false);
-        this.Ux(this.Ow, this.Ph, (b)this.Pg.ST(n), b3);
+        this.Ux(this.Ow, this.Ph, (b) this.Pg.ST(n), b3);
         b.TO(this.Ph, this.UE(a), !this.Ox && b4, this.OY, false);
         if (this.OW) {
             b.TO(this.Ph, this.Oy, b4, this.OZ, false);
         }
-        e.getInstance().Uc(this.Pa * this.Pf, new u(this, (ArrayList<com.google.research.reflection.common.c>[])this.Pc.ST(n), (b)this.Pb.ST(n), (b)this.Pg.ST(n - 1)));
+        e.getInstance().Uc(this.Pa * this.Pf, new u(this, (ArrayList<com.google.research.reflection.common.c>[]) this.Pc.ST(n), (b) this.Pb.ST(n), (b) this.Pg.ST(n - 1)));
     }
-    
+
     public b UE(final a a) {
         if (this.OE < 0) {
             return this.Ou;
         }
-        return ((o)a.TF().get(this.OE)).Ou;
+        return ((o) a.TF().get(this.OE)).Ou;
     }
-    
+
     public b UN() {
         return this.Oz;
     }
-    
+
     public String Uu() {
         return "LinearLayer";
     }
-    
+
     public void Uv(final DataOutputStream dataOutputStream) throws IOException {
         super.Uv(dataOutputStream);
         dataOutputStream.writeInt(this.Ow);
@@ -148,7 +140,7 @@ public class o extends v
         dataOutputStream.writeInt(this.OC);
         this.UQ(dataOutputStream);
     }
-    
+
     public void Uw(final DataInputStream dataInputStream) throws IOException {
         super.Uw(dataInputStream);
         this.Ow = dataInputStream.readInt();
@@ -165,11 +157,11 @@ public class o extends v
         this.OC = dataInputStream.readInt();
         this.UP(dataInputStream);
     }
-    
+
     void Ux(final int n, final b b, final b b2, final b b3) throws InvalidValueException {
         e.getInstance().Uc(b.Nl.length, new t(this, n, b2, b));
     }
-    
+
     public void Uz(final o o) {
         super.UW(o);
         o.Ox = this.Ox;
@@ -183,7 +175,7 @@ public class o extends v
         o.OE = this.OE;
         o.OC = this.OC;
     }
-    
+
     public o clone() {
         final o o = new o();
         super.UW(o);
@@ -199,13 +191,12 @@ public class o extends v
         o.OC = this.OC;
         return o;
     }
-    
+
     public void update() throws InvalidValueException {
         e.getInstance().Uc(this.Pf, new l(this));
     }
 
-    static class g implements c
-    {
+    static class g implements c {
         final /* synthetic */ int ND;
         final /* synthetic */ b NE;
         final /* synthetic */ b NF;
@@ -217,19 +208,16 @@ public class o extends v
         }
 
         public Boolean Ub(final int n) {
-            final boolean b = true;
-            if (this.ND != (b ? 1 : 0)) {
+            if (this.ND != 1) {
                 this.NF.Nl[n] = k.Ut(this.NE.Nl[n]);
-            }
-            else {
+            } else {
                 this.NF.Nl[n] = k.Uq(this.NE.Nl[n]);
             }
-            return b;
+            return true;
         }
     }
 
-    class l implements c
-    {
+    class l implements c {
         final /* synthetic */ o Oo;
 
         l(final o oo) {
@@ -259,8 +247,7 @@ public class o extends v
         }
     }
 
-    static class r implements c
-    {
+    static class r implements c {
         final /* synthetic */ b OL;
         final /* synthetic */ b OM;
 
@@ -275,8 +262,7 @@ public class o extends v
         }
     }
 
-    class t implements c
-    {
+    class t implements c {
         final /* synthetic */ int OP;
         final /* synthetic */ b OQ;
         final /* synthetic */ b OR;
@@ -288,23 +274,20 @@ public class o extends v
         }
 
         public Boolean Ub(final int n) {
-            final boolean b = true;
             final double n2 = 0.0;
-            if (this.OP != (b ? 1 : 0)) {
+            if (this.OP != 1) {
                 if (this.OP != 0) {
-                    throw new RuntimeException(new StringBuilder(44).append("Unsupported activation function: ").append(this.OP).toString());
+                    throw new RuntimeException("Unsupported activation function: " + this.OP);
                 }
                 this.OR.Nl[n] *= this.OQ.Nl[n] * (1.0 - this.OQ.Nl[n]);
-            }
-            else if (this.OQ.Nl[n] == n2) {
+            } else if (this.OQ.Nl[n] == n2) {
                 this.OR.Nl[n] = n2;
             }
-            return b;
+            return true;
         }
     }
 
-    class u implements c
-    {
+    class u implements c {
         final /* synthetic */ b OS;
         final /* synthetic */ b OT;
         final /* synthetic */ o OU;
@@ -328,8 +311,7 @@ public class o extends v
                     final int n5 = this.OU.Pf * j + n3;
                     nl[n5] += this.OT.Nl[this.OU.Pe * n2 + j] * n4;
                 }
-            }
-            else {
+            } else {
                 for (final com.google.research.reflection.common.c c : this.OV[n2]) {
                     final double[] nl2 = this.OU.Ov.Nl;
                     final int n6 = c.MV * this.OU.Pf + n3;
@@ -350,8 +332,7 @@ public class o extends v
         }
     }
 
-    class x implements c
-    {
+    class x implements c {
         final /* synthetic */ b Pn;
         final /* synthetic */ b Po;
         final /* synthetic */ a Pp;
@@ -380,8 +361,7 @@ public class o extends v
                 for (int i = 0; i < this.Pr.Pe; ++i) {
                     n6 += this.Po.TP(false, n2, i) * ue.TP(this.Pr.Ox, i, n3);
                 }
-            }
-            else {
+            } else {
                 final Iterator<com.google.research.reflection.common.c> iterator = this.Ps[n2].iterator();
                 n6 = n5;
                 while (iterator.hasNext()) {

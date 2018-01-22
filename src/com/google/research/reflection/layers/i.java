@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.30
-// 
-
 package com.google.research.reflection.layers;
 
 import com.google.research.reflection.common.a;
@@ -10,8 +6,7 @@ import com.google.research.reflection.common.c;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class i
-{
+public class i {
     private int NL;
     private b NM;
     private b NN;
@@ -39,7 +34,7 @@ public class i
     private a Oj;
     private b Ok;
     private b Ol;
-    
+
     private static void Ug(final boolean b, final b b2, final b b3, final int n, final ArrayList<c>[] array, final b b4, final int n2, final int n3, final int n4) {
         for (int i = 0; i < n4; ++i) {
             final double tp = b3.TP(false, i, n);
@@ -50,25 +45,23 @@ public class i
                             b2.TX(false, j, n3, b4.TP(false, i, j) * tp);
                         }
                     }
-                }
-                else {
+                } else {
                     for (final c c : array[i]) {
                         b2.TX(false, c.MV, n3, c.MW * tp);
                     }
                 }
-            }
-            else {
+            } else {
                 b2.TX(false, 0, n3, tp);
             }
         }
     }
-    
+
     private void Uj(final boolean b, final b b2, final int n, final int n2, final b[] array, final ArrayList[] array2, final b b3) {
         Ug(b, b2, array[1], 0, array2, b3, n, 0, n2);
         Ug(b, b2, array[2], 0, array2, b3, n, 1, n2);
         Ug(b, b2, array[4], 0, array2, b3, n, 2, n2);
     }
-    
+
     private double Ul(final int n, final ArrayList[] array, final b b, final b b2, final b b3, final int n2) {
         final double n3 = 0.0;
         double n4;
@@ -77,12 +70,9 @@ public class i
             for (int i = 0; i < this.NV; ++i) {
                 n4 += b.TP(false, n, i) * this.NO.TP(false, i, n2);
             }
-        }
-        else {
-            final Iterator<c> iterator = array[n].iterator();
+        } else {
             n4 = n3;
-            while (iterator.hasNext()) {
-                final c c = iterator.next();
+            for (com.google.research.reflection.common.c c : (Iterable<c>) array[n]) {
                 n4 += this.NO.TP(false, c.MV, n2) * c.MW;
             }
         }
@@ -94,28 +84,27 @@ public class i
         }
         return n4;
     }
-    
+
     public void Uf(final int n, final ArrayList[] array, final b b, final b b2, final b b3) throws InvalidValueException {
-        final b b4 = (b)this.Og.ST(n);
+        final b b4 = (b) this.Og.ST(n);
         final b b5 = new b(this.Oe, 1);
         for (int i = 0; i < this.Oe; ++i) {
             double n2 = 0.0;
             for (int j = 0; j < this.Oa; ++j) {
                 n2 += b4.TP(false, i, j) * b3.TP(false, i, j);
             }
-            final double tp = ((b)this.Oh.ST(n)).TP(false, i, 0);
+            final double tp = ((b) this.Oh.ST(n)).TP(false, i, 0);
             b5.TQ(false, i, 0, n2 * (tp * (1.0 - tp)));
         }
         final b b6 = new b(this.Oe, this.Oa);
-        final b b7 = (b)this.NX.ST(n + 1);
-        final b b8 = (b)this.Oc.ST(n);
+        final b b7 = (b) this.NX.ST(n + 1);
+        final b b8 = (b) this.Oc.ST(n);
         for (int k = 0; k < this.Oe; ++k) {
-            final double tp2 = ((b)this.Oh.ST(n)).TP(false, k, 0);
+            final double tp2 = ((b) this.Oh.ST(n)).TP(false, k, 0);
             double tp3;
             if (b7 == null) {
                 tp3 = 0.0;
-            }
-            else {
+            } else {
                 tp3 = b7.TP(false, k, 0);
             }
             for (int l = 0; l < this.Oa; ++l) {
@@ -127,8 +116,8 @@ public class i
                 b6.TQ(false, k, l, n3 + this.Ob.TP(false, l, 2) * b5.TP(false, k, 0));
             }
         }
-        final b b9 = (b)this.Oj.ST(n);
-        final b b10 = (b)this.NY.ST(n);
+        final b b9 = (b) this.Oj.ST(n);
+        final b b10 = (b) this.NY.ST(n);
         final b b11 = new b(this.Oe, this.Oa);
         for (int n4 = 0; n4 < this.Oe; ++n4) {
             final double tp5 = b9.TP(false, n4, 0);
@@ -138,8 +127,8 @@ public class i
             }
         }
         final b b12 = new b(this.Oe, 1);
-        final b b13 = (b)this.NX.ST(n);
-        final b b14 = (b)this.Oc.ST(n - 1);
+        final b b13 = (b) this.NX.ST(n);
+        final b b14 = (b) this.Oc.ST(n - 1);
         for (int n6 = 0; n6 < this.Oe; ++n6) {
             final double tp7 = b13.TP(false, n6, 0);
             final double n7 = (1.0 - tp7) * tp7;
@@ -150,7 +139,7 @@ public class i
             b12.TQ(false, n6, 0, n8 * n7);
         }
         final b b15 = new b(this.Oe, 1);
-        final b b16 = (b)this.Oj.ST(n);
+        final b b16 = (b) this.Oj.ST(n);
         for (int n10 = 0; n10 < this.Oe; ++n10) {
             final double tp8 = b16.TP(false, n10, 0);
             final double n11 = (1.0 - tp8) * tp8;
@@ -160,7 +149,7 @@ public class i
             }
             b15.TQ(false, n10, 0, n12 * n11);
         }
-        this.NS = new b[] { b6, b15, b12, b11, b5 };
+        this.NS = new b[]{b6, b15, b12, b11, b5};
         final b tv = b.TV(b.TV(b.TV(b15, b12), b5), b11);
         b.TO(tv, b.TV(this.NO, this.NP), true, this.NR, false);
         b.TO(tv, b.TV(this.NZ, this.Ok), true, this.NW, false);
@@ -176,11 +165,11 @@ public class i
             Ug(true, this.Od, this.NS[3], n14, null, null, 1, n14, this.Oe);
         }
     }
-    
+
     b Uh() {
         return this.NR;
     }
-    
+
     public void Ui() {
         this.NS = new b[5];
         k.Up(this.Od.Nl);
@@ -191,39 +180,39 @@ public class i
         k.Up(this.Ol.Nl);
         k.Up(this.NT.Nl);
     }
-    
+
     public void Uk(final ArrayList<c>[] array, final b b, final b b2, final b b3) throws InvalidValueException {
-        b b4 = (b)this.Oh.SS();
+        b b4 = (b) this.Oh.SS();
         if (b4 == null) {
             b4 = new b(this.Oe, 1);
         }
-        final b b5 = (b)this.Oh.add(b4);
-        b b6 = (b)this.NX.SS();
+        final b b5 = (b) this.Oh.add(b4);
+        b b6 = (b) this.NX.SS();
         if (b6 == null) {
             b6 = new b(this.Oe, 1);
         }
-        final b b7 = (b)this.NX.add(b6);
-        b b8 = (b)this.Oj.SS();
+        final b b7 = (b) this.NX.add(b6);
+        b b8 = (b) this.Oj.SS();
         if (b8 == null) {
             b8 = new b(this.Oe, 1);
         }
-        final b b9 = (b)this.Oj.add(b8);
-        final b b10 = (b)this.Oc.SU();
-        b b11 = (b)this.Og.SS();
+        final b b9 = (b) this.Oj.add(b8);
+        final b b10 = (b) this.Oc.SU();
+        b b11 = (b) this.Og.SS();
         if (b11 == null) {
             b11 = new b(this.Oe, this.Oa);
         }
-        final b b12 = (b)this.Og.add(b11);
-        b b13 = (b)this.Oc.SS();
+        final b b12 = (b) this.Og.add(b11);
+        b b13 = (b) this.Oc.SS();
         if (b13 == null) {
             b13 = new b(this.Oe, this.Oa);
         }
-        final b b14 = (b)this.Oc.add(b13);
-        b b15 = (b)this.NY.SS();
+        final b b14 = (b) this.Oc.add(b13);
+        b b15 = (b) this.NY.SS();
         if (b15 == null) {
             b15 = new b(this.Oe, this.Oa);
         }
-        final b b16 = (b)this.NY.add(b15);
+        final b b16 = (b) this.NY.add(b15);
         for (int i = 0; i < this.Oe; ++i) {
             final double ut = k.Ut(this.Ul(i, array, b, b2, b10, 0) + this.Oi.Nl[0]);
             b9.TQ(false, i, 0, ut);
@@ -235,8 +224,7 @@ public class i
                     for (int k = 0; k < this.NV; ++k) {
                         n += b.TP(false, i, k) * this.NP.TP(false, k, j);
                     }
-                }
-                else {
+                } else {
                     for (final c c : array[i]) {
                         n += c.MW * this.NP.TP(false, c.MV, j);
                     }
@@ -252,7 +240,7 @@ public class i
                 }
                 b14.TQ(false, i, j, n3);
                 if (Double.isNaN(n3)) {
-                    throw new InvalidValueException(new StringBuilder(78).append(ut).append(" x ").append(tanh).append(" + ").append(ut2).toString());
+                    throw new InvalidValueException(String.valueOf(ut) + " x " + tanh + " + " + ut2);
                 }
             }
             final double ut3 = k.Ut(this.Ul(i, array, b, b2, b14, 2) + this.Oi.Nl[2]);
@@ -262,16 +250,16 @@ public class i
                 b12.TQ(false, i, l, tanh2);
                 b3.TQ(false, i, l, ut3 * tanh2);
                 if (Double.isNaN(ut3 * tanh2)) {
-                    throw new InvalidValueException(new StringBuilder(82).append(ut3).append(" x ").append(tanh2).append("=tanh(").append(b14.TP(false, i, l)).append(")").toString());
+                    throw new InvalidValueException(String.valueOf(ut3) + " x " + tanh2 + "=tanh(" + b14.TP(false, i, l) + ")");
                 }
             }
         }
     }
-    
+
     b Um() {
         return this.NW;
     }
-    
+
     public void Un() {
         this.Oc.clear();
         this.Og.clear();
@@ -280,7 +268,7 @@ public class i
         this.NX.clear();
         this.Oj.clear();
     }
-    
+
     void update() throws InvalidValueException {
         this.NO.TR(this.Ol.Ua(-v.UV()));
         this.NZ.TR(this.NQ.Ua(-v.UV()));

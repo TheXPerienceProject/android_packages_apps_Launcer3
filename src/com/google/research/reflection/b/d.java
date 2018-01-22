@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.30
-// 
-
 package com.google.research.reflection.b;
 
 import com.google.research.reflection.common.UncertaintyException;
@@ -18,8 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class d extends b
-{
+public class d extends b {
     protected long Na;
     protected boolean[] Nb;
     protected int Nc;
@@ -27,7 +22,7 @@ public class d extends b
     protected int Ne;
     protected HashMap<Object, Object> Nf;
     protected long Ng;
-    
+
     public d() {
         this.Nf = new HashMap<>();
         this.Nd = new HashMap<>();
@@ -37,7 +32,7 @@ public class d extends b
         this.Nc = 2;
         this.Nb = new boolean[this.Ne];
     }
-    
+
     public d(final int ne) {
         this.Nf = new HashMap<>();
         this.Nd = new HashMap<>();
@@ -48,7 +43,7 @@ public class d extends b
         this.Ne = ne;
         this.Nb = new boolean[this.Ne];
     }
-    
+
     public d(final int ne, final long na, final long ng, final int nc) {
         this.Nf = new HashMap();
         this.Nd = new HashMap();
@@ -62,7 +57,7 @@ public class d extends b
         this.Ne = ne;
         this.Nb = new boolean[this.Ne];
     }
-    
+
     private String TC() {
         final long n = Long.MAX_VALUE;
         final Iterator<Map.Entry<Object, Object>> iterator = this.Nf.entrySet().iterator();
@@ -74,8 +69,7 @@ public class d extends b
             int n3;
             if (longValue >= n2) {
                 n3 = 1;
-            }
-            else {
+            } else {
                 n3 = 0;
             }
             String s2;
@@ -83,8 +77,7 @@ public class d extends b
             if (n3 == 0) {
                 s2 = (String) entry.getKey();
                 n4 = longValue;
-            }
-            else {
+            } else {
                 s2 = s;
                 n4 = n2;
             }
@@ -131,7 +124,7 @@ public class d extends b
         list.addAll(hashMap.values());
         return list;
     }
-    
+
     protected int TB(final String s, final long n) {
         final int n2 = 1;
         int i = 0;
@@ -141,44 +134,43 @@ public class d extends b
                 while (i < this.Nb.length) {
                     if (!this.Nb[i]) {
                         value = i;
-                        this.Nb[i] = (n2 != 0);
+                        this.Nb[i] = true;
                         break;
                     }
                     ++i;
                 }
-            }
-            else {
+            } else {
                 final String tc = this.TC();
-                value = (Integer)this.Nf.get(tc);
+                value = (Integer) this.Nf.get(tc);
                 final String[] array = new String[n2];
                 array[0] = tc;
                 this.Tu(Arrays.asList(array));
-                this.Nb[value] = (n2 != 0);
+                this.Nb[value] = true;
             }
             this.Nf.put(s, value);
         }
         this.Nd.put(value, n);
         return value;
     }
-    
+
     public int Ts() {
         return this.Ne;
     }
-    
+
     public com.google.research.reflection.layers.b Tt(final a a, final com.google.research.reflection.a.b b) {
         final ArrayList<c> ta = this.TA(a, b, this.Na, this.Ng, this.Nc);
         final com.google.research.reflection.layers.b b2 = new com.google.research.reflection.layers.b(1, this.Ne);
         for (final com.google.research.reflection.common.c c : ta) {
             if (c.MW > 0.0f) {
                 if (c.MV >= this.Ne) {
-                    throw new RuntimeException(new StringBuilder(26).append("invalid index: ").append(c.MV).toString());
+                    throw new RuntimeException("invalid index: " + c.MV);
                 }
                 b2.Nl[c.MV] = 1.0;
             }
         }
         return b2;
     }
-    
+
     public void Tu(final List list) {
         if (!list.isEmpty()) {
             final Integer n = (Integer) this.Nf.remove(list.get(0));
@@ -189,7 +181,7 @@ public class d extends b
             }
         }
     }
-    
+
     public void Tv(final DataInputStream dataInputStream) throws IOException {
         this.Ne = dataInputStream.readInt();
         this.Nc = dataInputStream.readInt();
@@ -203,7 +195,7 @@ public class d extends b
             this.Nb[(Integer) iterator.next()] = true;
         }
     }
-    
+
     public void Tw(final DataOutputStream dataOutputStream) throws IOException {
         dataOutputStream.writeInt(this.Ne);
         dataOutputStream.writeInt(this.Nc);
@@ -212,7 +204,7 @@ public class d extends b
         com.google.research.reflection.common.d.Ti(dataOutputStream, this.Nf);
         com.google.research.reflection.common.d.Ti(dataOutputStream, this.Nd);
     }
-    
+
     public d clone() {
         final d d = new d(this.Ne, this.Na, this.Ng, this.Nc);
         for (final Map.Entry<Object, Object> entry : this.Nf.entrySet()) {

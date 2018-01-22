@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.30
-// 
-
 package com.google.research.reflection.common;
 
 import java.io.DataInputStream;
@@ -10,8 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class d
-{
+public class d {
     private static void Tf(final DataOutputStream dataOutputStream, final Object o) throws IOException {
         int i = 0;
         if (!(o instanceof Integer)) {
@@ -21,44 +16,38 @@ public class d
                         if (!(o instanceof HashMap)) {
                             if (!(o instanceof int[])) {
                                 if (o instanceof float[]) {
-                                    final float[] array = (float[])o;
+                                    final float[] array = (float[]) o;
                                     dataOutputStream.writeInt(array.length);
                                     while (i < array.length) {
                                         dataOutputStream.writeFloat(array[i]);
                                         ++i;
                                     }
                                 }
-                            }
-                            else {
-                                final int[] array2 = (int[])o;
+                            } else {
+                                final int[] array2 = (int[]) o;
                                 dataOutputStream.writeInt(array2.length);
                                 while (i < array2.length) {
                                     dataOutputStream.writeInt(array2[i]);
                                     ++i;
                                 }
                             }
+                        } else {
+                            Ti(dataOutputStream, (Map) o);
                         }
-                        else {
-                            Ti(dataOutputStream, (Map)o);
-                        }
+                    } else {
+                        dataOutputStream.writeUTF((String) o);
                     }
-                    else {
-                        dataOutputStream.writeUTF((String)o);
-                    }
+                } else {
+                    dataOutputStream.writeFloat((float) o);
                 }
-                else {
-                    dataOutputStream.writeFloat((float)o);
-                }
+            } else {
+                dataOutputStream.writeLong((long) o);
             }
-            else {
-                dataOutputStream.writeLong((long)o);
-            }
-        }
-        else {
-            dataOutputStream.writeInt((int)o);
+        } else {
+            dataOutputStream.writeInt((int) o);
         }
     }
-    
+
     private static Object Tg(final DataInputStream dataInputStream, final Class clazz) throws IOException {
         int i = 0;
         if (clazz == Integer.class) {
@@ -93,14 +82,14 @@ public class d
         }
         return array2;
     }
-    
+
     public static float[] Th(final double n, final double n2) {
         final double radians = Math.toRadians(n);
         final double radians2 = Math.toRadians(n2);
         final double cos = Math.cos(radians);
-        return new float[] { (float)(Math.cos(radians2) * cos), (float)(Math.sin(radians2) * cos), (float)Math.sin(radians) };
+        return new float[]{(float) (Math.cos(radians2) * cos), (float) (Math.sin(radians2) * cos), (float) Math.sin(radians)};
     }
-    
+
     public static void Ti(final DataOutputStream dataOutputStream, final Map<Object, Object> map) throws IOException {
         dataOutputStream.writeInt(map.size());
         for (final Map.Entry<Object, Object> entry : map.entrySet()) {
@@ -108,8 +97,8 @@ public class d
             Tf(dataOutputStream, entry.getValue());
         }
     }
-    
-    public static HashMap Tj(final DataInputStream dataInputStream, final Class clazz, final Class clazz2) throws IOException {
+
+    public static HashMap<Object, Object> Tj(final DataInputStream dataInputStream, final Class clazz, final Class clazz2) throws IOException {
         final HashMap<Object, Object> hashMap = new HashMap<Object, Object>();
         for (int int1 = dataInputStream.readInt(), i = 0; i < int1; ++i) {
             hashMap.put(Tg(dataInputStream, clazz), Tg(dataInputStream, clazz2));

@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.30
-// 
-
 package com.google.research.reflection.b;
 
 import java.io.DataInputStream;
@@ -12,16 +8,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class c extends b implements a
-{
+public class c extends b implements a {
     private List<b> MY;
     private int MZ;
-    
+
     public c() {
         this.MY = new ArrayList<>();
         this.MZ = 0;
     }
-    
+
     private int Ty(final b b) {
         final Iterator<com.google.research.reflection.b.b> iterator = this.MY.iterator();
         int n = 0;
@@ -34,18 +29,18 @@ public class c extends b implements a
         }
         return n;
     }
-    
+
     public void SR(final b b, final int n) {
         final int n2 = this.Ty(b) + n;
         if (this.MX != null) {
             this.MX.SR(this, n2);
         }
     }
-    
+
     public int Ts() {
         return this.MZ;
     }
-    
+
     public com.google.research.reflection.layers.b Tt(final com.google.research.reflection.common.a a, final com.google.research.reflection.a.b b) {
         final com.google.research.reflection.layers.b b2 = new com.google.research.reflection.layers.b(1, this.MZ);
         final Iterator<com.google.research.reflection.b.b> iterator = this.MY.iterator();
@@ -60,7 +55,7 @@ public class c extends b implements a
         }
         return b2;
     }
-    
+
     public void Tu(final List<String> list) {
         if (list.size() >= 2) {
             final Pattern compile = Pattern.compile(list.get(0));
@@ -71,7 +66,7 @@ public class c extends b implements a
             }
         }
     }
-    
+
     public void Tv(final DataInputStream dataInputStream) throws IOException {
         int i = 0;
         this.MY.clear();
@@ -90,7 +85,7 @@ public class c extends b implements a
             ++i;
         }
     }
-    
+
     public void Tw(final DataOutputStream dataOutputStream) throws IOException {
         dataOutputStream.writeInt(this.MY.size());
         for (final com.google.research.reflection.b.b b : this.MY) {
@@ -98,13 +93,13 @@ public class c extends b implements a
             b.Tw(dataOutputStream);
         }
     }
-    
+
     public void Tz(final b b) {
         this.MY.add(b);
         b.Tq(this);
         this.MZ += b.Ts();
     }
-    
+
     public c clone() {
         final c c = new c();
         final Iterator<b> iterator = this.MY.iterator();
@@ -113,11 +108,11 @@ public class c extends b implements a
         }
         return c;
     }
-    
+
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         for (int i = 0; i < this.MY.size(); ++i) {
-            sb.append(((b)this.MY.get(i)).toString());
+            sb.append(((b) this.MY.get(i)).toString());
         }
         return sb.toString();
     }

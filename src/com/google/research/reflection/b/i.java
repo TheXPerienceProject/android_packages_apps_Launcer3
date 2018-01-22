@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.30
-// 
-
 package com.google.research.reflection.b;
 
 import com.google.research.reflection.common.a;
@@ -9,12 +5,11 @@ import com.google.research.reflection.common.d;
 
 import java.util.List;
 
-public class i extends b
-{
+public class i extends b {
     public int Ts() {
         return 3;
     }
-    
+
     public com.google.research.reflection.layers.b Tt(final a a, final com.google.research.reflection.a.b b) {
         final int n = 2;
         final int n2 = 1;
@@ -28,7 +23,7 @@ public class i extends b
         }
         return b2;
     }
-    
+
     public b clone() {
         return new i();
     }

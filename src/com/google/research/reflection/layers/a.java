@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.30
-// 
-
 package com.google.research.reflection.layers;
 
 import java.io.DataInputStream;
@@ -11,38 +7,36 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class a
-{
+public class a {
     List<v> Nh;
     com.google.research.reflection.common.a Ni;
     com.google.research.reflection.common.a Nj;
-    
+
     public a(final int n) {
         final boolean b = true;
         this.Nh = new ArrayList<>();
         this.Nj = new com.google.research.reflection.common.a(n, b);
         this.Ni = new com.google.research.reflection.common.a(n, b);
     }
-    
+
     private void TG() {
         for (int i = 0; i < this.Nh.size(); ++i) {
             this.Nh.get(i).UC();
         }
     }
-    
+
     public void TE() {
         this.Nj.clear();
         this.Ni.clear();
-        final Iterator<v> iterator = this.Nh.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().UO();
+        for (v aNh : this.Nh) {
+            aNh.UO();
         }
     }
-    
+
     public List<v> TF() {
         return this.Nh;
     }
-    
+
     public void TH(final b b, final b b2, final int n, final boolean b3) throws InvalidValueException {
         final boolean b4 = true;
         if (b3 && !(this.Nh.get(this.Nh.size() - 1) instanceof m)) {
@@ -59,16 +53,15 @@ public class a
                 final v v = this.Nh.get(i);
                 if (!v.Pd) {
                     if (v.Pb.SY() != sy) {
-                        throw new RuntimeException(new StringBuilder(110).append("backward: dense input vector has a different frame index from the target frame index: ").append(v.Pb.SY()).append("!=").append(sy).toString());
+                        throw new RuntimeException("backward: dense input vector has a different frame index from the target frame index: " + v.Pb.SY() + "!=" + sy);
                     }
-                }
-                else if (v.Pc.SY() != sy) {
+                } else if (v.Pc.SY() != sy) {
                     throw new RuntimeException("backward: sparse input vector has a different frame index from the target frame index");
                 }
             }
             for (int n2 = sv - 1; n2 >= 0 && sv - 1 - n2 < n; --n2) {
-                final b b5 = (b)this.Nj.ST(n2);
-                final b b6 = (b)this.Ni.ST(n2);
+                final b b5 = (b) this.Nj.ST(n2);
+                final b b6 = (b) this.Ni.ST(n2);
                 int j = size - 1;
                 b uy = b5;
                 while (j >= 0) {
@@ -80,16 +73,16 @@ public class a
             }
             return;
         }
-        final b b7 = new b(b4 ? 1 : 0, this.TN().UX());
-        final b b8 = new b(b4 ? 1 : 0, this.TN().UX());
+        final b b7 = new b(1, this.TN().UX());
+        final b b8 = new b(1, this.TN().UX());
         this.Nj.add(b7);
         this.Ni.add(b8);
     }
-    
+
     public int TI() {
         return this.Nh.get(0).UT();
     }
-    
+
     public b TJ(final boolean b, ArrayList[] array, b b2, final boolean b3) throws InvalidValueException {
         if (b3 && !(this.Nh.get(this.Nh.size() - 1) instanceof m)) {
             throw new RuntimeException("Lacks outputlayer");
@@ -105,17 +98,17 @@ public class a
         }
         return b4;
     }
-    
+
     public void TK(final v v) {
         if (v.US() != this.Nj.SX()) {
-            throw new RuntimeException(new StringBuilder(102).append("Inconsistent framebuffer size with the added layer: targetsize=").append(this.Nj.SX()).append(" layerbuffersize=").append(v.US()).toString());
+            throw new RuntimeException("Inconsistent framebuffer size with the added layer: targetsize=" + this.Nj.SX() + " layerbuffersize=" + v.US());
         }
-        if (v instanceof o && ((o)v).UA() == this.Nh.size()) {
+        if (v instanceof o && ((o) v).UA() == this.Nh.size()) {
             throw new RuntimeException();
         }
         this.Nh.add(v);
     }
-    
+
     public void TL(final DataOutputStream dataOutputStream) throws IOException {
         dataOutputStream.writeInt(this.Nh.size());
         for (final com.google.research.reflection.layers.v v : this.Nh) {
@@ -124,7 +117,7 @@ public class a
         }
         dataOutputStream.writeUTF("NeuralNet");
     }
-    
+
     public void TM(final DataInputStream dataInputStream) throws IOException {
         this.Nh.clear();
         for (int int1 = dataInputStream.readInt(), i = 0; i < int1; ++i) {
@@ -138,20 +131,17 @@ public class a
                         final String s = "Unsupported layer type: ";
                         String concat;
                         if (length == 0) {
-                            concat = new String(s);
-                        }
-                        else {
+                            concat = s;
+                        } else {
                             concat = s.concat(value);
                         }
                         throw new IOException(concat);
                     }
                     v = new s();
-                }
-                else {
+                } else {
                     v = new m();
                 }
-            }
-            else {
+            } else {
                 v = new o();
             }
             v.Uw(dataInputStream);
@@ -161,22 +151,21 @@ public class a
         if (utf2.equals("NeuralNet")) {
             return;
         }
-        throw new IOException(new StringBuilder(String.valueOf(utf2).length() + 45).append("Inconsistent ending: [").append(utf2).append("] expected: [NeuralNet]").toString());
+        throw new IOException("Inconsistent ending: [" + utf2 + "] expected: [NeuralNet]");
     }
-    
+
     public v TN() {
         return this.Nh.get(this.Nh.size() - 1);
     }
-    
+
     public a clone() {
         final a a = new a(this.Nj.SX());
-        final Iterator<v> iterator = this.Nh.iterator();
-        while (iterator.hasNext()) {
-            a.Nh.add(iterator.next().clone());
+        for (v aNh : this.Nh) {
+            a.Nh.add(aNh.clone());
         }
         return a;
     }
-    
+
     public void update() throws InvalidValueException {
         for (int i = this.Nh.size() - 1; i >= 0; --i) {
             this.Nh.get(i).update();
