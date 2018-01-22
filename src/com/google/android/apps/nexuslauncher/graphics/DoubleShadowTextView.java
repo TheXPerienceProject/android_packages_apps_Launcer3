@@ -25,7 +25,7 @@ public class DoubleShadowTextView extends TextView {
     }
 
     protected void onDraw(Canvas canvas) {
-        if (!mShadowInfo.skipDoubleShadow(this)) {
+        if (mShadowInfo.skipDoubleShadow(this)) {
             super.onDraw(canvas);
             return;
         }
