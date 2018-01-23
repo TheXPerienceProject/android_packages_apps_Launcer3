@@ -10,20 +10,20 @@ import com.android.launcher3.R;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomIconsPreference extends ListPreference {
-    public CustomIconsPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+public class CustomIconPreference extends ListPreference {
+    public CustomIconPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public CustomIconsPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomIconPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public CustomIconsPreference(Context context, AttributeSet attrs) {
+    public CustomIconPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public CustomIconsPreference(Context context) {
+    public CustomIconPreference(Context context) {
         super(context);
     }
 

@@ -57,7 +57,7 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
 
     public static class MySettingsFragment extends com.android.launcher3.SettingsActivity.LauncherSettingsFragment
             implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
-        private CustomIconsPreference mIconPackPref;
+        private CustomIconPreference mIconPackPref;
         private Context mContext;
 
         @Override
@@ -82,7 +82,7 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
                 Log.e("SettingsActivity", "Unable to load my own package info", ex);
             }
 
-            mIconPackPref = (CustomIconsPreference) findPreference(ICON_PACK_PREF);
+            mIconPackPref = (CustomIconPreference) findPreference(ICON_PACK_PREF);
             mIconPackPref.setOnPreferenceChangeListener(this);
 
             findPreference(SHOW_PREDICTIONS_PREF).setOnPreferenceChangeListener(this);
