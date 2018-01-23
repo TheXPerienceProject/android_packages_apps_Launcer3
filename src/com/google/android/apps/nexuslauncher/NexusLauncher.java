@@ -63,23 +63,6 @@ public class NexusLauncher {
         }
 
         public void finishBindingItems(final boolean b) {
-            if (Utilities.ATLEAST_MARSHMALLOW && !Utilities.ATLEAST_OREO) {
-                SharedPreferences prefs = Utilities.getPrefs(fB);
-                final String notifAccessPopupPref = "notif_access_popup";
-                boolean hasNotificationAccess = prefs.getBoolean(notifAccessPopupPref, false);
-                if (!hasNotificationAccess) {
-                    prefs.edit().putBoolean(notifAccessPopupPref, true).apply();
-                    for (String packageName : NotificationManagerCompat.getEnabledListenerPackages(fB)) {
-                        if (packageName.equals(fB.getApplicationContext().getPackageName())) {
-                            hasNotificationAccess = true;
-                            break;
-                        }
-                    }
-                    if (!hasNotificationAccess) {
-                        fB.startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
-                    }
-                }
-            }
         }
 
         public List<ComponentKeyMapper<AppInfo>> getPredictedApps() {
