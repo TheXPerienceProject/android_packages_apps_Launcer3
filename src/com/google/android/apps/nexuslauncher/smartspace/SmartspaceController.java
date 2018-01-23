@@ -30,7 +30,7 @@ public class SmartspaceController implements Handler.Callback {
     }
 
     private static SmartspaceController dU;
-    private final SmartspaceDataWraper dQ;
+    private final SmartspaceDataContainer dQ;
     private final Alarm dR;
     private ISmartspace dS;
     private final ProtoStore dT;
@@ -42,7 +42,7 @@ public class SmartspaceController implements Handler.Callback {
         this.mWorker = new Handler(LauncherModel.getWorkerLooper(), this);
         this.mUiHandler = new Handler(Looper.getMainLooper(), this);
         this.mAppContext = mAppContext;
-        this.dQ = new SmartspaceDataWraper();
+        this.dQ = new SmartspaceDataContainer();
         this.dT = new ProtoStore(mAppContext);
         (this.dR = new Alarm()).setOnAlarmListener(new OnAlarmListener() {
             @Override
@@ -182,7 +182,7 @@ public class SmartspaceController implements Handler.Callback {
                             dVarArr[0] :
                             null;
 
-                    SmartspaceDataWraper eVar = this.dQ;
+                    SmartspaceDataContainer eVar = this.dQ;
                     if (dVarArr.length > 1) {
                         dVar = dVarArr[1];
                     }

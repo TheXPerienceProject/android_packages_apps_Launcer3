@@ -33,6 +33,7 @@ import com.android.launcher3.dynamicui.WallpaperColorInfo;
 import com.android.launcher3.popup.PopupContainerWithArrow;
 import com.android.launcher3.popup.SystemShortcut;
 import com.android.launcher3.util.Themes;
+import com.google.android.apps.nexuslauncher.DynamicIconProvider;
 import com.google.android.apps.nexuslauncher.graphics.IcuDateTextView;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class SmartspaceView extends FrameLayout implements ISmartspace, ValueAni
     private IcuDateTextView mClockView;
     private ViewGroup mSmartspaceContent;
     private final SmartspaceController dp;
-    private SmartspaceDataWraper dq;
+    private SmartspaceDataContainer dq;
     private BubbleTextView dr;
     private boolean ds;
     private boolean mDoubleLine;
@@ -80,7 +81,7 @@ public class SmartspaceView extends FrameLayout implements ISmartspace, ValueAni
                     final Context context = getContext();
                     Launcher.getLauncher(context).startActivitySafely(v, addFlags, null);
                 } catch (ActivityNotFoundException ex) {
-                    LauncherAppsCompat.getInstance(getContext()).showAppDetailsForProfile(new ComponentName("com.google.android.calendar", ""), Process.myUserHandle());
+                    LauncherAppsCompat.getInstance(getContext()).showAppDetailsForProfile(new ComponentName(DynamicIconProvider.GOOGLE_CALENDAR, ""), Process.myUserHandle());
                 }
             }
         };
@@ -104,7 +105,7 @@ public class SmartspaceView extends FrameLayout implements ISmartspace, ValueAni
         dB.setTextSize((float) getResources().getDimensionPixelSize(R.dimen.smartspace_title_size));
     }
 
-    private void initListeners(final SmartspaceDataWraper e) {
+    private void initListeners(final SmartspaceDataContainer e) {
         final boolean cs = e.cS();
         if (mDoubleLine != cs) {
             mDoubleLine = cs;
@@ -128,7 +129,7 @@ public class SmartspaceView extends FrameLayout implements ISmartspace, ValueAni
         }
     }
 
-    private void loadDoubleLine(final SmartspaceDataWraper e) {
+    private void loadDoubleLine(final SmartspaceDataContainer e) {
         ColorStateList dh = null;
         setBackgroundResource(mSmartspaceBackgroundRes);
         final SmartspaceCard dp = e.dP;
@@ -158,7 +159,7 @@ public class SmartspaceView extends FrameLayout implements ISmartspace, ValueAni
         }
     }
 
-    private void loadSingleLine(final SmartspaceDataWraper e) {
+    private void loadSingleLine(final SmartspaceDataContainer e) {
         setBackgroundResource(0);
         mClockView.setOnClickListener(mCalendarClickListener);
         mClockView.setOnLongClickListener(co());
@@ -240,7 +241,7 @@ public class SmartspaceView extends FrameLayout implements ISmartspace, ValueAni
         }
     }
 
-    public void cr(final SmartspaceDataWraper dq2) {
+    public void cr(final SmartspaceDataContainer dq2) {
         dq = dq2;
         boolean visible = mSmartspaceContent.getVisibility() == View.VISIBLE;
         initListeners(dq);
@@ -349,12 +350,12 @@ public class SmartspaceView extends FrameLayout implements ISmartspace, ValueAni
             final Uri content_URI = CalendarContract.CONTENT_URI;
             final Uri.Builder appendPath = content_URI.buildUpon().appendPath("time");
             ContentUris.appendId(appendPath, System.currentTimeMillis());
-            final Intent addFlags = new Intent("android.intent.action.VIEW").setData(appendPath.build()).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+            final Intent addFlags = new Intent(Intent.ACTION_VIEW).setData(appendPath.build()).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             try {
                 final Context context = dZ.getContext();
                 Launcher.getLauncher(context).startActivitySafely(view, addFlags, null);
             } catch (ActivityNotFoundException ex) {
-                LauncherAppsCompat.getInstance(dZ.getContext()).showAppDetailsForProfile(new ComponentName("com.google.android.calendar", ""), Process.myUserHandle());
+                LauncherAppsCompat.getInstance(dZ.getContext()).showAppDetailsForProfile(new ComponentName(DynamicIconProvider.GOOGLE_CALENDAR, ""), Process.myUserHandle());
             }
         }
     }
