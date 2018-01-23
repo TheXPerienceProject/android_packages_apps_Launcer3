@@ -291,9 +291,9 @@ public class SmartspaceCard {
                     try {
                         Intent internal = Intent.parseUri(intent.getExtras()
                                 .getString("com.google.android.apps.gsa.smartspace.extra.SMARTSPACE_INTENT"), Intent.URI_INTENT_SCHEME);
-                        launcher.startActivitySafely(view, internal, null);
+                        launcher.startActivity(internal);
                         return;
-                    } catch (URISyntaxException | NullPointerException e) {
+                    } catch (URISyntaxException | NullPointerException | SecurityException e) {
                         e.printStackTrace();
                     }
                 }
