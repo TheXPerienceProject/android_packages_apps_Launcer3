@@ -183,8 +183,7 @@ public class CustomAppPredictor extends UserEventDispatcher implements SharedPre
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(SettingsActivity.SHOW_PREDICTIONS_PREF) && !isPredictorEnabled()) {
-            Set<String> predictionSet = new HashSet<>();
-            predictionSet.addAll(mPrefs.getStringSet(PREDICTION_SET, EMPTY_SET));
+            Set<String> predictionSet = getStringSetCopy();
 
             SharedPreferences.Editor edit = mPrefs.edit();
             for (String prediction : predictionSet) {
