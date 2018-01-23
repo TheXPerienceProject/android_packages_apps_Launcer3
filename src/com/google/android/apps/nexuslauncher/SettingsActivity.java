@@ -185,7 +185,7 @@ public class SettingsActivity extends com.android.launcher3.SettingsActivity imp
         }
 
         public Dialog onCreateDialog(final Bundle bundle) {
-            return new AlertDialog.Builder(getContext())
+            return new AlertDialog.Builder(getActivity())
                     .setTitle(R.string.title_disable_suggestions_prompt)
                     .setMessage(R.string.msg_disable_suggestions_prompt)
                     .setNegativeButton(android.R.string.cancel, null)
