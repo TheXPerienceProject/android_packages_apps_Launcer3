@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -15,6 +16,7 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.net.Uri;
 import android.os.Process;
 import android.util.AttributeSet;
 import android.view.View;
@@ -183,13 +185,19 @@ public abstract class AbstractQsbLayout extends FrameLayout implements LauncherL
     }
 
     protected void fallbackSearch(String action) {
+        final String GoogleQSB = "com.google.android.googlequicksearchbox";
         try {
             getContext().startActivity(new Intent(action)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    .setPackage("com.google.android.googlequicksearchbox"));
+                    .setPackage(GoogleQSB));
         } catch (ActivityNotFoundException e) {
-            LauncherAppsCompat.getInstance(getContext())
-                    .showAppDetailsForProfile(new ComponentName("com.google.android.googlequicksearchbox", ".SearchActivity"), Process.myUserHandle());
+            try {
+                getContext().getPackageManager().getPackageInfo(GoogleQSB, 0);
+                LauncherAppsCompat.getInstance(getContext())
+                        .showAppDetailsForProfile(new ComponentName(GoogleQSB, ".SearchActivity"), Process.myUserHandle());
+            } catch (PackageManager.NameNotFoundException ignored) {
+                getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com")));
+            }
         }
     }
 
