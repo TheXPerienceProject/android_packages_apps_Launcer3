@@ -201,10 +201,11 @@ public class CustomAppPredictor extends UserEventDispatcher implements SharedPre
     }
 
     private void clearNonExistentPackages() {
-        Set<String> predictionSet = getStringSetCopy();
+        Set<String> originalSet = mPrefs.getStringSet(PREDICTION_SET, EMPTY_SET);
+        Set<String> predictionSet = new HashSet<>(originalSet);
 
         SharedPreferences.Editor edit = mPrefs.edit();
-        for (String prediction : predictionSet) {
+        for (String prediction : originalSet) {
             try {
                 mPackageManager.getPackageInfo(prediction.substring(0, prediction.indexOf('/')), 0);
             } catch (PackageManager.NameNotFoundException e) {
