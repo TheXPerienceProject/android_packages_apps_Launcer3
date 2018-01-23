@@ -25,10 +25,10 @@ import com.android.launcher3.shortcuts.ShortcutInfoCompat;
 import com.google.android.apps.nexuslauncher.clock.DynamicClock;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class DynamicIconProvider extends IconProvider {
+    private static final String GOOGLE_CALENDAR = "com.google.android.calendar";
     private final BroadcastReceiver mDateChangeReceiver;
     private final Context mContext;
     private final PackageManager mPackageManager;
@@ -48,10 +48,10 @@ public class DynamicIconProvider extends IconProvider {
                 }
                 for (UserHandle user : UserManagerCompat.getInstance(context).getUserProfiles()) {
                     LauncherModel model = LauncherAppState.getInstance(context).getModel();
-                    model.onPackageChanged("com.google.android.calendar", user);
-                    List<ShortcutInfoCompat> shortcuts = DeepShortcutManager.getInstance(context).queryForPinnedShortcuts("com.google.android.calendar", user);
+                    model.onPackageChanged(GOOGLE_CALENDAR, user);
+                    List<ShortcutInfoCompat> shortcuts = DeepShortcutManager.getInstance(context).queryForPinnedShortcuts(GOOGLE_CALENDAR, user);
                     if (!shortcuts.isEmpty()) {
-                        model.updatePinnedShortcuts("com.google.android.calendar", shortcuts, user);
+                        model.updatePinnedShortcuts(GOOGLE_CALENDAR, shortcuts, user);
                     }
                 }
             }
@@ -73,7 +73,7 @@ public class DynamicIconProvider extends IconProvider {
 
     private int getDayResId(Bundle bundle, Resources resources) {
         if (bundle != null) {
-            int dateArrayId = bundle.getInt("com.google.android.calendar.dynamic_icons_nexus_round", 0);
+            int dateArrayId = bundle.getInt(GOOGLE_CALENDAR + ".dynamic_icons_nexus_round", 0);
             if (dateArrayId != 0) {
                 try {
                     TypedArray dateIds = resources.obtainTypedArray(dateArrayId);
@@ -88,7 +88,7 @@ public class DynamicIconProvider extends IconProvider {
     }
 
     private boolean isCalendar(String s) {
-        return "com.google.android.calendar".equals(s);
+        return GOOGLE_CALENDAR.equals(s);
     }
 
     @Override
